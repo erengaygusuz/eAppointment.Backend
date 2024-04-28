@@ -7,7 +7,7 @@ using GenericRepository;
 
 namespace eAppointment.Backend.Infrastructure.Context
 {
-    internal sealed class ApplicationDbContext : IdentityDbContext<AppUser, AppRole, Guid>, IUnitOfWork
+    internal sealed class ApplicationDbContext : IdentityDbContext<AppUser, AppRole, Guid, IdentityUserClaim<Guid>, AppUserRole, IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>, IUnitOfWork
     {
         public ApplicationDbContext(DbContextOptions options) : base(options) { }
 
