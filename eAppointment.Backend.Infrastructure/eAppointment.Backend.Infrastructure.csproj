@@ -20,8 +20,4 @@
     <ProjectReference Include="..\eAppointment.Backend.Domain\eAppointment.Backend.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Configurations\" />
-  </ItemGroup>
-
 </Project>
