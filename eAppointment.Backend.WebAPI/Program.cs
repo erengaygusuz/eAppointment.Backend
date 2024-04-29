@@ -1,6 +1,9 @@
 
+using DefaultCorsPolicyNugetPackage;
 using eAppointment.Backend.Application;
+using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Infrastructure;
+using Microsoft.AspNetCore.Identity;
 
 namespace eAppointment.Backend.WebAPI
 {
@@ -9,6 +12,8 @@ namespace eAppointment.Backend.WebAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddDefaultCors();
 
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
@@ -29,12 +34,15 @@ namespace eAppointment.Backend.WebAPI
                 app.UseSwaggerUI();
             }
 
+            app.UseCors();
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
 
-
             app.MapControllers();
+
+            Helper.CreateUserAsync(app).Wait();
 
             app.Run();
         }
