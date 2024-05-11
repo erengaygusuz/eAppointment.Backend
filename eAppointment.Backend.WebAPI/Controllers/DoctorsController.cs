@@ -8,14 +8,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace eAppointment.Backend.WebAPI.Controllers
 {
-    public class DoctorsController : ApiController
+    public sealed class DoctorsController : ApiController
     {
         public DoctorsController(IMediator mediator) : base(mediator)
         {
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetAll(GetAllDoctorQuery request, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAll(GetAllDoctorsQuery request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
 
