@@ -15,7 +15,10 @@ namespace eAppointment.Backend.Application.Features.Appointments.CreateAppointme
         {
             Patient patient = new();
 
-            if(request.patientId is null)
+            DateTime startDate = DateTime.ParseExact(request.startDate, "dd.MM.yyyy HH:mm", null);
+            DateTime endDate = DateTime.ParseExact(request.endDate, "dd.MM.yyyy HH:mm", null);
+
+            if (request.patientId is null)
             {
                 patient = new()
                 {
@@ -28,6 +31,19 @@ namespace eAppointment.Backend.Application.Features.Appointments.CreateAppointme
                 };
 
                 await patientRepository.AddAsync(patient, cancellationToken);
+            }
+
+            bool isAppointmentDateNotAvailable = await appointmentRepository
+                    .AnyAsync(p => p.DoctorId == request.doctorId &&
+                     ((p.StartDate < endDate && p.StartDate >= startDate) || // Mevcut randevunun bitişi, diğer randevunun başlangıcıyla çakışıyor
+                     (p.EndDate > startDate && p.EndDate <= endDate) || // Mevcut randevunun başlangıcı, diğer randevunun bitişiyle çakışıyor
+                     (p.StartDate >= startDate && p.EndDate <= endDate) || // Mevcut randevu, diğer randevu içinde tamamen
+                     (p.StartDate <= startDate && p.EndDate >= endDate)), // Mevcut randevu, diğer randevuyu tamamen kapsıyor
+                     cancellationToken);
+
+            if (isAppointmentDateNotAvailable)
+            {
+                return Result<string>.Failure("Appointment date is not available");
             }
 
             Appointment appointment = new()
