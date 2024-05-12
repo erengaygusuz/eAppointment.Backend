@@ -11,7 +11,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.GetAllAppointme
     {
         public async Task<Result<List<GetAllAppointmentsByDoctorIdQueryResponse>>> Handle(GetAllAppointmentsByDoctorIdQuery request, CancellationToken cancellationToken)
         {
-            List<Appointment> appointments = await appointmentRepository.Where(p => p.DoctorId == request.doctorId).ToListAsync(cancellationToken);
+            List<Appointment> appointments = await appointmentRepository.Where(p => p.DoctorId == request.doctorId).Include(p => p.Patient).ToListAsync(cancellationToken);
 
             List<GetAllAppointmentsByDoctorIdQueryResponse> response =
                 appointments.Select(s => 
@@ -20,7 +20,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.GetAllAppointme
                         s.Id,
                         s.StartDate,
                         s.EndDate,
-                        s.Patient!.FirstName,
+                        s.Patient!.FullName,
                         s.Patient)
                     ).ToList();
 
