@@ -26,7 +26,7 @@ namespace eAppointment.Backend.Application.Features.Auth.Login
                 return Result<LoginCommandResponse>.Failure("Password is wrong.");
             }
 
-            string token = jwtProvider.CreateToken(appUser);
+            string token = await jwtProvider.CreateTokenAsync(appUser);
             LoginCommandResponse response = new(token);
 
             return Result<LoginCommandResponse>.Succeed(response);
