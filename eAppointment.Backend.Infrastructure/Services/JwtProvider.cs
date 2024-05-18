@@ -1,5 +1,6 @@
 ﻿using eAppointment.Backend.Application.Services;
 using eAppointment.Backend.Domain.Entities;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -7,7 +8,8 @@ using System.Text;
 
 namespace eAppointment.Backend.Infrastructure.Services
 {
-    internal sealed class JwtProvider : IJwtProvider
+    internal sealed class JwtProvider(
+        IConfiguration configuration) : IJwtProvider
     {
         public string CreateToken(AppUser appUser)
         {
@@ -21,13 +23,13 @@ namespace eAppointment.Backend.Infrastructure.Services
 
             DateTime expires = DateTime.Now.AddDays(1);
 
-            SymmetricSecurityKey symmetricSecurityKey = new(Encoding.UTF8.GetBytes(string.Join("-", Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid())));
+            SymmetricSecurityKey symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"] ?? ""));
 
             SigningCredentials signingCredentials = new(symmetricSecurityKey, SecurityAlgorithms.HmacSha512);
 
             JwtSecurityToken jwtSecurityToken = new(
-                issuer: "Eren Gaygusuz",
-                audience:"eAppointment",
+                issuer: configuration.GetSection("Jwt:Issuer").Value,
+                audience: configuration.GetSection("Jwt:Audience").Value,
                 claims: claims,
                 notBefore: DateTime.Now,
                 expires: expires,

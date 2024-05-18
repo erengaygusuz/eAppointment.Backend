@@ -1,9 +1,10 @@
-
 using DefaultCorsPolicyNugetPackage;
 using eAppointment.Backend.Application;
-using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Infrastructure;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Text;
 
 namespace eAppointment.Backend.WebAPI
 {
@@ -12,6 +13,22 @@ namespace eAppointment.Backend.WebAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddAuthentication().AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"] ?? ""))
+                };
+            });
+
+            builder.Services.AddAuthorization();
 
             builder.Services.AddDefaultCors();
 
@@ -23,7 +40,31 @@ namespace eAppointment.Backend.WebAPI
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(setup =>
+            {
+                var jwtSecuritySheme = new OpenApiSecurityScheme
+                {
+                    BearerFormat = "JWT",
+                    Name = "JWT Authentication",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = JwtBearerDefaults.AuthenticationScheme,
+                    Description = "Put **_ONLY_** yourt JWT Bearer token on textbox below!",
+
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+
+                setup.AddSecurityDefinition(jwtSecuritySheme.Reference.Id, jwtSecuritySheme);
+
+                setup.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    { jwtSecuritySheme, Array.Empty<string>() }
+                });
+            });
 
             var app = builder.Build();
 
@@ -37,6 +78,8 @@ namespace eAppointment.Backend.WebAPI
             app.UseCors();
 
             app.UseHttpsRedirection();
+
+            app.UseAuthorization();
 
             app.UseAuthorization();
 
