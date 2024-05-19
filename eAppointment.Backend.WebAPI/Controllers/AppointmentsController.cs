@@ -25,7 +25,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetAllAppointmentsByDoctorId(GetAllAppointmentsByDoctorIdQuery request, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllByDoctorId(GetAllAppointmentsByDoctorIdQuery request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
 
@@ -41,7 +41,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAppointment(CreateAppointmentCommand request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Create(CreateAppointmentCommand request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
 
@@ -49,7 +49,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteAppointmentById(DeleteAppointmentByIdCommand request, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteById(DeleteAppointmentByIdCommand request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
 
@@ -57,7 +57,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateAppointment(UpdateAppointmentCommand request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Update(UpdateAppointmentCommand request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
 
