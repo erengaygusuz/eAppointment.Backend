@@ -24,7 +24,8 @@ namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
                 LastName = s.LastName,
                 FullName = s.FullName,
                 UserName = s.UserName,
-                Email = s.Email
+                Email = s.Email,
+
             }).ToList();
 
             foreach(var item in response)
@@ -32,8 +33,7 @@ namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
                 List<AppUserRole> userRoles = await userRoleRepository
                     .Where(p => p.UserId == item.Id).ToListAsync(cancellationToken);
 
-                List<Guid> stringRoles = new();
-                List<string?> stringRoleNames = new();
+                List<AppRole> roles = new();
 
                 foreach (var userRole in userRoles)
                 {
@@ -42,13 +42,11 @@ namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
 
                     if (role is not null)
                     {
-                        stringRoles.Add(role.Id);
-                        stringRoleNames.Add(role.Name);
+                        roles.Add(role);
                     }
                 }
 
-                item.RoleIds = stringRoles;
-                item.RoleNames = stringRoleNames;
+                item.Roles = roles;
             }
 
             return response;

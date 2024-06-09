@@ -1,4 +1,6 @@
-﻿namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
+﻿using eAppointment.Backend.Domain.Entities;
+
+namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
 {
     public sealed record GetAllUsersQueryResponse
     {
@@ -8,7 +10,6 @@
         public string FullName { get; set; } = string.Empty;
         public string? Email { get; set; }
         public string? UserName { get; set; }
-        public List<Guid> RoleIds { get; set; } = new();
-        public List<string?> RoleNames { get; set; } = new();
+        public List<AppRole>? Roles { get; set; }
     };
 }

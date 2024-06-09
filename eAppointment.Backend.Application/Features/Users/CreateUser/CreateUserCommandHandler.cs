@@ -36,15 +36,15 @@ namespace eAppointment.Backend.Application.Features.Users.CreateUser
                 return Result<string>.Failure(result.Errors.Select(s => s.Description).ToList());
             }
 
-            if (request.roleIds.Any())
+            if (request.roles.Any())
             {
                 List<AppUserRole> appUserRoles = new();
 
-                foreach (var roleId in request.roleIds)
+                foreach (var role in request.roles)
                 {
                     AppUserRole appUserRole = new()
                     {
-                        RoleId = roleId,
+                        RoleId = role.Id,
                         UserId = appUser.Id
                     };
 
