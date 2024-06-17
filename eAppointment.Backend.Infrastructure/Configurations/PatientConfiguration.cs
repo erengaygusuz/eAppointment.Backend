@@ -22,6 +22,7 @@ namespace eAppointment.Backend.Infrastructure.Configurations
                 .HasOne(e => e.User)
                 .WithOne(e => e.Patient)
                 .HasForeignKey<Patient>(e => e.UserId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
         }
     }

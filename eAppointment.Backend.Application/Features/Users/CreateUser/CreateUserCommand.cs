@@ -1,5 +1,4 @@
-﻿using eAppointment.Backend.Domain.Entities;
-using MediatR;
+﻿using MediatR;
 using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Users.CreateUser
@@ -13,5 +12,6 @@ namespace eAppointment.Backend.Application.Features.Users.CreateUser
         string password,
         string identityNumber,
         Guid departmentId,
-        Role role) : IRequest<Result<string>>;
+        Guid roleId,
+        string roleName) : IRequest<Result<string>>;
 }

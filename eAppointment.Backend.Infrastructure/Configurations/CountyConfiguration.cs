@@ -18,6 +18,7 @@ namespace eAppointment.Backend.Infrastructure.Configurations
                 .HasOne(e => e.City)
                 .WithMany(e => e.Counties)
                 .HasForeignKey(e => e.CityId)
+                .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
         }
     }

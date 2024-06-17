@@ -18,12 +18,14 @@ namespace eAppointment.Backend.Infrastructure.Configurations
                 .HasOne(e => e.User)
                 .WithOne(e => e.Doctor)
                 .HasForeignKey<Doctor>(e => e.UserId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
             builder
                 .HasOne(e => e.Department)
                 .WithOne(e => e.Doctor)
                 .HasForeignKey<Doctor>(e => e.DepartmentId)
+                .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
         }
     }

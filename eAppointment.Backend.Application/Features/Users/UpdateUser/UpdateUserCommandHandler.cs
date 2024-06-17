@@ -42,28 +42,25 @@ namespace eAppointment.Backend.Application.Features.Users.UpdateUser
                 return Result<string>.Failure(result.Errors.Select(s => s.Description).ToList());
             }
 
-            if (request.roles.Any())
+            if (request.roleId != Guid.Empty)
             {
                 List<UserRole> userRoles = await userRoleRepository
                     .Where(p => p.UserId == user.Id).ToListAsync();
 
                 userRoleRepository.DeleteRange(userRoles);
-                await unitOfWork.SaveChangesAsync(cancellationToken);
 
                 userRoles = new();
 
-                foreach (var role in request.roles)
+                UserRole userRole = new()
                 {
-                    UserRole userRole = new()
-                    {
-                        RoleId = role.Id,
-                        UserId = user.Id
-                    };
+                    RoleId = request.roleId,
+                    UserId = user.Id
+                };
 
-                    userRoles.Add(userRole);
-                }
+                userRoles.Add(userRole);
 
-                await userRoleRepository.AddRangeAsync(userRoles, cancellationToken);
+                await userRoleRepository.AddAsync(userRole, cancellationToken);
+
                 await unitOfWork.SaveChangesAsync(cancellationToken);
             }
 

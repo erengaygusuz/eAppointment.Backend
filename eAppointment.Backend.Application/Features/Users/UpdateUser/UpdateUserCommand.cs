@@ -1,5 +1,4 @@
-﻿using eAppointment.Backend.Domain.Entities;
-using MediatR;
+﻿using MediatR;
 using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Users.UpdateUser
@@ -10,5 +9,6 @@ namespace eAppointment.Backend.Application.Features.Users.UpdateUser
         string lastName,
         string phoneNumber,
         string userName,
-        List<Role> roles) : IRequest<Result<string>>;
+        Guid roleId,
+        string roleName) : IRequest<Result<string>>;
 }

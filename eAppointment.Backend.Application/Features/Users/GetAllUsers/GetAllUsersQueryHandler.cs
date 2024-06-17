@@ -46,7 +46,8 @@ namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
                     }
                 }
 
-                item.Role = roles.FirstOrDefault();
+                item.RoleId = roles.FirstOrDefault()!.Id;
+                item.RoleName = roles.FirstOrDefault()!.Name;
             }
 
             return response;

@@ -39,17 +39,17 @@ namespace eAppointment.Backend.Application.Features.Users.CreateUser
                 return Result<string>.Failure(result.Errors.Select(s => s.Description).ToList());
             }
 
-            if (request.role != null)
+            if (request.roleId != Guid.Empty)
             {
                 UserRole userRole = new()
                 {
-                    RoleId = request.role.Id,
+                    RoleId = request.roleId,
                     UserId = user.Id
                 };
 
                 await userRoleRepository.AddAsync(userRole, cancellationToken);
 
-                switch (request.role.Name)
+                switch (request.roleName)
                 {
                     case "Doctor":
 
