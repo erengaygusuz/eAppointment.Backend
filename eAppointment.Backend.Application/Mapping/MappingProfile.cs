@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using eAppointment.Backend.Application.Features.Doctors.CreateDoctor;
+using eAppointment.Backend.Application.Features.Departments.CreateDepartment;
+using eAppointment.Backend.Application.Features.Departments.UpdateDepartment;
 using eAppointment.Backend.Application.Features.Doctors.UpdateDoctor;
-using eAppointment.Backend.Application.Features.Patients.CreatePatient;
 using eAppointment.Backend.Application.Features.Patients.UpdatePatient;
 using eAppointment.Backend.Application.Features.Users.CreateUser;
 using eAppointment.Backend.Application.Features.Users.UpdateUser;
 using eAppointment.Backend.Domain.Entities;
-using eAppointment.Backend.Domain.Enums;
 
 namespace eAppointment.Backend.Application.Mapping
 {
@@ -14,17 +13,26 @@ namespace eAppointment.Backend.Application.Mapping
     {
         public MappingProfile() 
         {
-            CreateMap<CreateDoctorCommand, Doctor>()
-                .ForMember(member => member.Department, options => options.MapFrom(map => DepartmentEnum.FromValue(map.departmentValue)));
+            CreateMap<CreateDepartmentCommand, Department>();
+            CreateMap<UpdateDepartmentCommand, Department>();
+
+            CreateMap<CreateUserCommand, User>()
+                .ForMember(dest => dest.Doctor, src => src.Ignore())
+                .ForMember(dest => dest.Patient, src => src.Ignore());
+
+            CreateMap<UpdateUserCommand, User>();
 
             CreateMap<UpdateDoctorCommand, Doctor>()
-                .ForMember(member => member.Department, options => options.MapFrom(map => DepartmentEnum.FromValue(map.departmentValue)));
+                .ForPath(dest => dest.User.FirstName, src => src.MapFrom(src => src.firstName))
+                .ForPath(dest => dest.User.LastName, src => src.MapFrom(src => src.lastName))
+                .ForMember(dest => dest.DepartmentId, src => src.MapFrom(src => src.departmentId));
 
-            CreateMap<CreatePatientCommand, Patient>();
-            CreateMap<UpdatePatientCommand, Patient>();
-
-            CreateMap<CreateUserCommand, AppUser>();
-            CreateMap<UpdateUserCommand, AppUser>();
+            CreateMap<UpdatePatientCommand, Patient>()
+                .ForPath(dest => dest.User.FirstName, src => src.MapFrom(src => src.firstName))
+                .ForPath(dest => dest.User.LastName, src => src.MapFrom(src => src.lastName))
+                .ForPath(dest => dest.County.Id, src => src.MapFrom(src => src.countyId))
+                .ForPath(dest => dest.County.City.Id, src => src.MapFrom(src => src.cityId))
+                .ForMember(dest => dest.FullAddress, src => src.MapFrom(src => src.fullAddress));
         }
     }
 }

@@ -7,15 +7,15 @@ using TS.Result;
 namespace eAppointment.Backend.Application.Features.Roles.RoleSync
 {
     internal sealed class RoleSyncCommandHandler (
-        RoleManager<AppRole> roleManager): IRequestHandler<RoleSyncCommand, Result<string>>
+        RoleManager<Role> roleManager): IRequestHandler<RoleSyncCommand, Result<string>>
     {
         public async Task<Result<string>> Handle(RoleSyncCommand request, CancellationToken cancellationToken)
         {
-            List<AppRole> currentRoles = await roleManager.Roles.ToListAsync(cancellationToken);
+            List<Role> currentRoles = await roleManager.Roles.ToListAsync(cancellationToken);
 
-            List<AppRole> staticRoles = Constants.GetRoles();
+            List<Role> staticRoles = Constants.GetRoles();
 
-            foreach (AppRole role in currentRoles)
+            foreach (Role role in currentRoles)
             {
                 if (!staticRoles.Any(r => r.Name == role.Name))
                 {
@@ -23,7 +23,7 @@ namespace eAppointment.Backend.Application.Features.Roles.RoleSync
                 }
             }
 
-            foreach (AppRole role in staticRoles)
+            foreach (Role role in staticRoles)
             {
                 if (!currentRoles.Any(r => r.Name == role.Name))
                 {

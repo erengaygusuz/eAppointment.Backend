@@ -1,4 +1,5 @@
 ﻿using eAppointment.Backend.Domain.Entities;
+using eAppointment.Backend.Domain.Enums;
 using eAppointment.Backend.Domain.Repositories;
 using GenericRepository;
 using MediatR;
@@ -8,8 +9,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.CreateAppointme
 {
     internal sealed class CreateAppointmentCommandHandler(
         IAppointmentRepository appointmentRepository, 
-        IUnitOfWork unitOfWork,
-        IPatientRepository patientRepository) : IRequestHandler<CreateAppointmentCommand, Result<string>>
+        IUnitOfWork unitOfWork) : IRequestHandler<CreateAppointmentCommand, Result<string>>
     {
         public async Task<Result<string>> Handle(CreateAppointmentCommand request, CancellationToken cancellationToken)
         {
@@ -17,21 +17,6 @@ namespace eAppointment.Backend.Application.Features.Appointments.CreateAppointme
 
             DateTime startDate = DateTime.ParseExact(request.startDate, "dd.MM.yyyy HH:mm", null);
             DateTime endDate = DateTime.ParseExact(request.endDate, "dd.MM.yyyy HH:mm", null);
-
-            if (request.patientId is null)
-            {
-                patient = new()
-                {
-                    FirstName = request.firstName,
-                    LastName = request.lastName,
-                    IdentityNumber = request.identityNumber,
-                    City = request.city,
-                    Town = request.town,
-                    FullAddress = request.fullAddress
-                };
-
-                await patientRepository.AddAsync(patient, cancellationToken);
-            }
 
             bool isAppointmentDateNotAvailable = await appointmentRepository
                     .AnyAsync(p => p.DoctorId == request.doctorId &&
@@ -49,10 +34,10 @@ namespace eAppointment.Backend.Application.Features.Appointments.CreateAppointme
             Appointment appointment = new()
             {
                 DoctorId = request.doctorId,
-                PatientId = request.patientId ?? patient.Id,
+                PatientId = request.patientId,
                 StartDate = DateTime.ParseExact(request.startDate, "dd.MM.yyyy HH:mm", null),
                 EndDate = DateTime.ParseExact(request.endDate, "dd.MM.yyyy HH:mm", null),
-                IsCompleted = false
+                Status = AppointmentStatus.NotCompleted
             };
 
             await appointmentRepository.AddAsync(appointment, cancellationToken);

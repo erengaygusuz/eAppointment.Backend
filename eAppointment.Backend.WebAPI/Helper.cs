@@ -9,7 +9,7 @@ namespace eAppointment.Backend.WebAPI
         {
             using (var scoped = app.Services.CreateScope())
             {
-                var userManager = scoped.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+                var userManager = scoped.ServiceProvider.GetRequiredService<UserManager<User>>();
 
                 if (!userManager.Users.Any())
                 {

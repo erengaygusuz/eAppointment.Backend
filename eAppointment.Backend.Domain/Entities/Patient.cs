@@ -8,12 +8,23 @@
         }    
 
         public Guid Id { get; set; }
-        public string FirstName { get; set; } = string.Empty;
-        public string LastName { get; set; } = string.Empty;
-        public string FullName => string.Join(" ", FirstName, LastName);
+
+        public Guid UserId { get; set; }
+
+        public User User { get; set; } = new();
+
         public string IdentityNumber { get; set; } = string.Empty;
-        public string City { get; set; } = string.Empty;
-        public string Town { get; set; } = string.Empty;
-        public string FullAddress { get; set; } = string.Empty;
+
+        public Guid? CountyId { get; set; }
+
+        public County County { get; set; } = new ();
+
+        public string? FullAddress { get; set; } = string.Empty;
+
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+
+        public DateTime? ModifiedDate { get; set; }
+
+        public ICollection<Appointment>? Appointments { get; set; }
     }
 }

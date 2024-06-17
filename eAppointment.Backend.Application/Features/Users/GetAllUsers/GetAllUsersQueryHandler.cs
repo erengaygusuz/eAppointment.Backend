@@ -9,35 +9,35 @@ using TS.Result;
 namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
 {
     internal sealed class GetAllUsersQueryHandler (
-        UserManager<AppUser> userManager,
-        RoleManager<AppRole> roleManager,
+        UserManager<User> userManager,
+        RoleManager<Role> roleManager,
         IUserRoleRepository userRoleRepository) : IRequestHandler<GetAllUsersQuery, Result<List<GetAllUsersQueryResponse>>>
     {
         public async Task<Result<List<GetAllUsersQueryResponse>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
-            List<AppUser> users = await userManager.Users.OrderBy(u => u.FirstName).ToListAsync(cancellationToken);
+            List<User> users = await userManager.Users.OrderBy(u => u.FirstName).ToListAsync(cancellationToken);
 
             List<GetAllUsersQueryResponse> response = users.Select(s => new GetAllUsersQueryResponse()
             {
                 Id = s.Id,
                 FirstName = s.FirstName,
                 LastName = s.LastName,
-                FullName = s.FullName,
+                FullName = s.FirstName + " " + s.LastName,
                 UserName = s.UserName,
-                Email = s.Email,
+                Email = s.Email
 
             }).ToList();
 
             foreach(var item in response)
             {
-                List<AppUserRole> userRoles = await userRoleRepository
+                List<UserRole> userRoles = await userRoleRepository
                     .Where(p => p.UserId == item.Id).ToListAsync(cancellationToken);
 
-                List<AppRole> roles = new();
+                List<Role> roles = new();
 
                 foreach (var userRole in userRoles)
                 {
-                    AppRole? role = await roleManager.Roles
+                    Role? role = await roleManager.Roles
                         .Where(p => p.Id == userRole.RoleId).FirstOrDefaultAsync(cancellationToken);
 
                     if (role is not null)
@@ -46,7 +46,7 @@ namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
                     }
                 }
 
-                item.Roles = roles;
+                item.Role = roles.FirstOrDefault();
             }
 
             return response;

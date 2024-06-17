@@ -5,12 +5,15 @@ using GenericRepository;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Users.CreateUser
 {
     internal sealed class CreateUserCommandHandler(
-        UserManager<AppUser> userManager,
+        UserManager<User> userManager,
+        IPatientRepository patientRepository,
+        IDoctorRepository doctorRepository,
         IUserRoleRepository userRoleRepository,
         IUnitOfWork unitOfWork,
         IMapper mapper) : IRequestHandler<CreateUserCommand, Result<string>>
@@ -27,31 +30,62 @@ namespace eAppointment.Backend.Application.Features.Users.CreateUser
                 return Result<string>.Failure("User Name alraedy exists");
             }
 
-            AppUser appUser = mapper.Map<AppUser>(request);
+            User user = mapper.Map<User>(request);
 
-            IdentityResult result = await userManager.CreateAsync(appUser, request.password);
+            IdentityResult result = await userManager.CreateAsync(user, request.password);
 
             if (!result.Succeeded)
             {
                 return Result<string>.Failure(result.Errors.Select(s => s.Description).ToList());
             }
 
-            if (request.roles.Any())
+            if (request.role != null)
             {
-                List<AppUserRole> appUserRoles = new();
-
-                foreach (var role in request.roles)
+                UserRole userRole = new()
                 {
-                    AppUserRole appUserRole = new()
-                    {
-                        RoleId = role.Id,
-                        UserId = appUser.Id
-                    };
+                    RoleId = request.role.Id,
+                    UserId = user.Id
+                };
 
-                    appUserRoles.Add(appUserRole);
+                await userRoleRepository.AddAsync(userRole, cancellationToken);
+
+                switch (request.role.Name)
+                {
+                    case "Doctor":
+
+                        if (request.departmentId == Guid.Empty)
+                        {
+                            return Result<string>.Failure("Department id is not valid");
+                        }
+
+                        Doctor doctor = new()
+                        {
+                            UserId = user.Id,
+                            DepartmentId = request.departmentId
+                        };
+
+                        await doctorRepository.AddAsync(doctor, cancellationToken);
+
+                        break;
+
+                    case "Patient":
+
+                        if (string.IsNullOrEmpty(request.identityNumber))
+                        {
+                            return Result<string>.Failure("Identity number is not valid");
+                        }
+
+                        Patient patient = new()
+                        {
+                            UserId = user.Id,
+                            IdentityNumber = request.identityNumber
+                        };
+
+                        await patientRepository.AddAsync(patient, cancellationToken);
+
+                        break;
                 }
 
-                await userRoleRepository.AddRangeAsync(appUserRoles, cancellationToken);
                 await unitOfWork.SaveChangesAsync(cancellationToken);
             }
 

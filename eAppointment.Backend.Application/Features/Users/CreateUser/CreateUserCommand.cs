@@ -8,7 +8,10 @@ namespace eAppointment.Backend.Application.Features.Users.CreateUser
         string firstName,
         string lastName,
         string email,
+        string phoneNumber,
         string userName,
         string password,
-        List<AppRole> roles) : IRequest<Result<string>>;
+        string identityNumber,
+        Guid departmentId,
+        Role role) : IRequest<Result<string>>;
 }

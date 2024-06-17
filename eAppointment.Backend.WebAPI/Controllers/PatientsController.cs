@@ -1,5 +1,4 @@
-﻿using eAppointment.Backend.Application.Features.Patients.CreatePatient;
-using eAppointment.Backend.Application.Features.Patients.DeletePatient;
+﻿using eAppointment.Backend.Application.Features.Patients.DeletePatientById;
 using eAppointment.Backend.Application.Features.Patients.GetAllPatient;
 using eAppointment.Backend.Application.Features.Patients.UpdatePatient;
 using eAppointment.Backend.WebAPI.Abstractions;
@@ -16,14 +15,6 @@ namespace eAppointment.Backend.WebAPI.Controllers
 
         [HttpPost]
         public async Task<IActionResult> GetAll(GetAllPatientsQuery request, CancellationToken cancellationToken)
-        {
-            var response = await _mediator.Send(request, cancellationToken);
-
-            return StatusCode(response.StatusCode, response);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(CreatePatientCommand request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
 

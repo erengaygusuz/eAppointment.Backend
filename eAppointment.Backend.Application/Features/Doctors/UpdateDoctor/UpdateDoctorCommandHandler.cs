@@ -24,6 +24,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctor
             mapper.Map(request, doctor);
 
             doctorRepository.Update(doctor);
+
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
             return "Doctor updated successfully";

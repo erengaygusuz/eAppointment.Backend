@@ -21,7 +21,7 @@ namespace eAppointment.Backend.Infrastructure
                 options.UseSqlServer(configuration.GetConnectionString("SqlServer"));
             });
 
-            services.AddIdentity<AppUser, AppRole>(action =>
+            services.AddIdentity<User, Role>(action =>
             {
 
                 action.Password.RequiredLength = 1;

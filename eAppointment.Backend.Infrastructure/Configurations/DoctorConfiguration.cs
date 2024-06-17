@@ -1,5 +1,4 @@
 ﻿using eAppointment.Backend.Domain.Entities;
-using eAppointment.Backend.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,11 +8,23 @@ namespace eAppointment.Backend.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Doctor> builder)
         {
-            builder.Property(p => p.FirstName).HasColumnType("varchar(50)");
-            builder.Property(p => p.LastName).HasColumnType("varchar(50)");
-            builder.Property(p => p.Department)
-                .HasConversion(v => v.Value, v => DepartmentEnum.FromValue(v))
-                .HasColumnName("Department");
+            builder.HasKey(p => p.Id);
+
+            builder.Property(p => p.UserId).HasColumnType("uniqueidentifier");
+
+            builder.Property(p => p.DepartmentId).HasColumnType("uniqueidentifier");
+
+            builder
+                .HasOne(e => e.User)
+                .WithOne(e => e.Doctor)
+                .HasForeignKey<Doctor>(e => e.UserId)
+                .IsRequired();
+
+            builder
+                .HasOne(e => e.Department)
+                .WithOne(e => e.Doctor)
+                .HasForeignKey<Doctor>(e => e.DepartmentId)
+                .IsRequired();
         }
     }
 }

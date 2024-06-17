@@ -1,7 +1,5 @@
 ﻿using eAppointment.Backend.Application.Features.Users.CreateUser;
 using eAppointment.Backend.Application.Features.Users.DeleteUserById;
-using eAppointment.Backend.Application.Features.Users.GetAllRolesByUsername;
-using eAppointment.Backend.Application.Features.Users.GetAllRolesForUser;
 using eAppointment.Backend.Application.Features.Users.GetAllUsers;
 using eAppointment.Backend.Application.Features.Users.UpdateUser;
 using eAppointment.Backend.WebAPI.Abstractions;
@@ -18,22 +16,6 @@ namespace eAppointment.Backend.WebAPI.Controllers
 
         [HttpPost]
         public async Task<IActionResult> GetAll(GetAllUsersQuery request, CancellationToken cancellationToken)
-        {
-            var response = await _mediator.Send(request, cancellationToken);
-
-            return StatusCode(response.StatusCode, response);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> GetAllRoles(GetAllRolesForUserQuery request, CancellationToken cancellationToken)
-        {
-            var response = await _mediator.Send(request, cancellationToken);
-
-            return StatusCode(response.StatusCode, response);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> GetAllRolesByUsername(GetAllRolesByUsernameQuery request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
 

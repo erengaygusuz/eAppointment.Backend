@@ -7,11 +7,11 @@ using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Auth.Login
 {
-    internal sealed class LoginCommandHandler(UserManager<AppUser> userManager, IJwtProvider jwtProvider) : IRequestHandler<LoginCommand, Result<LoginCommandResponse>>
+    internal sealed class LoginCommandHandler(UserManager<User> userManager, IJwtProvider jwtProvider) : IRequestHandler<LoginCommand, Result<LoginCommandResponse>>
     {
         public async Task<Result<LoginCommandResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            AppUser? appUser = await userManager.Users.FirstOrDefaultAsync(p => p.UserName == request.userNameOrEmail || 
+            User? appUser = await userManager.Users.FirstOrDefaultAsync(p => p.UserName == request.userNameOrEmail || 
                p.Email == request.userNameOrEmail, cancellationToken);
 
             if (appUser is null)

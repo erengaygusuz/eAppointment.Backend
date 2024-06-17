@@ -7,8 +7,7 @@ namespace eAppointment.Backend.Application.Features.Patients.UpdatePatient
         Guid id,
         string firstName,
         string lastName,
-        string city,
-        string town,
-        string identityNumber,
+        Guid cityId,
+        Guid countyId,
         string fullAddress) : IRequest<Result<string>>;
 }

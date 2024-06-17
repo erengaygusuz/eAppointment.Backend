@@ -4,7 +4,7 @@ namespace eAppointment.Backend.Application
 {
     public static class Constants
     {
-        public static List<AppRole> GetRoles()
+        public static List<Role> GetRoles()
         {
             List<string> roles = new()
             {
@@ -13,7 +13,7 @@ namespace eAppointment.Backend.Application
                 "Patient"
             };
 
-            return roles.Select(s => new AppRole()
+            return roles.Select(s => new Role()
             {
                 Name = s,
             }).ToList();

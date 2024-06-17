@@ -8,7 +8,7 @@ namespace eAppointment.Backend.Application.Features.Users.UpdateUser
         Guid id,
         string firstName,
         string lastName,
-        string email,
+        string phoneNumber,
         string userName,
-        List<AppRole> roles) : IRequest<Result<string>>;
+        List<Role> roles) : IRequest<Result<string>>;
 }

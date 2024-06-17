@@ -21,17 +21,10 @@ namespace eAppointment.Backend.Application.Features.Patients.UpdatePatient
                 return Result<string>.Failure("Patient not found");
             }
 
-            if(patient.IdentityNumber != request.identityNumber)
-            {
-                if (patientRepository.Any(p => p.IdentityNumber == request.identityNumber))
-                {
-                    return Result<string>.Failure("This identity number already is in use");
-                }
-            }
-
             mapper.Map(request, patient);
 
             patientRepository.Update(patient);
+
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
             return "Patient updated successfully";

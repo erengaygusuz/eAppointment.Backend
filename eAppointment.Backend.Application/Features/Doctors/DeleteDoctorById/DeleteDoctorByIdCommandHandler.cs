@@ -6,7 +6,7 @@ using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Doctors.DeleteDoctorById
 {
-    internal sealed class DeleteDoctorByIdCommandHandler (IDoctorRepository doctorRepository, IUnitOfWork unitOfWork): IRequestHandler<DeleteDoctorByIdCommand, Result<string>>
+    internal sealed class DeleteDoctorByIdCommandHandler(IDoctorRepository doctorRepository, IUnitOfWork unitOfWork) : IRequestHandler<DeleteDoctorByIdCommand, Result<string>>
     {
         public async Task<Result<string>> Handle(DeleteDoctorByIdCommand request, CancellationToken cancellationToken)
         {
@@ -18,6 +18,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.DeleteDoctorById
             }
 
             doctorRepository.Delete(doctor);
+
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
             return "Doctor deleted successfully";

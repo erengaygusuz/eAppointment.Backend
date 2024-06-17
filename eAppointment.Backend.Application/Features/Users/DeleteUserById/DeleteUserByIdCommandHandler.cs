@@ -6,18 +6,18 @@ using TS.Result;
 namespace eAppointment.Backend.Application.Features.Users.DeleteUserById
 {
     internal sealed class DeleteUserByIdCommandHandler(
-        UserManager<AppUser> userManager) : IRequestHandler<DeleteUserByIdCommand, Result<string>>
+        UserManager<User> userManager) : IRequestHandler<DeleteUserByIdCommand, Result<string>>
     {
         public async Task<Result<string>> Handle(DeleteUserByIdCommand request, CancellationToken cancellationToken)
         {
-            AppUser? appUser = await userManager.FindByIdAsync(request.id.ToString());
+            User? user = await userManager.FindByIdAsync(request.id.ToString());
 
-            if (appUser is null)
+            if (user is null)
             {
                 return Result<string>.Failure("User not found");
             }
 
-            IdentityResult result = await userManager.DeleteAsync(appUser);
+            IdentityResult result = await userManager.DeleteAsync(user);
 
             if (!result.Succeeded)
             {

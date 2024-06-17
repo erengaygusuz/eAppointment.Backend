@@ -1,6 +1,6 @@
-﻿using eAppointment.Backend.Application.Features.Doctors.CreateDoctor;
-using eAppointment.Backend.Application.Features.Doctors.DeleteDoctorById;
+﻿using eAppointment.Backend.Application.Features.Doctors.DeleteDoctorById;
 using eAppointment.Backend.Application.Features.Doctors.GetAllDoctor;
+using eAppointment.Backend.Application.Features.Doctors.GetAllDoctorsByDepartmentId;
 using eAppointment.Backend.Application.Features.Doctors.UpdateDoctor;
 using eAppointment.Backend.WebAPI.Abstractions;
 using MediatR;
@@ -23,7 +23,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateDoctorCommand request, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllByDepartmentId(GetAllDoctorsByDepartmentIdQuery request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
 

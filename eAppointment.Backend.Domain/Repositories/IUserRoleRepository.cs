@@ -3,7 +3,7 @@ using GenericRepository;
 
 namespace eAppointment.Backend.Domain.Repositories
 {
-    public interface IUserRoleRepository : IRepository<AppUserRole>
+    public interface IUserRoleRepository : IRepository<UserRole>
     {
     }
 }

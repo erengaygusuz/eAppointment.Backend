@@ -10,29 +10,21 @@ using TS.Result;
 namespace eAppointment.Backend.Application.Features.Users.UpdateUser
 {
     internal sealed class UpdateUserCommandHandler(
-        UserManager<AppUser> userManager,
+        UserManager<User> userManager,
         IUserRoleRepository userRoleRepository,
         IUnitOfWork unitOfWork,
         IMapper mapper) : IRequestHandler<UpdateUserCommand, Result<string>>
     {
         public async Task<Result<string>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            AppUser? appUser = await userManager.FindByIdAsync(request.id.ToString());
+            User? user = await userManager.FindByIdAsync(request.id.ToString());
 
-            if (appUser is null)
+            if (user is null)
             {
                 return Result<string>.Failure("User not found");
             }
 
-            if (appUser.Email != request.email)
-            {
-                if (await userManager.Users.AnyAsync(p => p.Email == request.email))
-                {
-                    return Result<string>.Failure("Email alraedy exists");
-                }
-            }
-
-            if (appUser.UserName != request.userName)
+            if (user.UserName != request.userName)
             {
 
                 if (await userManager.Users.AnyAsync(p => p.UserName == request.userName))
@@ -41,9 +33,9 @@ namespace eAppointment.Backend.Application.Features.Users.UpdateUser
                 }
             }
 
-            mapper.Map(request, appUser);
+            mapper.Map(request, user);
 
-            IdentityResult result = await userManager.UpdateAsync(appUser);
+            IdentityResult result = await userManager.UpdateAsync(user);
 
             if (!result.Succeeded)
             {
@@ -52,26 +44,26 @@ namespace eAppointment.Backend.Application.Features.Users.UpdateUser
 
             if (request.roles.Any())
             {
-                List<AppUserRole> appUserRoles = await userRoleRepository
-                    .Where(p => p.UserId == appUser.Id).ToListAsync();
+                List<UserRole> userRoles = await userRoleRepository
+                    .Where(p => p.UserId == user.Id).ToListAsync();
 
-                userRoleRepository.DeleteRange(appUserRoles);
+                userRoleRepository.DeleteRange(userRoles);
                 await unitOfWork.SaveChangesAsync(cancellationToken);
 
-                appUserRoles = new();
+                userRoles = new();
 
                 foreach (var role in request.roles)
                 {
-                    AppUserRole appUserRole = new()
+                    UserRole userRole = new()
                     {
                         RoleId = role.Id,
-                        UserId = appUser.Id
+                        UserId = user.Id
                     };
 
-                    appUserRoles.Add(appUserRole);
+                    userRoles.Add(userRole);
                 }
 
-                await userRoleRepository.AddRangeAsync(appUserRoles, cancellationToken);
+                await userRoleRepository.AddRangeAsync(userRoles, cancellationToken);
                 await unitOfWork.SaveChangesAsync(cancellationToken);
             }
 

@@ -1,6 +1,4 @@
-﻿using eAppointment.Backend.Domain.Enums;
-
-namespace eAppointment.Backend.Domain.Entities
+﻿namespace eAppointment.Backend.Domain.Entities
 {
     public sealed class Doctor
     {
@@ -10,9 +8,19 @@ namespace eAppointment.Backend.Domain.Entities
         }
 
         public Guid Id { get; set; }
-        public string FirstName { get; set; } = string.Empty;
-        public string LastName { get; set; } = string.Empty;
-        public string FullName => string.Join(" ", FirstName, LastName);
-        public DepartmentEnum Department { get; set; } = DepartmentEnum.Acil;
+
+        public Guid UserId { get; set; }
+
+        public User User { get; set; } = new();
+
+        public Guid DepartmentId { get; set; }
+
+        public Department Department { get; set; } = new ();
+
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+
+        public DateTime? ModifiedDate { get; set; }
+
+        public ICollection<Appointment>? Appointments { get; set; }
     }
 }

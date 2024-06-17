@@ -6,12 +6,6 @@ namespace eAppointment.Backend.Application.Features.Appointments.CreateAppointme
     public sealed record CreateAppointmentCommand(
         string startDate,
         string endDate,
-        Guid? patientId,
-        Guid doctorId,
-        string firstName,
-        string lastName,
-        string identityNumber,
-        string city,
-        string town,
-        string fullAddress) : IRequest<Result<string>>;
+        Guid patientId,
+        Guid doctorId) : IRequest<Result<string>>;
 }

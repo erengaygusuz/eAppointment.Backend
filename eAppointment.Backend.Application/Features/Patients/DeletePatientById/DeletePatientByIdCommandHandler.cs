@@ -4,9 +4,9 @@ using GenericRepository;
 using MediatR;
 using TS.Result;
 
-namespace eAppointment.Backend.Application.Features.Patients.DeletePatient
+namespace eAppointment.Backend.Application.Features.Patients.DeletePatientById
 {
-    internal sealed class DeletePatientByIdCommandHandler(
+    internal sealed class DeleteDepartmentByIdCommandHandler(
         IPatientRepository patientRepository,
         IUnitOfWork unitOfWork) : IRequestHandler<DeletePatientByIdCommand, Result<string>>
     {
@@ -20,6 +20,7 @@ namespace eAppointment.Backend.Application.Features.Patients.DeletePatient
             }
 
             patientRepository.Delete(patient);
+
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
             return "Patient deleted successfully";

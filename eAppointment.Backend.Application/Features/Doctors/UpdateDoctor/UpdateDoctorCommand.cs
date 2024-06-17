@@ -5,7 +5,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctor
 {
     public sealed record UpdateDoctorCommand(
         Guid id, 
-        string firstname,
-        string lastname,
-        int departmentValue) : IRequest<Result<string>>;
+        string firstName,
+        string lastName,
+        Guid departmentId) : IRequest<Result<string>>;
 }

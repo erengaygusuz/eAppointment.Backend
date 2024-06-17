@@ -15,18 +15,18 @@ namespace eAppointment.Backend.Infrastructure.Services
     internal sealed class JwtProvider(
         IConfiguration configuration,
         IUserRoleRepository userRoleRepository,
-        RoleManager<AppRole> roleManager) : IJwtProvider
+        RoleManager<Role> roleManager) : IJwtProvider
     {
-        public async Task<string> CreateTokenAsync(AppUser appUser)
+        public async Task<string> CreateTokenAsync(User user)
         {
-            List<AppUserRole> appUserRoles = await userRoleRepository
-                .Where(p => p.UserId == appUser.Id).ToListAsync();
+            List<UserRole> userRoles = await userRoleRepository
+                .Where(p => p.UserId == user.Id).ToListAsync();
 
-            List<AppRole> roles = new();
+            List<Role> roles = new();
 
-            foreach(var userRole in appUserRoles)
+            foreach(var userRole in userRoles)
             {
-                AppRole? role = await roleManager.Roles
+                Role? role = await roleManager.Roles
                     .Where(p => p.Id == userRole.RoleId).FirstOrDefaultAsync();
 
                 if (role is not null)
@@ -39,10 +39,10 @@ namespace eAppointment.Backend.Infrastructure.Services
 
             List<Claim> claims = new()
             {
-                new Claim(ClaimTypes.NameIdentifier, appUser.Id.ToString()),
-                new Claim(ClaimTypes.Name, appUser.FullName),
-                new Claim(ClaimTypes.Email, appUser.Email ?? string.Empty),
-                new Claim("UserName", appUser.UserName ?? string.Empty),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.FirstName + " " + user.LastName),
+                new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
+                new Claim("UserName", user.UserName ?? string.Empty),
                 new Claim(ClaimTypes.Role, JsonSerializer.Serialize(stringRoles))
             };
 

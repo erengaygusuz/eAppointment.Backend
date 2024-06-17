@@ -8,13 +8,21 @@ namespace eAppointment.Backend.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Patient> builder)
         {
-            builder.Property(p => p.FirstName).HasColumnType("varchar(50)");
-            builder.Property(p => p.LastName).HasColumnType("varchar(50)");
-            builder.Property(p => p.City).HasColumnType("varchar(50)");
-            builder.Property(p => p.Town).HasColumnType("varchar(50)");
-            builder.Property(p => p.FullAddress).HasColumnType("varchar(50)");
+            builder.HasKey(p => p.Id);
+
+            builder.Property(p => p.UserId).HasColumnType("uniqueidentifier");
+
             builder.Property(p => p.IdentityNumber).HasColumnType("varchar(11)");
+
             builder.HasIndex(x => x.IdentityNumber).IsUnique();
+
+            builder.Property(p => p.FullAddress).HasColumnType("varchar(50)");
+
+            builder
+                .HasOne(e => e.User)
+                .WithOne(e => e.Patient)
+                .HasForeignKey<Patient>(e => e.UserId)
+                .IsRequired();
         }
     }
 }

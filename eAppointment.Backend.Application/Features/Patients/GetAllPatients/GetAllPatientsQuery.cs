@@ -1,8 +1,8 @@
-﻿using eAppointment.Backend.Domain.Entities;
+﻿using eAppointment.Backend.Application.Features.Patients.GetAllPatients;
 using MediatR;
 using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Patients.GetAllPatient
 {
-    public sealed record GetAllPatientsQuery() : IRequest<Result<List<Patient>>>;
+    public sealed record GetAllPatientsQuery() : IRequest<Result<List<GetAllPatientsQueryResponse>>>;
 }
