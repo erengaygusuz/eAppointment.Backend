@@ -1,15 +1,13 @@
 ﻿using MediatR;
 using TS.Result;
 
-namespace eAppointment.Backend.Application.Features.Patients.UpdatePatient
+namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientProfileById
 {
-    public sealed record UpdatePatientCommand(
+    public sealed record UpdatePatientProfileByIdCommand(
         Guid id,
         string firstName,
         string lastName,
         string phoneNumber,
-        string userName,
-        Guid cityId,
         Guid countyId,
         string fullAddress) : IRequest<Result<string>>;
 }

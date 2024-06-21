@@ -1,11 +1,13 @@
 ﻿namespace eAppointment.Backend.Application.Features.Patients.GetPatientById
 {
     public sealed record GetPatientByIdQueryResponse(
-        Guid id,
         string firstName,
         string lastName,
         string identityNumber,
-        string cityName,
-        string countyName,
+        string phoneNumber,
+        string email,
+        string userName,
+        Guid countyId,
+        Guid cityId,
         string? fullAddress);
 }

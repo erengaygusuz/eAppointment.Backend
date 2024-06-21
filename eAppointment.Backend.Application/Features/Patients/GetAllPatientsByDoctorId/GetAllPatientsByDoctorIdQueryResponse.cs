@@ -4,5 +4,14 @@
         Guid id,
         string firstName,
         string lastName,
-        string departmentName);
+        string identityNumber,
+        List<PatientAppointment> patientAppointments);
+
+    public sealed record PatientAppointment()
+    {
+        public Guid Id { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public int Status { get; set; }
+    }
 }

@@ -1,4 +1,5 @@
-﻿using eAppointment.Backend.Domain.Entities;
+﻿using AutoMapper;
+using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Domain.Enums;
 using eAppointment.Backend.Domain.Repositories;
 using MediatR;
@@ -8,7 +9,8 @@ using TS.Result;
 namespace eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsByPatientIdByStatus
 {
     internal sealed class GetAllAppointmentsByPatientIdAndByStatusQueryHandler (
-        IAppointmentRepository appointmentRepository): IRequestHandler<GetAllAppointmentsByPatientIdAndByStatusQuery, Result<List<GetAllAppointmentsByPatientIdAndByStatusQueryResponse>>>
+        IAppointmentRepository appointmentRepository,
+        IMapper mapper): IRequestHandler<GetAllAppointmentsByPatientIdAndByStatusQuery, Result<List<GetAllAppointmentsByPatientIdAndByStatusQueryResponse>>>
     {
         public async Task<Result<List<GetAllAppointmentsByPatientIdAndByStatusQueryResponse>>> Handle(GetAllAppointmentsByPatientIdAndByStatusQuery request, CancellationToken cancellationToken)
         {
@@ -18,15 +20,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.GetAllAppointme
                 .Include(p => p.Patient)
                 .ToListAsync(cancellationToken);
 
-            List<GetAllAppointmentsByPatientIdAndByStatusQueryResponse> response =
-                appointments.Select(s => 
-                    new GetAllAppointmentsByPatientIdAndByStatusQueryResponse
-                    (
-                        s.Id,
-                        s.StartDate,
-                        s.EndDate,
-                        s.Patient.User.FirstName + " " + s.Patient.User.LastName)
-                    ).ToList();
+            var response = mapper.Map<List< GetAllAppointmentsByPatientIdAndByStatusQueryResponse>>(appointments);
 
             return response;
         }

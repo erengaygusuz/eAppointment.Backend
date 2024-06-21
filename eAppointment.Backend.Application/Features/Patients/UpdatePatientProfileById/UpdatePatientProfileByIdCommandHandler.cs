@@ -5,14 +5,14 @@ using GenericRepository;
 using MediatR;
 using TS.Result;
 
-namespace eAppointment.Backend.Application.Features.Patients.UpdatePatient
+namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientProfileById
 {
     public sealed class UpdatePatientCommandHandler(
         IPatientRepository patientRepository,
         IUnitOfWork unitOfWork,
-        IMapper mapper) : IRequestHandler<UpdatePatientCommand, Result<string>>
+        IMapper mapper) : IRequestHandler<UpdatePatientProfileByIdCommand, Result<string>>
     {
-        public async Task<Result<string>> Handle(UpdatePatientCommand request, CancellationToken cancellationToken)
+        public async Task<Result<string>> Handle(UpdatePatientProfileByIdCommand request, CancellationToken cancellationToken)
         {
             Patient? patient = await patientRepository.GetByExpressionWithTrackingAsync(p => p.Id == request.id, cancellationToken);
 

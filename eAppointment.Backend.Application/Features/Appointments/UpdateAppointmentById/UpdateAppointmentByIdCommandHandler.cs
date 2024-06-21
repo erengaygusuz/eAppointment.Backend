@@ -4,13 +4,13 @@ using GenericRepository;
 using MediatR;
 using TS.Result;
 
-namespace eAppointment.Backend.Application.Features.Appointments.UpdateAppointment
+namespace eAppointment.Backend.Application.Features.Appointments.UpdateAppointmentById
 {
-    internal sealed class UpdateAppointmentCommandHandler(
+    internal sealed class UpdateAppointmentByIdCommandHandler(
         IAppointmentRepository appointmentRepository,
-        IUnitOfWork unitOfWork) : IRequestHandler<UpdateAppointmentCommand, Result<string>>
+        IUnitOfWork unitOfWork) : IRequestHandler<UpdateAppointmentByIdCommand, Result<string>>
     {
-        public async Task<Result<string>> Handle(UpdateAppointmentCommand request, CancellationToken cancellationToken)
+        public async Task<Result<string>> Handle(UpdateAppointmentByIdCommand request, CancellationToken cancellationToken)
         {
             DateTime startDate = DateTime.ParseExact(request.startDate, "dd.MM.yyyy HH:mm", null);
             DateTime endDate = DateTime.ParseExact(request.endDate, "dd.MM.yyyy HH:mm", null);

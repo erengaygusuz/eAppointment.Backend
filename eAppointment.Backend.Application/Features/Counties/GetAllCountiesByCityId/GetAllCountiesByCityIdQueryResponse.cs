@@ -1,4 +1,4 @@
-﻿namespace eAppointment.Backend.Application.Features.Cities.GetAllCountiesByCityId
+﻿namespace eAppointment.Backend.Application.Features.Counties.GetAllCountiesByCityId
 {
     public sealed record GetAllCountiesByCityIdQueryResponse(
         Guid id,

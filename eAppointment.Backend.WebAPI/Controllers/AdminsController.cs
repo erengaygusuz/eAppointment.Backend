@@ -14,7 +14,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetById(GetAdminByIdQuery request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Create(CreateAdminCommand request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
 
@@ -22,7 +22,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateAdminCommand request, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetById(GetAdminByIdQuery request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
 

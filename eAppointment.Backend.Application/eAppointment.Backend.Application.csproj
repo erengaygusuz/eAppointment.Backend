@@ -18,10 +18,4 @@
 	  <ProjectReference Include="..\eAppointment.Backend.Domain\eAppointment.Backend.Domain.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Features\Doctors\UpdateDoctorProfileById\" />
-	  <Folder Include="Features\Patients\CreatePatient\" />
-	  <Folder Include="Features\Patients\UpdatePatientProfileById\" />
-	</ItemGroup>
-
 </Project>
