@@ -14,7 +14,9 @@ namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
     {
         public async Task<Result<List<GetAllUsersQueryResponse>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
-            List<User> users = await userManager.Users.OrderBy(u => u.FirstName).ToListAsync(cancellationToken);
+            List<User> users = await userManager.Users
+                .Include(x => x.Role)
+                .OrderBy(u => u.FirstName).ToListAsync(cancellationToken);
 
             var response = mapper.Map<List<GetAllUsersQueryResponse>>(users);
 

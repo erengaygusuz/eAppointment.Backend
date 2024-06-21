@@ -85,6 +85,7 @@ namespace eAppointment.Backend.WebAPI
 
             app.MapControllers();
 
+            Helper.CreateRolesAsync(app).Wait();
             Helper.CreateUserAsync(app).Wait();
 
             app.Run();

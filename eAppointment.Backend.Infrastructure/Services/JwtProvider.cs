@@ -21,7 +21,7 @@ namespace eAppointment.Backend.Infrastructure.Services
             Role? role = await roleManager.Roles
                     .Where(p => p.Id == user.RoleId).FirstOrDefaultAsync();
 
-            string stringRole = role!.Name!;
+            string stringRole = role!.NormalizedName!.ToLower();
 
             List<Claim> claims = new()
             {
