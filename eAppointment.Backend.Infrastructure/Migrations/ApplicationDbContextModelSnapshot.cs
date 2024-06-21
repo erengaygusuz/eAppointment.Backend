@@ -77,7 +77,7 @@ namespace eAppointment.Backend.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("City");
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.County", b =>
@@ -103,7 +103,7 @@ namespace eAppointment.Backend.Infrastructure.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("County");
+                    b.ToTable("Counties");
                 });
 
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Department", b =>
@@ -273,6 +273,9 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -288,26 +291,14 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("[Email] IS NOT NULL");
 
+                    b.HasIndex("RoleId")
+                        .IsUnique();
+
                     b.HasIndex("UserName")
                         .IsUnique()
                         .HasFilter("[UserName] IS NOT NULL");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.UserRole", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Appointment", b =>
@@ -376,23 +367,15 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.UserRole", b =>
+            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.User", b =>
                 {
                     b.HasOne("eAppointment.Backend.Domain.Entities.Role", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("eAppointment.Backend.Domain.Entities.User", "User")
-                        .WithMany("Roles")
-                        .HasForeignKey("UserId")
+                        .WithOne("User")
+                        .HasForeignKey("eAppointment.Backend.Domain.Entities.User", "RoleId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Role");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.City", b =>
@@ -417,7 +400,7 @@ namespace eAppointment.Backend.Infrastructure.Migrations
 
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Role", b =>
                 {
-                    b.Navigation("Users");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.User", b =>
@@ -425,8 +408,6 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                     b.Navigation("Doctor");
 
                     b.Navigation("Patient");
-
-                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }

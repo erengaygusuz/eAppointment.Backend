@@ -6,7 +6,8 @@ using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Doctors.GetAllDoctorsByDepartmentId
 {
-    internal sealed class GetAllDoctorsByDepartmentIdQueryHandler(IDoctorRepository doctorRepository) : IRequestHandler<GetAllDoctorsByDepartmentIdQuery, Result<List<GetAllDoctorsByDepartmentIdQueryResponse>>>
+    internal sealed class GetAllDoctorsByDepartmentIdQueryHandler(
+        IDoctorRepository doctorRepository) : IRequestHandler<GetAllDoctorsByDepartmentIdQuery, Result<List<GetAllDoctorsByDepartmentIdQueryResponse>>>
     {
         public async Task<Result<List<GetAllDoctorsByDepartmentIdQueryResponse>>> Handle(GetAllDoctorsByDepartmentIdQuery request, CancellationToken cancellationToken)
         {

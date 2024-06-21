@@ -19,10 +19,12 @@ namespace eAppointment.Backend.Application.Features.Doctors.GetDoctorById
 
             GetDoctorByIdQueryResponse response = new GetDoctorByIdQueryResponse
             (
-                id: doctor!.Id,
-                firstName: doctor.User.FirstName,
+                firstName: doctor!.User.FirstName,
                 lastName: doctor.User.LastName,
-                departmentName: doctor.Department.Name
+                email: doctor.User.Email,
+                phoneNumber: doctor.User.PhoneNumber,
+                userName: doctor.User.UserName,
+                departmentId: doctor.Department.Id
             );
 
             return response;

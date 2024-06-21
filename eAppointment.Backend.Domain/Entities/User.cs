@@ -16,6 +16,8 @@ namespace eAppointment.Backend.Domain.Entities
 
         public DateTime? ModifiedDate { get; set; }
 
-        public ICollection<UserRole>? Roles { get; set; }
+        public Guid RoleId { get; set; }
+
+        public Role? Role { get; set; }
     }
 }

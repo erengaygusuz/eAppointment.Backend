@@ -21,18 +21,18 @@ namespace eAppointment.Backend.Application.Features.Appointments.DeleteAppointme
             }
 
             if(appointment.Status == AppointmentStatus.SuccessfullyCompleted || 
-               appointment.Status == AppointmentStatus.NotAttend)
+               appointment.Status == AppointmentStatus.NotAttended)
             {
                 return Result<string>.Failure("You cannot cancel a completed appointment");
             }
 
-            appointment.Status = AppointmentStatus.Canceled;
+            appointment.Status = AppointmentStatus.Cancelled;
 
             appointmentRepository.Update(appointment);
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return "Appointment canceled successfully";
+            return "Appointment cancelled successfully";
         }
     }
 }

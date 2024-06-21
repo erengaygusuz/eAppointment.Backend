@@ -10,8 +10,7 @@ namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
 {
     internal sealed class GetAllUsersQueryHandler (
         UserManager<User> userManager,
-        RoleManager<Role> roleManager,
-        IUserRoleRepository userRoleRepository) : IRequestHandler<GetAllUsersQuery, Result<List<GetAllUsersQueryResponse>>>
+        RoleManager<Role> roleManager) : IRequestHandler<GetAllUsersQuery, Result<List<GetAllUsersQueryResponse>>>
     {
         public async Task<Result<List<GetAllUsersQueryResponse>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
@@ -24,31 +23,11 @@ namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
                 LastName = s.LastName,
                 FullName = s.FirstName + " " + s.LastName,
                 UserName = s.UserName,
-                Email = s.Email
+                Email = s.Email,
+                RoleId = s.RoleId,
+                RoleName = roleManager.Roles.Where(x => x.Id == s.RoleId).FirstOrDefault()!.Name
 
             }).ToList();
-
-            foreach(var item in response)
-            {
-                List<UserRole> userRoles = await userRoleRepository
-                    .Where(p => p.UserId == item.Id).ToListAsync(cancellationToken);
-
-                List<Role> roles = new();
-
-                foreach (var userRole in userRoles)
-                {
-                    Role? role = await roleManager.Roles
-                        .Where(p => p.Id == userRole.RoleId).FirstOrDefaultAsync(cancellationToken);
-
-                    if (role is not null)
-                    {
-                        roles.Add(role);
-                    }
-                }
-
-                item.RoleId = roles.FirstOrDefault()!.Id;
-                item.RoleName = roles.FirstOrDefault()!.Name;
-            }
 
             return response;
         }

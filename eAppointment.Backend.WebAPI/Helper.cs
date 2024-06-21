@@ -17,7 +17,8 @@ namespace eAppointment.Backend.WebAPI
                     {
                         FirstName = "Eren",
                         LastName = "Gaygusuz",
-                        UserName = "gaygusuzeren@gmail.com"
+                        Email = "gaygusuzeren@gmail.com",
+                        UserName = "erengaygusuz"
                     }, "1");
                 }
             }

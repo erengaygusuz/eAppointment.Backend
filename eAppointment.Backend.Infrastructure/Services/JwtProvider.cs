@@ -14,28 +14,14 @@ namespace eAppointment.Backend.Infrastructure.Services
 {
     internal sealed class JwtProvider(
         IConfiguration configuration,
-        IUserRoleRepository userRoleRepository,
         RoleManager<Role> roleManager) : IJwtProvider
     {
         public async Task<string> CreateTokenAsync(User user)
         {
-            List<UserRole> userRoles = await userRoleRepository
-                .Where(p => p.UserId == user.Id).ToListAsync();
+            Role? role = await roleManager.Roles
+                    .Where(p => p.Id == user.RoleId).FirstOrDefaultAsync();
 
-            List<Role> roles = new();
-
-            foreach(var userRole in userRoles)
-            {
-                Role? role = await roleManager.Roles
-                    .Where(p => p.Id == userRole.RoleId).FirstOrDefaultAsync();
-
-                if (role is not null)
-                {
-                    roles.Add(role);
-                }
-            }
-
-            List<string?> stringRoles = roles.Select(s => s.Name).ToList();
+            string stringRole = role!.Name!;
 
             List<Claim> claims = new()
             {
@@ -43,7 +29,7 @@ namespace eAppointment.Backend.Infrastructure.Services
                 new Claim(ClaimTypes.Name, user.FirstName + " " + user.LastName),
                 new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
                 new Claim("UserName", user.UserName ?? string.Empty),
-                new Claim(ClaimTypes.Role, JsonSerializer.Serialize(stringRoles))
+                new Claim(ClaimTypes.Role, JsonSerializer.Serialize(stringRole))
             };
 
             DateTime expires = DateTime.Now.AddDays(1);
