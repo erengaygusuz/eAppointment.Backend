@@ -1,9 +1,9 @@
 ﻿using eAppointment.Backend.Domain.Entities;
+using GenericRepository;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using System.Reflection;
-using GenericRepository;
+using System.Reflection.Emit;
 
 namespace eAppointment.Backend.Infrastructure.Context
 {
@@ -25,10 +25,7 @@ namespace eAppointment.Backend.Infrastructure.Context
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Ignore<IdentityUserClaim<int>>();
-            builder.Ignore<IdentityRoleClaim<int>>();
-            builder.Ignore<IdentityUserLogin<int>>();
-            builder.Ignore<IdentityUserToken<int>>();
+            base.OnModelCreating(builder);
 
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }

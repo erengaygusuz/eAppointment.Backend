@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Linq;
 using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
@@ -14,11 +15,20 @@ namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
     {
         public async Task<Result<List<GetAllUsersQueryResponse>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
-            List<User> users = await userManager.Users
-                .Include(x => x.Role)
-                .OrderBy(u => u.FirstName).ToListAsync(cancellationToken);
+            var usersWithRolesTuples = new List<Tuple<User, List<string>>>();
 
-            var response = mapper.Map<List<GetAllUsersQueryResponse>>(users);
+            var users = userManager.Users.ToList();
+
+            for (int i = 0; i < users.Count; i++)
+            {
+                var userRoles = await userManager.GetRolesAsync(users[i]);
+
+                var tuple = new Tuple<User, List<string>>(users[i], userRoles.ToList());
+
+                usersWithRolesTuples.Add(tuple);
+            }
+
+            var response = mapper.Map<List<GetAllUsersQueryResponse>>(usersWithRolesTuples);
 
             return response;
         }

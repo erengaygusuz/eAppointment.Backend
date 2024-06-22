@@ -14,16 +14,21 @@ namespace eAppointment.Backend.WebAPI
 
                 if (!userManager.Users.Any())
                 {
-                    Role? role = roleManager.Roles.Where(x => x.Name == "Admin").FirstOrDefault();
-
-                    await userManager.CreateAsync(new()
+                    var result = await userManager.CreateAsync(new()
                     {
                         FirstName = "Eren",
                         LastName = "Gaygusuz",
                         Email = "gaygusuzeren@gmail.com",
                         UserName = "erengaygusuz",
-                        RoleId = role!.Id
+                        PhoneNumber = "5555555555"
                     }, "12345");
+
+                    if (result.Succeeded)
+                    {
+                        var addedUser = await userManager.FindByEmailAsync("gaygusuzeren@gmail.com");
+
+                        await userManager.AddToRoleAsync(addedUser!, "Admin");
+                    }
                 }
             }
         }

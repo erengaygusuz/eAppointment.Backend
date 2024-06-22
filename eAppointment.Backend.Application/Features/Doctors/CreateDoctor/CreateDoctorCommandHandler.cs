@@ -12,7 +12,6 @@ namespace eAppointment.Backend.Application.Features.Doctors.CreateDoctor
 {
     internal sealed class CreateDoctorCommandHandler(
         UserManager<User> userManager,
-        RoleManager<Role> roleManager,
         IDoctorRepository doctorRepository,
         IUnitOfWork unitOfWork,
         IMapper mapper) : IRequestHandler<CreateDoctorCommand, Result<string>>
@@ -38,23 +37,24 @@ namespace eAppointment.Backend.Application.Features.Doctors.CreateDoctor
                 return Result<string>.Failure(result.Errors.Select(s => s.Description).ToList());
             }
 
-                if (await roleManager.Roles.AnyAsync(r => r.Id == request.roleId))
-                {
-                    Doctor doctor = new Doctor()
-                    {
-                        UserId = user.Id,
-                        DepartmentId = request.departmentId
-                    };
+            var addedUser = await userManager.FindByEmailAsync(user.Email!);
 
-                    await doctorRepository.AddAsync(doctor, cancellationToken);
+            var roleResult = await userManager.AddToRoleAsync(addedUser!, "Doctor");
 
-                    await unitOfWork.SaveChangesAsync(cancellationToken);
-                } 
-                
-                else
-                {
-                    return Result<string>.Failure("Role does not exist");
-                }
+            if (!roleResult.Succeeded)
+            {
+                return Result<string>.Failure("Role could not add to user");
+            }
+
+            Doctor doctor = new Doctor()
+            {
+                UserId = addedUser!.Id,
+                DepartmentId = request.departmentId
+            };
+
+            await doctorRepository.AddAsync(doctor, cancellationToken);
+
+            await unitOfWork.SaveChangesAsync(cancellationToken);
 
             return "Doctor created successfully";
         }

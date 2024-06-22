@@ -10,6 +10,5 @@ namespace eAppointment.Backend.Application.Features.Doctors.CreateDoctor
         string phoneNumber,
         string userName,
         string password,
-        int roleId,
         int departmentId) : IRequest<Result<string>>;
 }

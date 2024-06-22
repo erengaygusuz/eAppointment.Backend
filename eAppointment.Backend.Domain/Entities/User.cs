@@ -15,9 +15,5 @@ namespace eAppointment.Backend.Domain.Entities
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
         public DateTime? ModifiedDate { get; set; }
-
-        public int RoleId { get; set; }
-
-        public Role Role { get; set; }
     }
 }

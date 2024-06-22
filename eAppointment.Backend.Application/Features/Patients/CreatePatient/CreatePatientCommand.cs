@@ -12,6 +12,5 @@ namespace eAppointment.Backend.Application.Features.Patients.CreatePatient
         string identityNumber,
         int countyId,
         string fullAddress,
-        string password,
-        int roleId) : IRequest<Result<string>>;
+        string password) : IRequest<Result<string>>;
 }

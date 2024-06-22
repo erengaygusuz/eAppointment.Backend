@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using eAppointment.Backend.Domain.Entities;
-using eAppointment.Backend.Domain.Repositories;
 using GenericRepository;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -12,7 +11,6 @@ namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
 {
     internal sealed class CreateAdminCommandHandler(
         UserManager<User> userManager,
-        RoleManager<Role> roleManager,
         IUnitOfWork unitOfWork,
         IMapper mapper) : IRequestHandler<CreateAdminCommand, Result<string>>
     {
@@ -29,13 +27,21 @@ namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
             }
 
             User user = mapper.Map<User>(request);
-            user.RoleId = roleManager.Roles.Where(r => r.Name == "Admin").FirstOrDefault()!.Id;
 
             IdentityResult result = await userManager.CreateAsync(user, request.password);
 
             if (!result.Succeeded)
             {
                 return Result<string>.Failure(result.Errors.Select(s => s.Description).ToList());
+            }
+
+            var addedUser = await userManager.FindByEmailAsync(user.Email!);
+
+            var roleResult = await userManager.AddToRoleAsync(addedUser!, "Admin");
+
+            if (!roleResult.Succeeded)
+            {
+                return Result<string>.Failure("Role could not add to user");
             }
 
             await unitOfWork.SaveChangesAsync(cancellationToken);

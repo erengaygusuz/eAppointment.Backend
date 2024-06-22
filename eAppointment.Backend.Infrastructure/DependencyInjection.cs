@@ -1,9 +1,5 @@
-﻿using eAppointment.Backend.Application.Services;
-using eAppointment.Backend.Domain.Entities;
-using eAppointment.Backend.Domain.Repositories;
+﻿using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Infrastructure.Context;
-using eAppointment.Backend.Infrastructure.Repositories;
-using eAppointment.Backend.Infrastructure.Services;
 using GenericRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

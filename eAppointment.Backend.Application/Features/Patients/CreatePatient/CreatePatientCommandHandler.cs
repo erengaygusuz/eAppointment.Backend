@@ -12,7 +12,6 @@ namespace eAppointment.Backend.Application.Features.Patients.CreatePatient
 {
     internal sealed class CreatePatientCommandHandler(
         UserManager<User> userManager,
-        RoleManager<Role> roleManager,
         IPatientRepository patientRepository,
         IUnitOfWork unitOfWork,
         IMapper mapper) : IRequestHandler<CreatePatientCommand, Result<string>>
@@ -38,25 +37,26 @@ namespace eAppointment.Backend.Application.Features.Patients.CreatePatient
                 return Result<string>.Failure(result.Errors.Select(s => s.Description).ToList());
             }
 
-                if (await roleManager.Roles.AnyAsync(r => r.Id == request.roleId))
-                {
-                    Patient patient = new Patient()
-                    {
-                        UserId = user.Id,
-                        CountyId = request.countyId,
-                        FullAddress = request.fullAddress,
-                        IdentityNumber = request.identityNumber
-                    };
+            var addedUser = await userManager.FindByEmailAsync(user.Email!);
 
-                    await patientRepository.AddAsync(patient, cancellationToken);
+            var roleResult = await userManager.AddToRoleAsync(addedUser!, "Patient");
 
-                    await unitOfWork.SaveChangesAsync(cancellationToken);
-                } 
-                
-                else
-                {
-                    return Result<string>.Failure("Role does not exist");
-                }
+            if (!roleResult.Succeeded)
+            {
+                return Result<string>.Failure("Role could not add to user");
+            }
+
+            Patient patient = new Patient()
+            {
+                UserId = addedUser!.Id,
+                CountyId = request.countyId,
+                FullAddress = request.fullAddress,
+                IdentityNumber = request.identityNumber
+            };
+
+            await patientRepository.AddAsync(patient, cancellationToken);
+
+            await unitOfWork.SaveChangesAsync(cancellationToken);
 
             return "Patient created successfully";
         }

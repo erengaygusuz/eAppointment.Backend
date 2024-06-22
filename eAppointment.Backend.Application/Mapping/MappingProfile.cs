@@ -20,7 +20,6 @@ using eAppointment.Backend.Application.Features.Patients.GetPatientById;
 using eAppointment.Backend.Application.Features.Patients.UpdatePatientById;
 using eAppointment.Backend.Application.Features.Patients.UpdatePatientProfileById;
 using eAppointment.Backend.Application.Features.Users.GetAllUsers;
-using eAppointment.Backend.Application.Features.Users.GetUserById;
 using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Domain.Enums;
 
@@ -40,7 +39,6 @@ namespace eAppointment.Backend.Application.Mapping
                 .ForMember(dest => dest.UserName, src => src.MapFrom(src => src.userName))
                 .ForMember(dest => dest.PasswordHash, src => src.Ignore())
                 .ForMember(dest => dest.Doctor, src => src.Ignore())
-                .ForMember(dest => dest.Role, src => src.Ignore())
                 .ForMember(dest => dest.Patient, src => src.Ignore());
 
             CreateMap<User, GetAdminByIdQueryResponse>()
@@ -48,8 +46,7 @@ namespace eAppointment.Backend.Application.Mapping
                 .ForMember(dest => dest.LastName, src => src.MapFrom(src => src.LastName))
                 .ForMember(dest => dest.PhoneNumber, src => src.MapFrom(src => src.PhoneNumber))
                 .ForMember(dest => dest.Email, src => src.MapFrom(src => src.Email))
-                .ForMember(dest => dest.UserName, src => src.MapFrom(src => src.UserName))
-                .ForMember(dest => dest.RoleId, src => src.MapFrom(src => src.RoleId));
+                .ForMember(dest => dest.UserName, src => src.MapFrom(src => src.UserName));
 
             CreateMap<UpdateAdminByIdCommand, User>()
                 .ForMember(dest => dest.Id, src => src.MapFrom(src => src.id))
@@ -127,7 +124,6 @@ namespace eAppointment.Backend.Application.Mapping
                 .ForMember(dest => dest.Email, src => src.MapFrom(src => src.email))
                 .ForMember(dest => dest.UserName, src => src.MapFrom(src => src.userName))
                 .ForMember(dest => dest.PasswordHash, src => src.Ignore())
-                .ForMember(dest => dest.RoleId, src => src.MapFrom(src => src.roleId))
                 .ForPath(dest => dest.Doctor!.DepartmentId, src => src.MapFrom(src => src.departmentId))
                 .ForMember(dest => dest.Patient, src => src.Ignore());
 
@@ -176,7 +172,6 @@ namespace eAppointment.Backend.Application.Mapping
                 .ForPath(dest => dest.Patient!.FullAddress, src => src.MapFrom(src => src.fullAddress))
                 .ForPath(dest => dest.Patient!.IdentityNumber, src => src.MapFrom(src => src.identityNumber))
                 .ForMember(dest => dest.PasswordHash, src => src.Ignore())
-                .ForMember(dest => dest.RoleId, src => src.MapFrom(src => src.roleId))
                 .ForPath(dest => dest.Patient!.CountyId, src => src.MapFrom(src => src.countyId))
                 .ForMember(dest => dest.Patient, src => src.Ignore());
 
@@ -226,15 +221,12 @@ namespace eAppointment.Backend.Application.Mapping
 
             #region User Mappings
 
-            CreateMap<User, GetUserByIdQueryResponse>()
-               .ForMember(dest => dest.fullName, src => src.MapFrom(src => src.FirstName + " " + src.LastName))
-               .ForPath(dest => dest.roleName, src => src.MapFrom(src => src.Role!.Name));
-
-            CreateMap<User, GetAllUsersQueryResponse>()
-                .ForMember(dest => dest.FullName, src => src.MapFrom(src => src.FirstName + " " + src.LastName))
-                .ForMember(dest => dest.Email, src => src.MapFrom(src => src.Email))
-                .ForMember(dest => dest.UserName, src => src.MapFrom(src => src.UserName))
-                .ForPath(dest => dest.RoleName, src => src.MapFrom(src => src.Role!.Name));
+            CreateMap<Tuple<User, List<string>>, GetAllUsersQueryResponse>()
+                .ForPath(dest => dest.Id, src => src.MapFrom(src => src.Item1.Id))
+                .ForPath(dest => dest.FullName, src => src.MapFrom(src => src.Item1.FirstName + " " + src.Item1.LastName))
+                .ForPath(dest => dest.Email, src => src.MapFrom(src => src.Item1.Email))
+                .ForPath(dest => dest.UserName, src => src.MapFrom(src => src.Item1.UserName))
+                .ForPath(dest => dest.RoleNames, src => src.MapFrom(src => src.Item2));
 
             #endregion
         }
