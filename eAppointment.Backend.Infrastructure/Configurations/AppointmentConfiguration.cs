@@ -11,9 +11,13 @@ namespace eAppointment.Backend.Infrastructure.Configurations
         {
             builder.HasKey(p => p.Id);
 
-            builder.Property(p => p.DoctorId).HasColumnType("uniqueidentifier");
+            builder.Property(p => p.DoctorId).HasColumnType("int");
 
-            builder.Property(p => p.PatientId).HasColumnType("uniqueidentifier");
+            builder.HasIndex(x => x.DoctorId).IsUnique(false);
+
+            builder.Property(p => p.PatientId).HasColumnType("int");
+
+            builder.HasIndex(x => x.PatientId).IsUnique(false);
 
             builder.Property(p => p.StartDate).HasColumnType("datetime");
 

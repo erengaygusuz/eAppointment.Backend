@@ -9,6 +9,5 @@ namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
         string email,
         string phoneNumber,
         string userName,
-        string password,
-        Guid roleId) : IRequest<Result<string>>;
+        string password) : IRequest<Result<string>>;
 }

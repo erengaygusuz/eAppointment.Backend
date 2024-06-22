@@ -4,10 +4,10 @@ using TS.Result;
 namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientProfileById
 {
     public sealed record UpdatePatientProfileByIdCommand(
-        Guid id,
+        int id,
         string firstName,
         string lastName,
         string phoneNumber,
-        Guid countyId,
+        int countyId,
         string fullAddress) : IRequest<Result<string>>;
 }

@@ -2,7 +2,7 @@
 
 namespace eAppointment.Backend.Domain.Entities
 {
-    public sealed class User : IdentityUser<Guid>
+    public sealed class User : IdentityUser<int>
     {
         public string FirstName { get; set; } = string.Empty;
 
@@ -16,8 +16,8 @@ namespace eAppointment.Backend.Domain.Entities
 
         public DateTime? ModifiedDate { get; set; }
 
-        public Guid RoleId { get; set; }
+        public int RoleId { get; set; }
 
-        public Role? Role { get; set; }
+        public Role Role { get; set; }
     }
 }

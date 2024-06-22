@@ -2,18 +2,13 @@
 {
     public sealed class Doctor
     {
-        public Doctor() 
-        {
-            Id = Guid.NewGuid();
-        }
+        public int Id { get; set; }
 
-        public Guid Id { get; set; }
-
-        public Guid UserId { get; set; }
+        public int UserId { get; set; }
 
         public User User { get; set; } = new();
 
-        public Guid DepartmentId { get; set; }
+        public int DepartmentId { get; set; }
 
         public Department Department { get; set; } = new ();
 

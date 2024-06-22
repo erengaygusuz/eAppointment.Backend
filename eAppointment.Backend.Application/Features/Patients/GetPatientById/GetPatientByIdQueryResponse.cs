@@ -7,7 +7,7 @@
         string phoneNumber,
         string email,
         string userName,
-        Guid countyId,
-        Guid cityId,
+        int countyId,
+        int cityId,
         string? fullAddress);
 }

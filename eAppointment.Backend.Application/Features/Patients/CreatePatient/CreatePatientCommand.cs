@@ -10,8 +10,8 @@ namespace eAppointment.Backend.Application.Features.Patients.CreatePatient
         string phoneNumber,
         string userName,
         string identityNumber,
-        Guid countyId,
+        int countyId,
         string fullAddress,
         string password,
-        Guid roleId) : IRequest<Result<string>>;
+        int roleId) : IRequest<Result<string>>;
 }

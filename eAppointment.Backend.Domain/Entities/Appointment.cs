@@ -4,18 +4,13 @@ namespace eAppointment.Backend.Domain.Entities
 {
     public sealed class Appointment
     {
-        public Appointment() 
-        {
-            Id = Guid.NewGuid();
-        }
+        public int Id { get; set; }
 
-        public Guid Id { get; set; }
-
-        public Guid DoctorId { get; set; }
+        public int DoctorId { get; set; }
 
         public Doctor Doctor { get; set; } = new ();
 
-        public Guid PatientId { get; set; }
+        public int PatientId { get; set; }
 
         public Patient Patient { get; set; } = new ();
 

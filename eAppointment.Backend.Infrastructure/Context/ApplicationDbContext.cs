@@ -7,7 +7,7 @@ using GenericRepository;
 
 namespace eAppointment.Backend.Infrastructure.Context
 {
-    internal sealed class ApplicationDbContext : IdentityDbContext<User, Role, Guid>, IUnitOfWork
+    internal sealed class ApplicationDbContext : IdentityDbContext<User, Role, int>, IUnitOfWork
     {
         public DbSet<County> Counties { get; set; }
 
@@ -25,11 +25,10 @@ namespace eAppointment.Backend.Infrastructure.Context
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Ignore<IdentityUserRole<Guid>>();
-            builder.Ignore<IdentityUserClaim<Guid>>();
-            builder.Ignore<IdentityRoleClaim<Guid>>();
-            builder.Ignore<IdentityUserLogin<Guid>>();
-            builder.Ignore<IdentityUserToken<Guid>>();
+            builder.Ignore<IdentityUserClaim<int>>();
+            builder.Ignore<IdentityRoleClaim<int>>();
+            builder.Ignore<IdentityUserLogin<int>>();
+            builder.Ignore<IdentityUserToken<int>>();
 
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }

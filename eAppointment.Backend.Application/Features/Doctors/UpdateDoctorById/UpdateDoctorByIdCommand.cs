@@ -4,11 +4,11 @@ using TS.Result;
 namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorById
 {
     public sealed record UpdateDoctorByIdCommand(
-        Guid id, 
+        int id, 
         string firstName,
         string lastName,
         string phoneNumber,
         string email,
         string userName,
-        Guid departmentId) : IRequest<Result<string>>;
+        int departmentId) : IRequest<Result<string>>;
 }

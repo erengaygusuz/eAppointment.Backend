@@ -2,7 +2,7 @@
 
 namespace eAppointment.Backend.Domain.Entities
 {
-    public sealed class Role : IdentityRole<Guid>
+    public sealed class Role : IdentityRole<int>
     {
         public User? User { get; set; }
 

@@ -2,12 +2,7 @@
 {
     public sealed class Department
     {
-        public Department()
-        {
-            Id = Guid.NewGuid();
-        }
-
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; } = string.Empty;
 

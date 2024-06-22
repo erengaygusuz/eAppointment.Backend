@@ -39,8 +39,8 @@ namespace eAppointment.Backend.Application.Mapping
                 .ForMember(dest => dest.Email, src => src.MapFrom(src => src.email))
                 .ForMember(dest => dest.UserName, src => src.MapFrom(src => src.userName))
                 .ForMember(dest => dest.PasswordHash, src => src.Ignore())
-                .ForMember(dest => dest.RoleId, src => src.MapFrom(src => src.roleId))
                 .ForMember(dest => dest.Doctor, src => src.Ignore())
+                .ForMember(dest => dest.Role, src => src.Ignore())
                 .ForMember(dest => dest.Patient, src => src.Ignore());
 
             CreateMap<User, GetAdminByIdQueryResponse>()
@@ -59,7 +59,6 @@ namespace eAppointment.Backend.Application.Mapping
                 .ForMember(dest => dest.Email, src => src.MapFrom(src => src.email))
                 .ForMember(dest => dest.UserName, src => src.MapFrom(src => src.userName))
                 .ForMember(dest => dest.PasswordHash, src => src.Ignore())
-                .ForMember(dest => dest.RoleId, src => src.MapFrom(src => src.roleId))
                 .ForMember(dest => dest.Doctor, src => src.Ignore())
                 .ForMember(dest => dest.Patient, src => src.Ignore());
 

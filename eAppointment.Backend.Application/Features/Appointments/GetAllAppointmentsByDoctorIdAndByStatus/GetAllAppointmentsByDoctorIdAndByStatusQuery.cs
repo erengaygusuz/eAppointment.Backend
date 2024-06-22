@@ -4,6 +4,6 @@ using TS.Result;
 namespace eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsByDoctorIdAndByStatus
 {
     public sealed record GetAllAppointmentsByDoctorIdAndByStatusQuery(
-        Guid doctorId, 
+        int doctorId, 
         int status) : IRequest<Result<List<GetAllAppointmentsByDoctorIdAndByStatusQueryResponse>>>;
 }

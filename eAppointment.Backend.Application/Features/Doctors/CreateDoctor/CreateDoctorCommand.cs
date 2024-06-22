@@ -10,6 +10,6 @@ namespace eAppointment.Backend.Application.Features.Doctors.CreateDoctor
         string phoneNumber,
         string userName,
         string password,
-        Guid roleId,
-        Guid departmentId) : IRequest<Result<string>>;
+        int roleId,
+        int departmentId) : IRequest<Result<string>>;
 }

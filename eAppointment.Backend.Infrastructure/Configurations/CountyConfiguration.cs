@@ -10,7 +10,9 @@ namespace eAppointment.Backend.Infrastructure.Configurations
         {
             builder.HasKey(p => p.Id);
 
-            builder.Property(p => p.CityId).HasColumnType("uniqueidentifier");
+            builder.Property(p => p.CityId).HasColumnType("int");
+
+            builder.HasIndex(x => x.CityId).IsUnique(false);
 
             builder.Property(p => p.Name).HasColumnType("varchar(50)");
 

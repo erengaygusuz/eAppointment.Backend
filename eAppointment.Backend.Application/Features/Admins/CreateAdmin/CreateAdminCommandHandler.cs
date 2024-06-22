@@ -12,6 +12,7 @@ namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
 {
     internal sealed class CreateAdminCommandHandler(
         UserManager<User> userManager,
+        RoleManager<Role> roleManager,
         IUnitOfWork unitOfWork,
         IMapper mapper) : IRequestHandler<CreateAdminCommand, Result<string>>
     {
@@ -28,6 +29,7 @@ namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
             }
 
             User user = mapper.Map<User>(request);
+            user.RoleId = roleManager.Roles.Where(r => r.Name == "Admin").FirstOrDefault()!.Id;
 
             IdentityResult result = await userManager.CreateAsync(user, request.password);
 

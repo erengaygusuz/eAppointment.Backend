@@ -1,6 +1,6 @@
 ﻿namespace eAppointment.Backend.Application.Features.Departments.GetDepartmentById
 {
     public sealed record GetDepartmentByIdQueryResponse(
-        Guid id,
+        int id,
         string name);
 }

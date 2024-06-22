@@ -6,5 +6,5 @@
         string? email,
         string? phoneNumber,
         string? userName,
-        Guid departmentId);
+        int departmentId);
 }

@@ -38,8 +38,6 @@ namespace eAppointment.Backend.Application.Features.Patients.CreatePatient
                 return Result<string>.Failure(result.Errors.Select(s => s.Description).ToList());
             }
 
-            if (request.roleId != Guid.Empty)
-            {
                 if (await roleManager.Roles.AnyAsync(r => r.Id == request.roleId))
                 {
                     Patient patient = new Patient()
@@ -59,7 +57,6 @@ namespace eAppointment.Backend.Application.Features.Patients.CreatePatient
                 {
                     return Result<string>.Failure("Role does not exist");
                 }
-            }
 
             return "Patient created successfully";
         }

@@ -24,12 +24,14 @@ namespace eAppointment.Backend.Infrastructure.Configurations
 
             builder.Property(p => p.PhoneNumber).HasColumnType("varchar(50)");
 
+            builder.Property(p => p.RoleId).HasColumnType("int");
+
+            builder.HasIndex(x => x.RoleId).IsUnique(false);
+
             builder
                .HasOne(e => e.Role)
                .WithOne(e => e.User)
-               .HasForeignKey<User>(e => e.RoleId)
-               .OnDelete(DeleteBehavior.NoAction)
-               .IsRequired();
+               .HasForeignKey<User>(e => e.RoleId);
         }
     }
 }

@@ -2,14 +2,9 @@
 {
     public sealed class County
     {
-        public County()
-        {
-            Id = Guid.NewGuid();
-        }
+        public int Id { get; set; }
 
-        public Guid Id { get; set; }
-
-        public Guid CityId { get; set; }
+        public int CityId { get; set; }
 
         public City City { get; set; } = new ();
 

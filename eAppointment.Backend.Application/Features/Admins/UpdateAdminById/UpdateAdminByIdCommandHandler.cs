@@ -9,6 +9,7 @@ namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminById
 {
     internal sealed class UpdateAdminByIdCommandHandler(
         UserManager<User> userManager,
+        RoleManager<Role> roleManager,
         IMapper mapper) : IRequestHandler<UpdateAdminByIdCommand, Result<string>>
     {
         public async Task<Result<string>> Handle(UpdateAdminByIdCommand request, CancellationToken cancellationToken)
@@ -30,6 +31,7 @@ namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminById
             }
 
             mapper.Map(request, user);
+            user.RoleId = roleManager.Roles.Where(r => r.Name == "Admin").FirstOrDefault()!.Id;
 
             IdentityResult result = await userManager.UpdateAsync(user);
 
