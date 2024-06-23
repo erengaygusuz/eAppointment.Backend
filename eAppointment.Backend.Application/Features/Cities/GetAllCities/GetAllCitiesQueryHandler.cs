@@ -8,12 +8,12 @@ using TS.Result;
 namespace eAppointment.Backend.Application.Features.Cities.GetAllCities
 {
     public sealed class GetAllCitiesQueryHandler(
-        IDepartmentRepository cityRepository,
+        ICityRepository cityRepository,
         IMapper mapper) : IRequestHandler<GetAllCitiesQuery, Result<List<GetAllCitiesQueryResponse>>>
     {
         public async Task<Result<List<GetAllCitiesQueryResponse>>> Handle(GetAllCitiesQuery request, CancellationToken cancellationToken)
         {
-            List<Department> cities = await cityRepository.GetAll()
+            List<City> cities = await cityRepository.GetAll()
                 .OrderBy(p => p.Name).ToListAsync(cancellationToken);
 
             var response = mapper.Map<List<GetAllCitiesQueryResponse>>(cities);

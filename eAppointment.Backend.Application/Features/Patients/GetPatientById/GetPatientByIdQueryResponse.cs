@@ -1,13 +1,15 @@
 ﻿namespace eAppointment.Backend.Application.Features.Patients.GetPatientById
 {
-    public sealed record GetPatientByIdQueryResponse(
-        string firstName,
-        string lastName,
-        string identityNumber,
-        string phoneNumber,
-        string email,
-        string userName,
-        int countyId,
-        int cityId,
-        string? fullAddress);
+    public sealed record GetPatientByIdQueryResponse
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string IdentityNumber { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Email { get; set; }
+        public string UserName { get; set; }
+        public int CountyId { get; set; }
+        public int CityId { get; set; }
+        public string FullAddress { get; set; }
+    }
 }

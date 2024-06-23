@@ -14,8 +14,9 @@ namespace eAppointment.Backend.Application.Features.Patients.GetPatientById
         public async Task<Result<GetPatientByIdQueryResponse>> Handle(GetPatientByIdQuery request, CancellationToken cancellationToken)
         {
             Patient? patient = (await patientRepository
-                .Where(x => x.Id == request.id)
+                .Where(x => x.UserId == request.id)
                 .Include(p => p.User)
+                .Include(c => c.County)
                 .OrderBy(p => p.User.FirstName).ToListAsync(cancellationToken)).FirstOrDefault();
 
             var response = mapper.Map<GetPatientByIdQueryResponse>(patient);
