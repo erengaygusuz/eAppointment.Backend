@@ -128,12 +128,12 @@ namespace eAppointment.Backend.Application.Mapping
                 .ForMember(dest => dest.Doctor, src => src.Ignore());
 
             CreateMap<Doctor, GetDoctorByIdQueryResponse>()
-                .ForPath(dest => dest.firstName, src => src.MapFrom(src => src.User!.FirstName))
-                .ForPath(dest => dest.lastName, src => src.MapFrom(src => src.User!.LastName))
-                .ForPath(dest => dest.phoneNumber, src => src.MapFrom(src => src.User!.PhoneNumber))
-                .ForPath(dest => dest.email, src => src.MapFrom(src => src.User!.Email))
-                .ForPath(dest => dest.userName, src => src.MapFrom(src => src.User!.UserName))
-                .ForMember(dest => dest.departmentId, src => src.MapFrom(src => src.DepartmentId));
+                .ForPath(dest => dest.FirstName, src => src.MapFrom(src => src.User!.FirstName))
+                .ForPath(dest => dest.LastName, src => src.MapFrom(src => src.User!.LastName))
+                .ForPath(dest => dest.PhoneNumber, src => src.MapFrom(src => src.User!.PhoneNumber))
+                .ForPath(dest => dest.Email, src => src.MapFrom(src => src.User!.Email))
+                .ForPath(dest => dest.UserName, src => src.MapFrom(src => src.User!.UserName))
+                .ForMember(dest => dest.DepartmentId, src => src.MapFrom(src => src.DepartmentId));
 
             CreateMap<Doctor, GetAllDoctorsByDepartmentIdQueryResponse>()
                 .ForPath(dest => dest.firstName, src => src.MapFrom(src => src.User!.FirstName))
@@ -148,7 +148,6 @@ namespace eAppointment.Backend.Application.Mapping
                 .ForMember(dest => dest.Email, src => src.MapFrom(src => src.email))
                 .ForMember(dest => dest.UserName, src => src.MapFrom(src => src.userName))
                 .ForMember(dest => dest.PasswordHash, src => src.Ignore())
-                .ForPath(dest => dest.Doctor!.DepartmentId, src => src.MapFrom(src => src.departmentId))
                 .ForMember(dest => dest.Patient, src => src.Ignore());
 
             CreateMap<UpdateDoctorProfileByIdCommand, User>()
