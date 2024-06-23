@@ -17,7 +17,7 @@ namespace eAppointment.Backend.Application.Features.Patients.GetAllPatientsByDoc
                 .Where(d => d.Id == request.doctorId)
                 .Include(a => a.Appointments!)
                 .ThenInclude(p => p.Patient)
-                .OrderBy(p => p.User.FirstName).FirstOrDefaultAsync(cancellationToken);
+                .OrderBy(p => p.User!.FirstName).FirstOrDefaultAsync(cancellationToken);
 
             var response = mapper.Map<List<GetAllPatientsByDoctorIdQueryResponse>>(doctor);
 

@@ -76,13 +76,13 @@ namespace eAppointment.Backend.Application.Mapping
                 .ForMember(dest => dest.id, src => src.MapFrom(src => src.Id))
                 .ForMember(dest => dest.startDate, src => src.MapFrom(src => src.StartDate))
                 .ForMember(dest => dest.endDate, src => src.MapFrom(src => src.EndDate))
-                .ForPath(dest => dest.title, src => src.MapFrom(src => src.Patient.User.FirstName + " " + src.Patient.User.LastName));
+                .ForPath(dest => dest.title, src => src.MapFrom(src => src.Patient.User!.FirstName + " " + src.Patient.User!.LastName));
 
             CreateMap<Appointment, GetAllAppointmentsByPatientIdAndByStatusQueryResponse>()
                 .ForMember(dest => dest.id, src => src.MapFrom(src => src.Id))
                 .ForMember(dest => dest.startDate, src => src.MapFrom(src => src.StartDate))
                 .ForMember(dest => dest.endDate, src => src.MapFrom(src => src.EndDate))
-                .ForPath(dest => dest.title, src => src.MapFrom(src => src.Patient.User.FirstName + " " + src.Patient.User.LastName));
+                .ForPath(dest => dest.title, src => src.MapFrom(src => src.Patient.User!.FirstName + " " + src.Patient.User!.LastName));
 
             CreateMap<UpdateAppointmentByIdCommand, Appointment>()
                .ForMember(dest => dest.StartDate, src => src.MapFrom(src => src.startDate))
@@ -124,21 +124,21 @@ namespace eAppointment.Backend.Application.Mapping
                 .ForMember(dest => dest.Email, src => src.MapFrom(src => src.email))
                 .ForMember(dest => dest.UserName, src => src.MapFrom(src => src.userName))
                 .ForMember(dest => dest.PasswordHash, src => src.Ignore())
-                .ForPath(dest => dest.Doctor!.DepartmentId, src => src.MapFrom(src => src.departmentId))
-                .ForMember(dest => dest.Patient, src => src.Ignore());
+                .ForMember(dest => dest.Patient, src => src.Ignore())
+                .ForMember(dest => dest.Doctor, src => src.Ignore());
 
             CreateMap<Doctor, GetDoctorByIdQueryResponse>()
-                .ForPath(dest => dest.firstName, src => src.MapFrom(src => src.User.FirstName))
-                .ForPath(dest => dest.lastName, src => src.MapFrom(src => src.User.LastName))
-                .ForPath(dest => dest.phoneNumber, src => src.MapFrom(src => src.User.PhoneNumber))
-                .ForPath(dest => dest.email, src => src.MapFrom(src => src.User.Email))
-                .ForPath(dest => dest.userName, src => src.MapFrom(src => src.User.UserName))
+                .ForPath(dest => dest.firstName, src => src.MapFrom(src => src.User!.FirstName))
+                .ForPath(dest => dest.lastName, src => src.MapFrom(src => src.User!.LastName))
+                .ForPath(dest => dest.phoneNumber, src => src.MapFrom(src => src.User!.PhoneNumber))
+                .ForPath(dest => dest.email, src => src.MapFrom(src => src.User!.Email))
+                .ForPath(dest => dest.userName, src => src.MapFrom(src => src.User!.UserName))
                 .ForMember(dest => dest.departmentId, src => src.MapFrom(src => src.DepartmentId));
 
             CreateMap<Doctor, GetAllDoctorsByDepartmentIdQueryResponse>()
-                .ForPath(dest => dest.firstName, src => src.MapFrom(src => src.User.FirstName))
-                .ForPath(dest => dest.lastName, src => src.MapFrom(src => src.User.LastName))
-                .ForPath(dest => dest.departmentName, src => src.MapFrom(src => src.Department.Name));
+                .ForPath(dest => dest.firstName, src => src.MapFrom(src => src.User!.FirstName))
+                .ForPath(dest => dest.lastName, src => src.MapFrom(src => src.User!.LastName))
+                .ForPath(dest => dest.departmentName, src => src.MapFrom(src => src.Department!.Name));
 
             CreateMap<UpdateDoctorByIdCommand, User>()
                 .ForMember(dest => dest.Id, src => src.MapFrom(src => src.id))
@@ -176,17 +176,17 @@ namespace eAppointment.Backend.Application.Mapping
                 .ForMember(dest => dest.Patient, src => src.Ignore());
 
             CreateMap<Patient, GetPatientByIdQueryResponse>()
-                .ForPath(dest => dest.firstName, src => src.MapFrom(src => src.User.FirstName))
-                .ForPath(dest => dest.lastName, src => src.MapFrom(src => src.User.LastName))
-                .ForPath(dest => dest.phoneNumber, src => src.MapFrom(src => src.User.PhoneNumber))
-                .ForPath(dest => dest.email, src => src.MapFrom(src => src.User.Email))
-                .ForPath(dest => dest.userName, src => src.MapFrom(src => src.User.UserName))
-                .ForPath(dest => dest.cityId, src => src.MapFrom(src => src.User.Patient!.County.CityId))
-                .ForPath(dest => dest.countyId, src => src.MapFrom(src => src.User.Patient!.CountyId));
+                .ForPath(dest => dest.firstName, src => src.MapFrom(src => src.User!.FirstName))
+                .ForPath(dest => dest.lastName, src => src.MapFrom(src => src.User!.LastName))
+                .ForPath(dest => dest.phoneNumber, src => src.MapFrom(src => src.User!.PhoneNumber))
+                .ForPath(dest => dest.email, src => src.MapFrom(src => src.User!.Email))
+                .ForPath(dest => dest.userName, src => src.MapFrom(src => src.User!.UserName))
+                .ForPath(dest => dest.cityId, src => src.MapFrom(src => src.User!.Patient!.County.CityId))
+                .ForPath(dest => dest.countyId, src => src.MapFrom(src => src.User!.Patient!.CountyId));
 
             CreateMap<Patient, GetAllPatientsByDoctorIdQueryResponse>()
-                .ForPath(dest => dest.firstName, src => src.MapFrom(src => src.User.FirstName))
-                .ForPath(dest => dest.lastName, src => src.MapFrom(src => src.User.LastName))
+                .ForPath(dest => dest.firstName, src => src.MapFrom(src => src.User!.FirstName))
+                .ForPath(dest => dest.lastName, src => src.MapFrom(src => src.User!.LastName))
                 .ForPath(dest => dest.identityNumber, src => src.MapFrom(src => src.IdentityNumber))
                 .ForMember(dest => dest.patientAppointments, src => src.MapFrom(src => src.Appointments!.Select(x => new PatientAppointment()
                 {

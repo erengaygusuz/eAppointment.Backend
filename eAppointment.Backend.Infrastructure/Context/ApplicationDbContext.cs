@@ -27,6 +27,8 @@ namespace eAppointment.Backend.Infrastructure.Context
         {
             base.OnModelCreating(builder);
 
+            builder.UseCollation("Turkish_CI_AS");
+
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }

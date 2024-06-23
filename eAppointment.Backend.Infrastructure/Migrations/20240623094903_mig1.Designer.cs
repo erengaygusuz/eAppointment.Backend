@@ -12,7 +12,7 @@ using eAppointment.Backend.Infrastructure.Context;
 namespace eAppointment.Backend.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240622193334_mig1")]
+    [Migration("20240623094903_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -20,6 +20,7 @@ namespace eAppointment.Backend.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .UseCollation("Turkish_CI_AS")
                 .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 

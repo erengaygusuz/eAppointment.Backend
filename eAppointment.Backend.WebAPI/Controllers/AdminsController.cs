@@ -30,7 +30,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(UpdateAdminByIdCommand request, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateById(UpdateAdminByIdCommand request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
 
