@@ -16,10 +16,9 @@ namespace eAppointment.Backend.Application.Features.Doctors.GetAllDoctorsByDepar
             List<Doctor> doctors = await doctorRepository
                 .Where(p => p.DepartmentId == request.departmentId)
                 .Include(u => u.User)
-                .Include(d => d.Department)
                 .OrderBy(p => p.User!.FirstName).ToListAsync(cancellationToken);
 
-            var response = mapper.Map<List< GetAllDoctorsByDepartmentIdQueryResponse>>(doctors);
+            var response = mapper.Map<List<GetAllDoctorsByDepartmentIdQueryResponse>>(doctors);
 
             return response;
         }

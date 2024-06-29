@@ -11,7 +11,9 @@ namespace eAppointment.Backend.Application.Features.Auth.Login
     {
         public async Task<Result<LoginCommandResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            User? appUser = await userManager.Users.FirstOrDefaultAsync(p => p.UserName == request.userNameOrEmail || 
+            User? appUser = await userManager.Users
+                .Include(x => x.Patient)
+                .FirstOrDefaultAsync(p => p.UserName == request.userNameOrEmail || 
                p.Email == request.userNameOrEmail, cancellationToken);
 
             if (appUser is null)

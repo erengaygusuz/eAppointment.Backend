@@ -22,14 +22,31 @@ namespace eAppointment.Backend.Infrastructure.Services
 
             var stringRoles = userRoles!.Select(x => x.ToLower()).ToList();
 
-            List<Claim> claims = new()
+            List<Claim> claims = new();
+
+            if (user.Patient != null)
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.FirstName + " " + user.LastName),
-                new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
-                new Claim("UserName", user.UserName ?? string.Empty),
-                new Claim(ClaimTypes.Role, JsonSerializer.Serialize(stringRoles))
-            };
+                claims.AddRange(new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.FirstName + " " + user.LastName),
+                    new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
+                    new Claim("UserName", user.UserName ?? string.Empty),
+                    new Claim("PatientId", user.Patient!.Id.ToString()),
+                    new Claim(ClaimTypes.Role, JsonSerializer.Serialize(stringRoles))
+                });
+            } 
+            else
+            {
+                claims.AddRange(new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.FirstName + " " + user.LastName),
+                    new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
+                    new Claim("UserName", user.UserName ?? string.Empty),
+                    new Claim(ClaimTypes.Role, JsonSerializer.Serialize(stringRoles))
+                });
+            }
 
             DateTime expires = DateTime.Now.AddDays(1);
 

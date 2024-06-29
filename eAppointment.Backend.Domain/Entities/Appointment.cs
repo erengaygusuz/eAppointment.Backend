@@ -8,11 +8,11 @@ namespace eAppointment.Backend.Domain.Entities
 
         public int DoctorId { get; set; }
 
-        public Doctor Doctor { get; set; } = new ();
+        public Doctor Doctor { get; set; }
 
         public int PatientId { get; set; }
 
-        public Patient Patient { get; set; } = new ();
+        public Patient Patient { get; set; }
 
         public DateTime StartDate { get; set; }
 

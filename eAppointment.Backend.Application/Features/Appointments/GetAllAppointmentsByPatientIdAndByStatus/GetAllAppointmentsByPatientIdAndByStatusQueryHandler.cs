@@ -18,9 +18,10 @@ namespace eAppointment.Backend.Application.Features.Appointments.GetAllAppointme
                 .Where(p => p.PatientId == request.patientId &&
                        p.Status == AppointmentStatus.FromValue(request.status))
                 .Include(p => p.Patient)
+                .ThenInclude(u => u.User)
                 .ToListAsync(cancellationToken);
 
-            var response = mapper.Map<List< GetAllAppointmentsByPatientIdAndByStatusQueryResponse>>(appointments);
+            var response = mapper.Map<List<GetAllAppointmentsByPatientIdAndByStatusQueryResponse>>(appointments);
 
             return response;
         }
