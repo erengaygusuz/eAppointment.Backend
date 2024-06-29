@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using eAppointment.Backend.Domain.Entities;
-using eAppointment.Backend.Domain.Enums;
 using eAppointment.Backend.Domain.Repositories;
 using GenericRepository;
 using MediatR;
@@ -32,15 +31,6 @@ namespace eAppointment.Backend.Application.Features.Appointments.CreateAppointme
             {
                 return Result<string>.Failure("Appointment date is not available");
             }
-
-            //Appointment appointment = new()
-            //{
-            //    DoctorId = request.doctorId,
-            //    PatientId = request.patientId,
-            //    StartDate = DateTime.ParseExact(request.startDate, "dd.MM.yyyy HH:mm", null),
-            //    EndDate = DateTime.ParseExact(request.endDate, "dd.MM.yyyy HH:mm", null),
-            //    Status = AppointmentStatus.NotCompleted
-            //};
 
             var appointment = mapper.Map<Appointment>(request);
 

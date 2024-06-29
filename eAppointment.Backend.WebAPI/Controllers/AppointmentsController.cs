@@ -1,6 +1,7 @@
 ﻿using eAppointment.Backend.Application.Features.Appointments.CreateAppointment;
 using eAppointment.Backend.Application.Features.Appointments.DeleteAppointmentById;
 using eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsByDoctorIdAndByStatus;
+using eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsByPatientId;
 using eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsByPatientIdByStatus;
 using eAppointment.Backend.Application.Features.Appointments.UpdateAppointmentById;
 using eAppointment.Backend.WebAPI.Abstractions;
@@ -33,6 +34,14 @@ namespace eAppointment.Backend.WebAPI.Controllers
 
         [HttpPost]
         public async Task<IActionResult> GetAllByPatientIdAndByStatus(GetAllAppointmentsByPatientIdAndByStatusQuery request, CancellationToken cancellationToken)
+        {
+            var response = await _mediator.Send(request, cancellationToken);
+
+            return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetAllByPatientId(GetAllAppointmentsByPatientIdQuery request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
 
