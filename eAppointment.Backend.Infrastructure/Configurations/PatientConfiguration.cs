@@ -18,7 +18,7 @@ namespace eAppointment.Backend.Infrastructure.Configurations
 
             builder.HasIndex(x => x.IdentityNumber).IsUnique();
 
-            builder.Property(p => p.FullAddress).HasColumnType("varchar(50)");
+            builder.Property(p => p.FullAddress).HasColumnType("varchar(500)");
 
             builder
                 .HasOne(e => e.User)
