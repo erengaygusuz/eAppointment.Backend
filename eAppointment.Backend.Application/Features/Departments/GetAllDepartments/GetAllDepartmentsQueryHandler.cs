@@ -7,16 +7,16 @@ using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Departments.GetAllDepartments
 {
-    public sealed class GetAllDepartmentsQueryHandler (
+    public sealed class GetAllDepartmentsQueryHandler(
         IDepartmentRepository departmentRepository,
-        IMapper mapper): IRequestHandler<GetAllDepartmentsQuery, Result<List<GetAllDepartmentsQueryResponse>>>
+        IMapper mapper) : IRequestHandler<GetAllDepartmentsQuery, Result<List<GetAllDepartmentsQueryResponse>>>
     {
         public async Task<Result<List<GetAllDepartmentsQueryResponse>>> Handle(GetAllDepartmentsQuery request, CancellationToken cancellationToken)
         {
             List<Department> departments = await departmentRepository.GetAll()
                 .OrderBy(p => p.Name).ToListAsync(cancellationToken);
 
-            var response = mapper.Map<List< GetAllDepartmentsQueryResponse>>(departments);
+            var response = mapper.Map<List<GetAllDepartmentsQueryResponse>>(departments);
 
             return response;
         }

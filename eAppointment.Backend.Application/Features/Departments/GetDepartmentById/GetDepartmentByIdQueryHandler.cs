@@ -5,8 +5,8 @@ using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Departments.GetDepartmentById
 {
-    public sealed class GetAllDepartmentsQueryHandler (
-        IDepartmentRepository departmentRepository): IRequestHandler<GetDepartmentByIdQuery, Result<GetDepartmentByIdQueryResponse>>
+    public sealed class GetAllDepartmentsQueryHandler(
+        IDepartmentRepository departmentRepository) : IRequestHandler<GetDepartmentByIdQuery, Result<GetDepartmentByIdQueryResponse>>
     {
         public async Task<Result<GetDepartmentByIdQueryResponse>> Handle(GetDepartmentByIdQuery request, CancellationToken cancellationToken)
         {

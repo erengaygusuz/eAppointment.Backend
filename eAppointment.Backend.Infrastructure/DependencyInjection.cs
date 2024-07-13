@@ -28,7 +28,7 @@ namespace eAppointment.Backend.Infrastructure
 
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
-            
+
             services.AddScoped<IUnitOfWork>(srv => srv.GetRequiredService<ApplicationDbContext>());
 
             services.Scan(action => action

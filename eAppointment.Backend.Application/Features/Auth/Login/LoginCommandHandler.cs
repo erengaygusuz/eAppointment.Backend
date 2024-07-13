@@ -13,7 +13,7 @@ namespace eAppointment.Backend.Application.Features.Auth.Login
         {
             User? appUser = await userManager.Users
                 .Include(x => x.Patient)
-                .FirstOrDefaultAsync(p => p.UserName == request.userNameOrEmail || 
+                .FirstOrDefaultAsync(p => p.UserName == request.userNameOrEmail ||
                p.Email == request.userNameOrEmail, cancellationToken);
 
             if (appUser is null)
@@ -23,7 +23,7 @@ namespace eAppointment.Backend.Application.Features.Auth.Login
 
             bool isPasswordCorrect = await userManager.CheckPasswordAsync(appUser, request.password);
 
-            if(!isPasswordCorrect)
+            if (!isPasswordCorrect)
             {
                 return Result<LoginCommandResponse>.Failure("Password is wrong.");
             }

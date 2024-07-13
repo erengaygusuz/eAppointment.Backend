@@ -3,7 +3,6 @@ using GenericRepository;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using System.Reflection.Emit;
 
 namespace eAppointment.Backend.Infrastructure.Context
 {

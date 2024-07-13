@@ -4,7 +4,7 @@ using TS.Result;
 namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorById
 {
     public sealed record UpdateDoctorByIdCommand(
-        int id, 
+        int id,
         string firstName,
         string lastName,
         string phoneNumber,

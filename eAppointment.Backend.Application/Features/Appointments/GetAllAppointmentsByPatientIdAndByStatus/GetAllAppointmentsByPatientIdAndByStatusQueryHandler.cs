@@ -8,9 +8,9 @@ using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsByPatientIdByStatus
 {
-    internal sealed class GetAllAppointmentsByPatientIdAndByStatusQueryHandler (
+    internal sealed class GetAllAppointmentsByPatientIdAndByStatusQueryHandler(
         IAppointmentRepository appointmentRepository,
-        IMapper mapper): IRequestHandler<GetAllAppointmentsByPatientIdAndByStatusQuery, Result<List<GetAllAppointmentsByPatientIdAndByStatusQueryResponse>>>
+        IMapper mapper) : IRequestHandler<GetAllAppointmentsByPatientIdAndByStatusQuery, Result<List<GetAllAppointmentsByPatientIdAndByStatusQueryResponse>>>
     {
         public async Task<Result<List<GetAllAppointmentsByPatientIdAndByStatusQueryResponse>>> Handle(GetAllAppointmentsByPatientIdAndByStatusQuery request, CancellationToken cancellationToken)
         {

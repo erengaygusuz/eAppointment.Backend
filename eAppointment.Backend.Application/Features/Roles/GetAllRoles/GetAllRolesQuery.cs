@@ -1,5 +1,4 @@
-﻿using eAppointment.Backend.Domain.Entities;
-using MediatR;
+﻿using MediatR;
 using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Roles.GetAllRoles

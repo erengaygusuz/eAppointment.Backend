@@ -2,14 +2,11 @@
 using eAppointment.Backend.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System.Data;
-using System.Linq;
 using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
 {
-    internal sealed class GetAllUsersQueryHandler (
+    internal sealed class GetAllUsersQueryHandler(
         UserManager<User> userManager,
         IMapper mapper) : IRequestHandler<GetAllUsersQuery, Result<List<GetAllUsersQueryResponse>>>
     {

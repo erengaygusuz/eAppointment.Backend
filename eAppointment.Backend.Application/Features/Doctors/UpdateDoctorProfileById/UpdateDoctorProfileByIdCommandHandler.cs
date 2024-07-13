@@ -7,10 +7,10 @@ using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorProfileById
 {
-    internal sealed class UpdateDoctorProfileByIdCommandHandler (
-        IDoctorRepository doctorRepository, 
+    internal sealed class UpdateDoctorProfileByIdCommandHandler(
+        IDoctorRepository doctorRepository,
         IUnitOfWork unitOfWork,
-        IMapper mapper): IRequestHandler<UpdateDoctorProfileByIdCommand, Result<string>>
+        IMapper mapper) : IRequestHandler<UpdateDoctorProfileByIdCommand, Result<string>>
     {
         public async Task<Result<string>> Handle(UpdateDoctorProfileByIdCommand request, CancellationToken cancellationToken)
         {

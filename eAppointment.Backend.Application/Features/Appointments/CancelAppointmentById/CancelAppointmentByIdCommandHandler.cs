@@ -7,7 +7,7 @@ using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Appointments.DeleteAppointmentById
 {
-    internal sealed class CancelAppointmentByIdCommandHandler (
+    internal sealed class CancelAppointmentByIdCommandHandler(
         IAppointmentRepository appointmentRepository,
         IUnitOfWork unitOfWork) : IRequestHandler<CancelAppointmentByIdCommand, Result<string>>
     {
@@ -15,12 +15,12 @@ namespace eAppointment.Backend.Application.Features.Appointments.DeleteAppointme
         {
             Appointment? appointment = await appointmentRepository.GetByExpressionAsync(p => p.Id == request.id, cancellationToken);
 
-            if(appointment is null)
+            if (appointment is null)
             {
                 return Result<string>.Failure("Appointment not found");
             }
 
-            if(appointment.Status == AppointmentStatus.SuccessfullyCompleted || 
+            if (appointment.Status == AppointmentStatus.SuccessfullyCompleted ||
                appointment.Status == AppointmentStatus.NotAttended)
             {
                 return Result<string>.Failure("You cannot cancel a completed appointment");

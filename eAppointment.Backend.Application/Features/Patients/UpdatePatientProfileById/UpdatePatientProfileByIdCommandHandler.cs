@@ -16,7 +16,7 @@ namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientProfil
         {
             Patient? patient = await patientRepository.GetByExpressionWithTrackingAsync(p => p.Id == request.id, cancellationToken);
 
-            if(patient is null)
+            if (patient is null)
             {
                 return Result<string>.Failure("Patient not found");
             }

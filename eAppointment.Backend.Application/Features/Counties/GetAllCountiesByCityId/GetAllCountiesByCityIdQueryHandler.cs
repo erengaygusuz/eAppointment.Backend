@@ -17,7 +17,7 @@ namespace eAppointment.Backend.Application.Features.Counties.GetAllCountiesByCit
                 .Where(x => x.CityId == request.cityId)
                 .OrderBy(p => p.Name).ToListAsync(cancellationToken);
 
-            var response = mapper.Map<List< GetAllCountiesByCityIdQueryResponse>>(counties);
+            var response = mapper.Map<List<GetAllCountiesByCityIdQueryResponse>>(counties);
 
             return response;
         }

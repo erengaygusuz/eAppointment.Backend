@@ -16,7 +16,7 @@ namespace eAppointment.Backend.Application.Features.Departments.UpdateDepartment
         {
             Department? department = await departmentRepository.GetByExpressionWithTrackingAsync(p => p.Id == request.id, cancellationToken);
 
-            if(department is null)
+            if (department is null)
             {
                 return Result<string>.Failure("Department not found");
             }

@@ -23,7 +23,6 @@ using eAppointment.Backend.Application.Features.Patients.UpdatePatientProfileByI
 using eAppointment.Backend.Application.Features.Users.GetAllUsers;
 using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Domain.Enums;
-using MediatR;
 
 namespace eAppointment.Backend.Application.Mapping
 {

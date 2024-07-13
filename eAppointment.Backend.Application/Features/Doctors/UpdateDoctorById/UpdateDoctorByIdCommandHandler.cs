@@ -9,11 +9,11 @@ using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorById
 {
-    internal sealed class UpdateDoctorByIdCommandHandler (
+    internal sealed class UpdateDoctorByIdCommandHandler(
         IMapper mapper,
         IDoctorRepository doctorRepository,
         IUnitOfWork unitOfWork,
-        UserManager<User> userManager): IRequestHandler<UpdateDoctorByIdCommand, Result<string>>
+        UserManager<User> userManager) : IRequestHandler<UpdateDoctorByIdCommand, Result<string>>
     {
         public async Task<Result<string>> Handle(UpdateDoctorByIdCommand request, CancellationToken cancellationToken)
         {

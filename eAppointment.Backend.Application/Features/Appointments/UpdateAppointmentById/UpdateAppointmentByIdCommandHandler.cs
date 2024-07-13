@@ -1,4 +1,6 @@
-﻿using eAppointment.Backend.Domain.Entities;
+﻿using AutoMapper;
+using eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsByPatientIdByStatus;
+using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Domain.Repositories;
 using GenericRepository;
 using MediatR;
@@ -8,7 +10,8 @@ namespace eAppointment.Backend.Application.Features.Appointments.UpdateAppointme
 {
     internal sealed class UpdateAppointmentByIdCommandHandler(
         IAppointmentRepository appointmentRepository,
-        IUnitOfWork unitOfWork) : IRequestHandler<UpdateAppointmentByIdCommand, Result<string>>
+        IUnitOfWork unitOfWork,
+        IMapper mapper) : IRequestHandler<UpdateAppointmentByIdCommand, Result<string>>
     {
         public async Task<Result<string>> Handle(UpdateAppointmentByIdCommand request, CancellationToken cancellationToken)
         {
@@ -30,13 +33,12 @@ namespace eAppointment.Backend.Application.Features.Appointments.UpdateAppointme
                      (p.StartDate <= startDate && p.EndDate >= endDate)), // Mevcut randevu, diğer randevuyu tamamen kapsıyor
                      cancellationToken);
 
-            if(isAppointmentDateNotAvailable)
+            if (isAppointmentDateNotAvailable)
             {
                 return Result<string>.Failure("Appointment date is not available");
             }
 
-            appointment.StartDate = startDate;
-            appointment.EndDate = endDate;
+            var response = mapper.Map<UpdateAppointmentByIdCommand>(appointment);
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 

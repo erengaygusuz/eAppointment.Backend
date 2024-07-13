@@ -1,9 +1,9 @@
-﻿using eAppointment.Backend.Application.Features.Admins.GetUserById;
+﻿using eAppointment.Backend.Application.Features.Admins.CreateAdmin;
+using eAppointment.Backend.Application.Features.Admins.GetUserById;
 using eAppointment.Backend.Application.Features.Admins.UpdateAdminById;
 using eAppointment.Backend.WebAPI.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using eAppointment.Backend.Application.Features.Admins.CreateAdmin;
 
 namespace eAppointment.Backend.WebAPI.Controllers
 {

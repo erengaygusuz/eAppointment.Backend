@@ -1,8 +1,6 @@
 ﻿using eAppointment.Backend.Application.Services;
 using eAppointment.Backend.Domain.Entities;
-using eAppointment.Backend.Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -35,7 +33,7 @@ namespace eAppointment.Backend.Infrastructure.Services
                     new Claim("PatientId", user.Patient!.Id.ToString()),
                     new Claim(ClaimTypes.Role, JsonSerializer.Serialize(stringRoles))
                 });
-            } 
+            }
             else
             {
                 claims.AddRange(new List<Claim>
