@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsByPatientIdByStatus;
 using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Domain.Repositories;
 using GenericRepository;
@@ -38,7 +37,9 @@ namespace eAppointment.Backend.Application.Features.Appointments.UpdateAppointme
                 return Result<string>.Failure("Appointment date is not available");
             }
 
-            var response = mapper.Map<UpdateAppointmentByIdCommand>(appointment);
+            mapper.Map(request, appointment);
+
+            appointmentRepository.Update(appointment);
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 

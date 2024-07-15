@@ -93,8 +93,8 @@ namespace eAppointment.Backend.Application.Mapping
                 .ForMember(dest => dest.Status, src => src.MapFrom(src => AppointmentStatus.FromValue(src.Status).Name));
 
             CreateMap<UpdateAppointmentByIdCommand, Appointment>()
-               .ForMember(dest => dest.StartDate, src => src.MapFrom(src => src.startDate))
-               .ForMember(dest => dest.EndDate, src => src.MapFrom(src => src.endDate))
+               .ForMember(dest => dest.StartDate, src => src.MapFrom(src => DateTime.ParseExact(src.startDate, "dd.MM.yyyy HH:mm", null)))
+               .ForMember(dest => dest.EndDate, src => src.MapFrom(src => DateTime.ParseExact(src.endDate, "dd.MM.yyyy HH:mm", null)))
                .ForMember(dest => dest.Status, src => src.MapFrom(src => AppointmentStatus.FromValue(src.status)));
 
             #endregion
