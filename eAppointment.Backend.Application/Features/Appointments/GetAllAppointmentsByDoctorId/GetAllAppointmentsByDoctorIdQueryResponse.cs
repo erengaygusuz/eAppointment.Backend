@@ -1,6 +1,6 @@
-﻿namespace eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsByDoctorIdAndByStatus
+﻿namespace eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsByDoctorId
 {
-    public sealed record GetAllAppointmentsByDoctorIdAndByStatusQueryResponse
+    public sealed record GetAllAppointmentsByDoctorIdQueryResponse
     {
         public int Id { get; set; }
         public string FullName { get; set; }

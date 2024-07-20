@@ -3,10 +3,12 @@ using eAppointment.Backend.Application.Features.Admins.CreateAdmin;
 using eAppointment.Backend.Application.Features.Admins.GetUserById;
 using eAppointment.Backend.Application.Features.Admins.UpdateAdminById;
 using eAppointment.Backend.Application.Features.Appointments.CreateAppointment;
+using eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsByDoctorId;
 using eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsByDoctorIdAndByStatus;
 using eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsByPatientId;
 using eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsByPatientIdByStatus;
 using eAppointment.Backend.Application.Features.Appointments.UpdateAppointmentById;
+using eAppointment.Backend.Application.Features.Appointments.UpdateAppointmentStatusById;
 using eAppointment.Backend.Application.Features.Cities.GetAllCities;
 using eAppointment.Backend.Application.Features.Counties.GetAllCountiesByCityId;
 using eAppointment.Backend.Application.Features.Departments.GetAllDepartments;
@@ -73,11 +75,19 @@ namespace eAppointment.Backend.Application.Mapping
                .ForMember(dest => dest.Doctor, src => src.Ignore())
                .ForMember(dest => dest.Patient, src => src.Ignore());
 
+            CreateMap<Appointment, GetAllAppointmentsByDoctorIdQueryResponse>()
+                .ForMember(dest => dest.Id, src => src.MapFrom(src => src.Id))
+                .ForMember(dest => dest.StartDate, src => src.MapFrom(src => src.StartDate.ToString("dd.MM.yyyy HH:mm")))
+                .ForMember(dest => dest.EndDate, src => src.MapFrom(src => src.EndDate.ToString("dd.MM.yyyy HH:mm")))
+                .ForMember(dest => dest.Status, src => src.MapFrom(src => AppointmentStatus.FromValue(src.Status).Name))
+                .ForPath(dest => dest.FullName, src => src.MapFrom(src => src.Patient.User!.FirstName + " " + src.Patient.User!.LastName));
+
             CreateMap<Appointment, GetAllAppointmentsByDoctorIdAndByStatusQueryResponse>()
                 .ForMember(dest => dest.Id, src => src.MapFrom(src => src.Id))
-                .ForMember(dest => dest.StartDate, src => src.MapFrom(src => src.StartDate))
-                .ForMember(dest => dest.EndDate, src => src.MapFrom(src => src.EndDate))
-                .ForPath(dest => dest.Title, src => src.MapFrom(src => src.Patient.User!.FirstName + " " + src.Patient.User!.LastName));
+                .ForMember(dest => dest.StartDate, src => src.MapFrom(src => src.StartDate.ToString("dd.MM.yyyy HH:mm")))
+                .ForMember(dest => dest.EndDate, src => src.MapFrom(src => src.EndDate.ToString("dd.MM.yyyy HH:mm")))
+                .ForMember(dest => dest.Status, src => src.MapFrom(src => AppointmentStatus.FromValue(src.Status).Name))
+                .ForPath(dest => dest.FullName, src => src.MapFrom(src => src.Patient.User!.FirstName + " " + src.Patient.User!.LastName));
 
             CreateMap<Appointment, GetAllAppointmentsByPatientIdAndByStatusQueryResponse>()
                 .ForMember(dest => dest.Id, src => src.MapFrom(src => src.Id))
@@ -95,6 +105,9 @@ namespace eAppointment.Backend.Application.Mapping
             CreateMap<UpdateAppointmentByIdCommand, Appointment>()
                .ForMember(dest => dest.StartDate, src => src.MapFrom(src => DateTime.ParseExact(src.startDate, "dd.MM.yyyy HH:mm", null)))
                .ForMember(dest => dest.EndDate, src => src.MapFrom(src => DateTime.ParseExact(src.endDate, "dd.MM.yyyy HH:mm", null)))
+               .ForMember(dest => dest.Status, src => src.MapFrom(src => AppointmentStatus.FromValue(src.status)));
+
+            CreateMap<UpdateAppointmentStatusByIdCommand, Appointment>()
                .ForMember(dest => dest.Status, src => src.MapFrom(src => AppointmentStatus.FromValue(src.status)));
 
             #endregion

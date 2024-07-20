@@ -34,6 +34,20 @@ namespace eAppointment.Backend.Infrastructure.Services
                     new Claim(ClaimTypes.Role, JsonSerializer.Serialize(stringRoles))
                 });
             }
+
+            else if (user.Doctor != null)
+            {
+                claims.AddRange(new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.FirstName + " " + user.LastName),
+                    new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
+                    new Claim("UserName", user.UserName ?? string.Empty),
+                    new Claim("DoctorId", user.Doctor!.Id.ToString()),
+                    new Claim(ClaimTypes.Role, JsonSerializer.Serialize(stringRoles))
+                });
+            }
+
             else
             {
                 claims.AddRange(new List<Claim>
