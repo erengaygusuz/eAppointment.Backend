@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using eAppointment.Backend.Domain.Entities;
+using FluentValidation;
 using GenericRepository;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -12,10 +13,18 @@ namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
     internal sealed class CreateAdminCommandHandler(
         UserManager<User> userManager,
         IUnitOfWork unitOfWork,
-        IMapper mapper) : IRequestHandler<CreateAdminCommand, Result<string>>
+        IMapper mapper,
+        IValidator<CreateAdminCommand> createAdminCommandValidator) : IRequestHandler<CreateAdminCommand, Result<string>>
     {
         public async Task<Result<string>> Handle(CreateAdminCommand request, CancellationToken cancellationToken)
         {
+            var validationResult = await createAdminCommandValidator.ValidateAsync(request);
+
+            if (!validationResult.IsValid)
+            {
+                return Result<string>.Failure(validationResult.Errors.Select(x => x.ErrorMessage).ToList());
+            }
+
             if (await userManager.Users.AnyAsync(p => p.Email == request.email))
             {
                 return Result<string>.Failure("Email alraedy exists");
