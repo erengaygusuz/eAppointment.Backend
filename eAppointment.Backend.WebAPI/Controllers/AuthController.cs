@@ -3,14 +3,18 @@ using eAppointment.Backend.WebAPI.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 
 namespace eAppointment.Backend.WebAPI.Controllers
 {
     [AllowAnonymous]
     public sealed class AuthController : ApiController
     {
-        public AuthController(IMediator mediator) : base(mediator)
+        private readonly IStringLocalizer<AuthController> _localization;
+
+        public AuthController(IMediator mediator, IStringLocalizer<AuthController> localization) : base(mediator)
         {
+            _localization = localization;
         }
 
         [HttpPost]
@@ -19,6 +23,14 @@ namespace eAppointment.Backend.WebAPI.Controllers
             var response = await _mediator.Send(request, cancellationToken);
 
             return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpGet("{name}")]
+        public IActionResult Get(string name)
+        {
+            var welcomeMessage = string.Format(_localization["welcome"], name);
+
+            return Ok(welcomeMessage);
         }
     }
 }
