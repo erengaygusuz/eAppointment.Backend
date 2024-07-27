@@ -4,7 +4,7 @@ using FluentValidation;
 using GenericRepository;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using System.Data;
 using TS.Result;
 
@@ -14,25 +14,18 @@ namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
         UserManager<User> userManager,
         IUnitOfWork unitOfWork,
         IMapper mapper,
-        IValidator<CreateAdminCommand> createAdminCommandValidator) : IRequestHandler<CreateAdminCommand, Result<string>>
+        IValidator<CreateAdminCommand> createAdminCommandValidator,
+        IStringLocalizer<object> localization) : IRequestHandler<CreateAdminCommand, Result<string>>
     {
         public async Task<Result<string>> Handle(CreateAdminCommand request, CancellationToken cancellationToken)
         {
+            var translatedMessagePath = "Features.Admins.CreateAdmin.Others";
+
             var validationResult = await createAdminCommandValidator.ValidateAsync(request);
 
             if (!validationResult.IsValid)
             {
                 return Result<string>.Failure(validationResult.Errors.Select(x => x.ErrorMessage).ToList());
-            }
-
-            if (await userManager.Users.AnyAsync(p => p.Email == request.email))
-            {
-                return Result<string>.Failure("Email alraedy exists");
-            }
-
-            if (await userManager.Users.AnyAsync(p => p.UserName == request.userName))
-            {
-                return Result<string>.Failure("User Name alraedy exists");
             }
 
             User user = mapper.Map<User>(request);
@@ -41,7 +34,7 @@ namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
 
             if (!result.Succeeded)
             {
-                return Result<string>.Failure(result.Errors.Select(s => s.Description).ToList());
+                return Result<string>.Failure(localization[translatedMessagePath + "." + "UserCannotCreated"]);
             }
 
             var addedUser = await userManager.FindByEmailAsync(user.Email!);
@@ -50,12 +43,12 @@ namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
 
             if (!roleResult.Succeeded)
             {
-                return Result<string>.Failure("Role could not add to user");
+                return Result<string>.Failure(localization[translatedMessagePath + "." + "RoleCannotAddedToUser"]);
             }
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return "User created successfully";
+            return localization[translatedMessagePath + "." + "UserSuccessfullyCreated"].Value;
         }
     }
 }

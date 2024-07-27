@@ -1,3 +1,53 @@
 {
-  "welcome": "Hoşgeldin {0}, Nasılsın?"
+  "Features": {
+    "Admins": {
+      "CreateAdmin": {
+        "ValidationMessages": {
+          "FirstName": {
+            "NotNull": "Lütfen ad alanını boş bırakmayınız",
+            "MinimumLength": "Lütfen ad alanı için minimum 3 karakter giriniz",
+            "MaximumLength": "Lütfen ad alanı için maksimum 50 karakter giriniz",
+            "NotUseNumbers": "Lütfen ad alanı için rakam kullanmayınız"
+          },
+          "LastName": {
+            "NotNull": "Lütfen soyad alanını boş bırakmayınız",
+            "MinimumLength": "Lütfen soyad alanı için minimum 3 karakter giriniz",
+            "MaximumLength": "Lütfen soyad alanı için maksimum 50 karakter giriniz",
+            "NotUseNumbers": "Lütfen soyad alanı için rakam kullanmayınız"
+          },
+          "UserName": {
+            "NotNull": "Lütfen kullanıcı adı alanını boş bırakmayınız",
+            "MinimumLength": "Lütfen kullanıcı adı alanı için minimum 3 karakter giriniz",
+            "MaximumLength": "Lütfen kullanıcı adı alanı için maksimum 100 karakter giriniz",
+            "NotUseSpaces": "Lütfen kullanıcı adı alanında boşluk karakteri kullanmayınız",
+            "NotUseTurkishCharacters": "Lütfen kullanıcı adı alanında türkçe karakter kullanmayınız",
+            "NotUseUpperLetters": "Lütfen kullanıcı adı alanında büyük harf kullanmayınız",
+            "NotUseNumbers": "Lütfen kullanıcı adı alanı için rakam kullanmayınız",
+            "NotUnique": "Lütfen benzersiz bir kullanıcı adı giriniz"
+          },
+          "Email": {
+            "NotNull": "Lütfen e-posta alanını boş bırakmayınız",
+            "MaximumLength": "Lütfen geçerli bir e-posta giriniz",
+            "NotValid": "Lütfen e-posta alanı için maksimum 150 karakter giriniz",
+            "NotUnique": "Lütfen benzersiz bir e-posta adresi giriniz"
+          },
+          "PhoneNumber": {
+            "NotNull": "Lütfen telefon numarası alanını boş bırakmayınız",
+            "NotValid": "Lütfen geçerli bir telefon numarası giriniz",
+            "NotUseLetters": "Lütfen telefon numarası alanı için harf kullanmayınız"
+          },
+          "Password": {
+            "NotNull": "Lütfen şifre alanını boş bırakmayınız",
+            "MinimumLength": "Lütfen şifre alanı için minimum 1 karakter giriniz",
+            "MaximumLength": "Lütfen şifre alanı için maksimum 5 karakter giriniz"
+          }
+        },
+        "Others": {
+          "UserCannotCreated": "Kullanıcı oluşturulamadı",
+          "RoleCannotAddedToUser": "Rol kullanıcıya eklenemedi",
+          "UserSuccessfullyCreated": "Kullanıcı başarılı bir şekilde oluşturuldu"
+        }
+      }
+    }
+  }
 }

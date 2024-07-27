@@ -19,7 +19,6 @@ namespace eAppointment.Backend.Infrastructure
 
             services.AddIdentity<User, Role>(action =>
             {
-
                 action.Password.RequiredLength = 1;
                 action.Password.RequireUppercase = false;
                 action.Password.RequireLowercase = false;

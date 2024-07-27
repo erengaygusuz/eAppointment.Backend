@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Text;
 
 namespace eAppointment.Backend.Infrastructure.Services
@@ -105,19 +106,18 @@ namespace eAppointment.Backend.Infrastructure.Services
 
             using StreamReader streamReader = new(stream);
 
-            using JsonTextReader reader = new(streamReader);
+            var jsonText = streamReader.ReadToEnd();
 
-            while (reader.Read())
+            var jObject = JObject.Parse(jsonText);
+
+            var str = (string)jObject.SelectToken(propertyName);
+
+            if (str == null)
             {
-                if (reader.TokenType == JsonToken.PropertyName && reader.Value as string == propertyName)
-                {
-                    reader.Read();
-
-                    return _serializer.Deserialize<string>(reader);
-                }
+                return string.Empty;
             }
 
-            return string.Empty;
+            return str;
         }
     }
 }

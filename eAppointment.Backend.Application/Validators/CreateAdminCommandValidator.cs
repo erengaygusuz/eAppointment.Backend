@@ -2,54 +2,59 @@
 using eAppointment.Backend.Domain.Entities;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Localization;
 
 namespace eAppointment.Backend.Application.Validators
 {
     public class CreateAdminCommandValidator : AbstractValidator<CreateAdminCommand>
     {
         private readonly UserManager<User> _userManager;
+        private readonly IStringLocalizer<object> _localization;
 
-        public CreateAdminCommandValidator(UserManager<User> userManager)
+        public CreateAdminCommandValidator(UserManager<User> userManager, IStringLocalizer<object> localization)
         {
             _userManager = userManager;
+            _localization = localization;
+
+            var validationMessagePath = "Features.Admins.CreateAdmin.ValidationMessages";
 
             RuleFor(x => x.firstName)
-                .NotNull().WithMessage("Please fill the firstname")
-                .MinimumLength(3).WithMessage("Please enter minimum 3 character for firstname")
-                .MaximumLength(50).WithMessage("Please enter maximum 50 character for firstname")
-                .Matches("^((?![0-9]).)*$").WithMessage("Please do not use numbers in the firstname");
+                .NotNull().WithMessage(_localization[validationMessagePath + "." + "FirstName.NotNull"])
+                .MinimumLength(3).WithMessage(_localization[validationMessagePath + "." + "FirstName.MinimumLength"])
+                .MaximumLength(50).WithMessage(_localization[validationMessagePath + "." + "FirstName.MaximumLength"])
+                .Matches("^((?![0-9]).)*$").WithMessage(_localization[validationMessagePath + "." + "FirstName.NotUseNumbers"]);
 
             RuleFor(x => x.lastName)
-                .NotNull().WithMessage("Please fill the lastname")
-                .MinimumLength(3).WithMessage("Please enter minimum 3 character for lastname")
-                .MaximumLength(50).WithMessage("Please enter maximum 50 character for lastname")
-                .Matches("^((?![0-9]).)*$").WithMessage("Please do not use numbers in the lastname");
+                .NotNull().WithMessage(_localization[validationMessagePath + "." + "LastName.NotNull"])
+                .MinimumLength(3).WithMessage(_localization[validationMessagePath + "." + "LastName.MinimumLength"])
+                .MaximumLength(50).WithMessage(_localization[validationMessagePath + "." + "LastName.MaximumLength"])
+                .Matches("^((?![0-9]).)*$").WithMessage(_localization[validationMessagePath + "." + "LastName.NotUseNumbers"]);
 
             RuleFor(x => x.userName)
-                .NotNull().WithMessage("Please fill the username")
-                .MinimumLength(3).WithMessage("Please enter minimum 3 character for username")
-                .MaximumLength(100).WithMessage("Please enter maximum 50 character for username")
-                .Matches("^((?![ ]).)*$").WithMessage("Please do not use spaces for username")
-                .Matches("^((?![ğĞçÇşŞüÜöÖıİ]).)*$").WithMessage("Please do not use turkish characters for username")
-                .Matches("^((?![A-Z]).)*$").WithMessage("Please do not use upper letters for username")
-                .Matches("^((?![0-9]).)*$").WithMessage("Please do not use numbers in the username")
-                .Must(UniqueUsername).WithMessage("Please choose a unique username");
+                .NotNull().WithMessage(_localization[validationMessagePath + "." + "UserName.NotNull"])
+                .MinimumLength(3).WithMessage(_localization[validationMessagePath + "." + "UserName.MinimumLength"])
+                .MaximumLength(100).WithMessage(_localization[validationMessagePath + "." + "UserName.MaximumLength"])
+                .Matches("^((?![ ]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseSpaces"])
+                .Matches("^((?![ğĞçÇşŞüÜöÖıİ]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseTurkishCharacters"])
+                .Matches("^((?![A-Z]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseUpperLetters"])
+                .Matches("^((?![0-9]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseNumbers"])
+                .Must(UniqueUsername).WithMessage(_localization[validationMessagePath + "." + "UserName.NotUnique"]);
 
             RuleFor(x => x.email)
-                .NotNull().WithMessage("Please fill the e-mail")
-                .MaximumLength(150).WithMessage("Please enter maximum 150 character for e-mail")
-                .EmailAddress().WithMessage("Please enter a valid e-mail")
-                .Must(UniqueEmail).WithMessage("Please choose a unique e-mail");
+                .NotNull().WithMessage(_localization[validationMessagePath + "." + "Email.NotNull"])
+                .MaximumLength(150).WithMessage(_localization[validationMessagePath + "." + "Email.MaximumLength"])
+                .EmailAddress().WithMessage(_localization[validationMessagePath + "." + "Email.NotValid"])
+                .Must(UniqueEmail).WithMessage(_localization[validationMessagePath + "." + "Email.NotUnique"]);
 
             RuleFor(x => x.phoneNumber)
-                .NotNull().WithMessage("Please fill the phone number")
-                .Matches("((\\(\\d{3}\\) ?)|(\\d{3}-)) ?\\d{3}-\\d{4}").WithMessage("Please enter a valid phone number")
-                .Matches("^((?![a-zA-Z]).)*$").WithMessage("Please do not use letters in the phone number");
+                .NotNull().WithMessage(_localization[validationMessagePath + "." + "PhoneNumber.NotNull"])
+                .Matches("((\\(\\d{3}\\) ?)|(\\d{3}-)) ?\\d{3}-\\d{4}").WithMessage(_localization[validationMessagePath + "." + "PhoneNumber.NotValid"])
+                .Matches("^((?![a-zA-Z]).)*$").WithMessage(_localization[validationMessagePath + "." + "PhoneNumber.NotUseLetters"]);
 
             RuleFor(x => x.password)
-                .NotNull().WithMessage("Please fill the password")
-                .MinimumLength(1).WithMessage("Please enter minimum 1 character for password")
-                .MaximumLength(5).WithMessage("Please enter maximum 5 character for password");
+                .NotNull().WithMessage(_localization[validationMessagePath + "." + "Password.NotNull"])
+                .MinimumLength(1).WithMessage(_localization[validationMessagePath + "." + "Password.MinimumLength"])
+                .MaximumLength(5).WithMessage(_localization[validationMessagePath + "." + "Password.MaximumLength"]);
         }
 
         private bool UniqueUsername(string username)
