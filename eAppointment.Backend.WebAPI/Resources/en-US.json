@@ -47,6 +47,290 @@
           "RoleCannotAddedToUser": "Role could not add to user",
           "UserSuccessfullyCreated": "User created successfully"
         }
+      },
+      "CreateAppointment": {
+        "ValidationMessages": {
+          "StartDate": {
+            "NotNull": "Please fill the start date",
+            "IsValidDate": "Start date is not valid"
+          },
+          "EndDate": {
+            "NotNull": "Please fill the end date",
+            "IsValidDate": "End date is not valid"
+          },
+          "PatientId": {
+            "GreaterThan": "Patient id should be greater than 0"
+          },
+          "DoctorId": {
+            "GreaterThan": "Doctor id should be greater than 0"
+          },
+          "Composite": {
+            "IsAvailable": "Appointment is not available"
+          }
+        },
+        "Others": {
+          "AppointmentSuccessfullyCreated": "Appointment created successfully"
+        }
+      },
+      "CreateDoctor": {
+        "ValidationMessages": {
+          "FirstName": {
+            "NotNull": "Please fill the firstname",
+            "MinimumLength": "Please enter minimum 3 character for firstname",
+            "MaximumLength": "Please enter maximum 50 character for firstname",
+            "NotUseNumbers": "Please do not use numbers in the firstname"
+          },
+          "LastName": {
+            "NotNull": "Please fill the lastname",
+            "MinimumLength": "Please enter minimum 3 character for lastname",
+            "MaximumLength": "Please enter maximum 50 character for lastname",
+            "NotUseNumbers": "Please do not use numbers in the lastname"
+          },
+          "UserName": {
+            "NotNull": "Please fill the username",
+            "MinimumLength": "Please enter minimum 3 character for username",
+            "MaximumLength": "Please enter maximum 50 character for username",
+            "NotUseSpaces": "Please do not use spaces for username",
+            "NotUseTurkishCharacters": "Please do not use turkish characters for username",
+            "NotUseUpperLetters": "Please do not use upper letters for username",
+            "NotUseNumbers": "Please do not use numbers in the username",
+            "NotUnique": "Please choose a unique username"
+          },
+          "Email": {
+            "NotNull": "Please fill the e-mail",
+            "MaximumLength": "Please enter maximum 150 character for e-mail",
+            "NotValid": "Please enter a valid e-mail",
+            "NotUnique": "Please choose a unique e-mail"
+          },
+          "PhoneNumber": {
+            "NotNull": "Please fill the phone number",
+            "NotValid": "Please enter a valid phone number",
+            "NotUseLetters": "Please do not use letters in the phone number"
+          },
+          "Password": {
+            "NotNull": "Please fill the password",
+            "MinimumLength": "Please enter minimum 1 character for password",
+            "MaximumLength": "Please enter maximum 5 character for password"
+          }
+          "DepartmentId": {
+
+          }
+        }
+      },
+      "CreatePatient": {
+        "ValidationMessages": {
+          "FirstName": {
+            "NotNull": "Please fill the firstname",
+            "MinimumLength": "Please enter minimum 3 character for firstname",
+            "MaximumLength": "Please enter maximum 50 character for firstname",
+            "NotUseNumbers": "Please do not use numbers in the firstname"
+          },
+          "LastName": {
+            "NotNull": "Please fill the lastname",
+            "MinimumLength": "Please enter minimum 3 character for lastname",
+            "MaximumLength": "Please enter maximum 50 character for lastname",
+            "NotUseNumbers": "Please do not use numbers in the lastname"
+          },
+          "Email": {
+            "NotNull": "Please fill the e-mail",
+            "MaximumLength": "Please enter maximum 150 character for e-mail",
+            "NotValid": "Please enter a valid e-mail",
+            "NotUnique": "Please choose a unique e-mail"
+          },
+          "PhoneNumber": {
+            "NotNull": "Please fill the phone number",
+            "NotValid": "Please enter a valid phone number",
+            "NotUseLetters": "Please do not use letters in the phone number"
+          },
+          "UserName": {
+            "NotNull": "Please fill the username",
+            "MinimumLength": "Please enter minimum 3 character for username",
+            "MaximumLength": "Please enter maximum 50 character for username",
+            "NotUseSpaces": "Please do not use spaces for username",
+            "NotUseTurkishCharacters": "Please do not use turkish characters for username",
+            "NotUseUpperLetters": "Please do not use upper letters for username",
+            "NotUseNumbers": "Please do not use numbers in the username",
+            "NotUnique": "Please choose a unique username"
+          },
+          "IdentityNumber": {
+
+          },
+          "CountyId": {
+
+          },
+          "FullAddress": {
+
+          },
+          "Password": {
+            "NotNull": "Please fill the password",
+            "MinimumLength": "Please enter minimum 1 character for password",
+            "MaximumLength": "Please enter maximum 5 character for password"
+          }
+        }
+      },
+      "Login": {
+        "ValidationMessages": {
+          "UserNameOrEmail": {
+            "NotNull": "Please fill the firstname",
+            "MinimumLength": "Please enter minimum 3 character for firstname",
+            "MaximumLength": "Please enter maximum 50 character for firstname",
+            "NotUseNumbers": "Please do not use numbers in the firstname"
+          },
+          "Password": {
+            "NotNull": "Please fill the password",
+            "MinimumLength": "Please enter minimum 1 character for password",
+            "MaximumLength": "Please enter maximum 5 character for password"
+          }
+        }
+      },
+      "UpdateAdmin": {
+        "ValidationMessages": {
+          "FirstName": {
+            "NotNull": "Please fill the firstname",
+            "MinimumLength": "Please enter minimum 3 character for firstname",
+            "MaximumLength": "Please enter maximum 50 character for firstname",
+            "NotUseNumbers": "Please do not use numbers in the firstname"
+          },
+          "LastName": {
+            "NotNull": "Please fill the lastname",
+            "MinimumLength": "Please enter minimum 3 character for lastname",
+            "MaximumLength": "Please enter maximum 50 character for lastname",
+            "NotUseNumbers": "Please do not use numbers in the lastname"
+          },
+          "UserName": {
+            "NotNull": "Please fill the username",
+            "MinimumLength": "Please enter minimum 3 character for username",
+            "MaximumLength": "Please enter maximum 50 character for username",
+            "NotUseSpaces": "Please do not use spaces for username",
+            "NotUseTurkishCharacters": "Please do not use turkish characters for username",
+            "NotUseUpperLetters": "Please do not use upper letters for username",
+            "NotUseNumbers": "Please do not use numbers in the username",
+            "NotUnique": "Please choose a unique username"
+          },
+          "Email": {
+            "NotNull": "Please fill the e-mail",
+            "MaximumLength": "Please enter maximum 150 character for e-mail",
+            "NotValid": "Please enter a valid e-mail",
+            "NotUnique": "Please choose a unique e-mail"
+          },
+          "PhoneNumber": {
+            "NotNull": "Please fill the phone number",
+            "NotValid": "Please enter a valid phone number",
+            "NotUseLetters": "Please do not use letters in the phone number"
+          }
+        }
+      },
+      "UpdateAppointment": {
+        "ValidationMessages": {
+          "StartDate": {
+
+          },
+          "EndDate": {
+
+          },
+          "PatientId": {
+
+          },
+          "DoctorId": {
+
+          }
+        }
+      },
+      "UpdateDoctor": {
+        "ValidationMessages": {
+          "FirstName": {
+            "NotNull": "Please fill the firstname",
+            "MinimumLength": "Please enter minimum 3 character for firstname",
+            "MaximumLength": "Please enter maximum 50 character for firstname",
+            "NotUseNumbers": "Please do not use numbers in the firstname"
+          },
+          "LastName": {
+            "NotNull": "Please fill the lastname",
+            "MinimumLength": "Please enter minimum 3 character for lastname",
+            "MaximumLength": "Please enter maximum 50 character for lastname",
+            "NotUseNumbers": "Please do not use numbers in the lastname"
+          },
+          "UserName": {
+            "NotNull": "Please fill the username",
+            "MinimumLength": "Please enter minimum 3 character for username",
+            "MaximumLength": "Please enter maximum 50 character for username",
+            "NotUseSpaces": "Please do not use spaces for username",
+            "NotUseTurkishCharacters": "Please do not use turkish characters for username",
+            "NotUseUpperLetters": "Please do not use upper letters for username",
+            "NotUseNumbers": "Please do not use numbers in the username",
+            "NotUnique": "Please choose a unique username"
+          },
+          "Email": {
+            "NotNull": "Please fill the e-mail",
+            "MaximumLength": "Please enter maximum 150 character for e-mail",
+            "NotValid": "Please enter a valid e-mail",
+            "NotUnique": "Please choose a unique e-mail"
+          },
+          "PhoneNumber": {
+            "NotNull": "Please fill the phone number",
+            "NotValid": "Please enter a valid phone number",
+            "NotUseLetters": "Please do not use letters in the phone number"
+          },
+          "Password": {
+            "NotNull": "Please fill the password",
+            "MinimumLength": "Please enter minimum 1 character for password",
+            "MaximumLength": "Please enter maximum 5 character for password"
+          },
+          "DepartmentId": {
+
+          }
+        }
+      },
+      "UpdatePatient": {
+        "ValidationMessages": {
+          "FirstName": {
+            "NotNull": "Please fill the firstname",
+            "MinimumLength": "Please enter minimum 3 character for firstname",
+            "MaximumLength": "Please enter maximum 50 character for firstname",
+            "NotUseNumbers": "Please do not use numbers in the firstname"
+          },
+          "LastName": {
+            "NotNull": "Please fill the lastname",
+            "MinimumLength": "Please enter minimum 3 character for lastname",
+            "MaximumLength": "Please enter maximum 50 character for lastname",
+            "NotUseNumbers": "Please do not use numbers in the lastname"
+          },
+          "Email": {
+            "NotNull": "Please fill the e-mail",
+            "MaximumLength": "Please enter maximum 150 character for e-mail",
+            "NotValid": "Please enter a valid e-mail",
+            "NotUnique": "Please choose a unique e-mail"
+          },
+          "PhoneNumber": {
+            "NotNull": "Please fill the phone number",
+            "NotValid": "Please enter a valid phone number",
+            "NotUseLetters": "Please do not use letters in the phone number"
+          },
+          "UserName": {
+            "NotNull": "Please fill the username",
+            "MinimumLength": "Please enter minimum 3 character for username",
+            "MaximumLength": "Please enter maximum 50 character for username",
+            "NotUseSpaces": "Please do not use spaces for username",
+            "NotUseTurkishCharacters": "Please do not use turkish characters for username",
+            "NotUseUpperLetters": "Please do not use upper letters for username",
+            "NotUseNumbers": "Please do not use numbers in the username",
+            "NotUnique": "Please choose a unique username"
+          },
+          "IdentityNumber": {
+
+          },
+          "CountyId": {
+
+          },
+          "FullAddress": {
+
+          },
+          "Password": {
+            "NotNull": "Please fill the password",
+            "MinimumLength": "Please enter minimum 1 character for password",
+            "MaximumLength": "Please enter maximum 5 character for password"
+          }
+        }
       }
     }
   }

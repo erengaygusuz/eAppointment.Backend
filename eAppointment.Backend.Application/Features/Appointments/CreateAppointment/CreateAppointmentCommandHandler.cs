@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Domain.Repositories;
+using FluentValidation;
 using GenericRepository;
 using MediatR;
+using Microsoft.Extensions.Localization;
 using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Appointments.CreateAppointment
@@ -10,26 +12,19 @@ namespace eAppointment.Backend.Application.Features.Appointments.CreateAppointme
     internal sealed class CreateAppointmentCommandHandler(
         IAppointmentRepository appointmentRepository,
         IUnitOfWork unitOfWork,
-        IMapper mapper) : IRequestHandler<CreateAppointmentCommand, Result<string>>
+        IMapper mapper,
+        IValidator<CreateAppointmentCommand> createAppoitmentCommandValidator,
+        IStringLocalizer<object> localization) : IRequestHandler<CreateAppointmentCommand, Result<string>>
     {
         public async Task<Result<string>> Handle(CreateAppointmentCommand request, CancellationToken cancellationToken)
         {
-            Patient patient = new();
+            var translatedMessagePath = "Features.Appointments.CreateAppointment.Others";
 
-            DateTime startDate = DateTime.ParseExact(request.startDate, "dd.MM.yyyy HH:mm", null);
-            DateTime endDate = DateTime.ParseExact(request.endDate, "dd.MM.yyyy HH:mm", null);
+            var validationResult = await createAppoitmentCommandValidator.ValidateAsync(request);
 
-            bool isAppointmentDateNotAvailable = await appointmentRepository
-                    .AnyAsync(p => p.DoctorId == request.doctorId &&
-                     ((p.StartDate < endDate && p.StartDate >= startDate) || // Mevcut randevunun bitişi, diğer randevunun başlangıcıyla çakışıyor
-                     (p.EndDate > startDate && p.EndDate <= endDate) || // Mevcut randevunun başlangıcı, diğer randevunun bitişiyle çakışıyor
-                     (p.StartDate >= startDate && p.EndDate <= endDate) || // Mevcut randevu, diğer randevu içinde tamamen
-                     (p.StartDate <= startDate && p.EndDate >= endDate)), // Mevcut randevu, diğer randevuyu tamamen kapsıyor
-                     cancellationToken);
-
-            if (isAppointmentDateNotAvailable)
+            if (!validationResult.IsValid)
             {
-                return Result<string>.Failure("Appointment date is not available");
+                return Result<string>.Failure(validationResult.Errors.Select(x => x.ErrorMessage).ToList());
             }
 
             var appointment = mapper.Map<Appointment>(request);
@@ -38,7 +33,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.CreateAppointme
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return "Appointment created successfully";
+            return localization[translatedMessagePath + "." + "AppointmentSuccessfullyCreated"].Value;
         }
     }
 }
