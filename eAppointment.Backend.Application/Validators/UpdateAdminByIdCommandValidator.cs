@@ -16,7 +16,7 @@ namespace eAppointment.Backend.Application.Validators
             _userManager = userManager;
             _localization = localization;
 
-            var validationMessagePath = "Features.Admins.CreateAdmin.ValidationMessages";
+            var validationMessagePath = "Features.Admins.UpdateAdmin.ValidationMessages";
 
             RuleFor(x => x.firstName)
                 .NotNull().WithMessage(_localization[validationMessagePath + "." + "FirstName.NotNull"])
@@ -50,11 +50,6 @@ namespace eAppointment.Backend.Application.Validators
                 .NotNull().WithMessage(_localization[validationMessagePath + "." + "PhoneNumber.NotNull"])
                 .Matches("((\\(\\d{3}\\) ?)|(\\d{3}-)) ?\\d{3}-\\d{4}").WithMessage(_localization[validationMessagePath + "." + "PhoneNumber.NotValid"])
                 .Matches("^((?![a-zA-Z]).)*$").WithMessage(_localization[validationMessagePath + "." + "PhoneNumber.NotUseLetters"]);
-
-            RuleFor(x => x.password)
-                .NotNull().WithMessage(_localization[validationMessagePath + "." + "Password.NotNull"])
-                .MinimumLength(1).WithMessage(_localization[validationMessagePath + "." + "Password.MinimumLength"])
-                .MaximumLength(5).WithMessage(_localization[validationMessagePath + "." + "Password.MaximumLength"]);
         }
 
         private bool UniqueUsername(string username)
