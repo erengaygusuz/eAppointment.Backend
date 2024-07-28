@@ -16,21 +16,9 @@ namespace eAppointment.Backend.Application.Validators
             _userManager = userManager;
             _localization = localization;
 
-            var validationMessagePath = "Features.Admins.CreateAdmin.ValidationMessages";
+            var validationMessagePath = "Features.Auth.Login.ValidationMessages";
 
-            RuleFor(x => x.firstName)
-                .NotNull().WithMessage(_localization[validationMessagePath + "." + "FirstName.NotNull"])
-                .MinimumLength(3).WithMessage(_localization[validationMessagePath + "." + "FirstName.MinimumLength"])
-                .MaximumLength(50).WithMessage(_localization[validationMessagePath + "." + "FirstName.MaximumLength"])
-                .Matches("^((?![0-9]).)*$").WithMessage(_localization[validationMessagePath + "." + "FirstName.NotUseNumbers"]);
-
-            RuleFor(x => x.lastName)
-                .NotNull().WithMessage(_localization[validationMessagePath + "." + "LastName.NotNull"])
-                .MinimumLength(3).WithMessage(_localization[validationMessagePath + "." + "LastName.MinimumLength"])
-                .MaximumLength(50).WithMessage(_localization[validationMessagePath + "." + "LastName.MaximumLength"])
-                .Matches("^((?![0-9]).)*$").WithMessage(_localization[validationMessagePath + "." + "LastName.NotUseNumbers"]);
-
-            RuleFor(x => x.userName)
+            RuleFor(x => x.userNameOrEmail)
                 .NotNull().WithMessage(_localization[validationMessagePath + "." + "UserName.NotNull"])
                 .MinimumLength(3).WithMessage(_localization[validationMessagePath + "." + "UserName.MinimumLength"])
                 .MaximumLength(100).WithMessage(_localization[validationMessagePath + "." + "UserName.MaximumLength"])
@@ -39,17 +27,6 @@ namespace eAppointment.Backend.Application.Validators
                 .Matches("^((?![A-Z]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseUpperLetters"])
                 .Matches("^((?![0-9]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseNumbers"])
                 .Must(UniqueUsername).WithMessage(_localization[validationMessagePath + "." + "UserName.NotUnique"]);
-
-            RuleFor(x => x.email)
-                .NotNull().WithMessage(_localization[validationMessagePath + "." + "Email.NotNull"])
-                .MaximumLength(150).WithMessage(_localization[validationMessagePath + "." + "Email.MaximumLength"])
-                .EmailAddress().WithMessage(_localization[validationMessagePath + "." + "Email.NotValid"])
-                .Must(UniqueEmail).WithMessage(_localization[validationMessagePath + "." + "Email.NotUnique"]);
-
-            RuleFor(x => x.phoneNumber)
-                .NotNull().WithMessage(_localization[validationMessagePath + "." + "PhoneNumber.NotNull"])
-                .Matches("((\\(\\d{3}\\) ?)|(\\d{3}-)) ?\\d{3}-\\d{4}").WithMessage(_localization[validationMessagePath + "." + "PhoneNumber.NotValid"])
-                .Matches("^((?![a-zA-Z]).)*$").WithMessage(_localization[validationMessagePath + "." + "PhoneNumber.NotUseLetters"]);
 
             RuleFor(x => x.password)
                 .NotNull().WithMessage(_localization[validationMessagePath + "." + "Password.NotNull"])
@@ -65,23 +42,6 @@ namespace eAppointment.Backend.Application.Validators
             }
 
             var user = _userManager.FindByNameAsync(username).GetAwaiter().GetResult();
-
-            if (user == null)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        private bool UniqueEmail(string email)
-        {
-            if (string.IsNullOrEmpty(email))
-            {
-                return true;
-            }
-
-            var user = _userManager.FindByEmailAsync(email).GetAwaiter().GetResult();
 
             if (user == null)
             {

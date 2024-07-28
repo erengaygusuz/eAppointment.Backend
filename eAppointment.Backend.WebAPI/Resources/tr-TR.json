@@ -147,16 +147,24 @@
       "Login": {
         "ValidationMessages": {
           "UserNameOrEmail": {
-            "NotNull": "Please fill the firstname",
-            "MinimumLength": "Please enter minimum 3 character for firstname",
-            "MaximumLength": "Please enter maximum 50 character for firstname",
-            "NotUseNumbers": "Please do not use numbers in the firstname"
+            "NotNull": "Lütfen kullanıcı adı alanını boş bırakmayınız",
+            "MinimumLength": "Lütfen kullanıcı adı alanı için minimum 3 karakter giriniz",
+            "MaximumLength": "Lütfen kullanıcı adı alanı için maksimum 100 karakter giriniz",
+            "NotUseSpaces": "Lütfen kullanıcı adı alanında boşluk karakteri kullanmayınız",
+            "NotUseTurkishCharacters": "Lütfen kullanıcı adı alanında türkçe karakter kullanmayınız",
+            "NotUseUpperLetters": "Lütfen kullanıcı adı alanında büyük harf kullanmayınız",
+            "NotUseNumbers": "Lütfen kullanıcı adı alanı için rakam kullanmayınız",
+            "NotUnique": "Lütfen benzersiz bir kullanıcı adı giriniz"
           },
           "Password": {
-            "NotNull": "Please fill the password",
-            "MinimumLength": "Please enter minimum 1 character for password",
-            "MaximumLength": "Please enter maximum 5 character for password"
+            "NotNull": "Lütfen şifre alanını boş bırakmayınız",
+            "MinimumLength": "Lütfen şifre alanı için minimum 1 karakter giriniz",
+            "MaximumLength": "Lütfen şifre alanı için maksimum 5 karakter giriniz"
           }
+        },
+        "Others": {
+          "NotFound": "Kullanıcı bulunamadı",
+          "WrongPassword": "Şifre hatalı"
         }
       }
     },

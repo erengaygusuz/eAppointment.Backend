@@ -33,7 +33,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.CreateAppointme
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return localization[translatedMessagePath + "." + "AppointmentSuccessfullyCreated"].Value;
+            return localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value;
         }
     }
 }

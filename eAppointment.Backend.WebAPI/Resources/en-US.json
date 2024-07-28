@@ -147,16 +147,24 @@
       "Login": {
         "ValidationMessages": {
           "UserNameOrEmail": {
-            "NotNull": "Please fill the firstname",
-            "MinimumLength": "Please enter minimum 3 character for firstname",
-            "MaximumLength": "Please enter maximum 50 character for firstname",
-            "NotUseNumbers": "Please do not use numbers in the firstname"
+            "NotNull": "Please fill the username",
+            "MinimumLength": "Please enter minimum 3 character for username",
+            "MaximumLength": "Please enter maximum 50 character for username",
+            "NotUseSpaces": "Please do not use spaces for username",
+            "NotUseTurkishCharacters": "Please do not use turkish characters for username",
+            "NotUseUpperLetters": "Please do not use upper letters for username",
+            "NotUseNumbers": "Please do not use numbers in the username",
+            "NotUnique": "Please choose a unique username"
           },
           "Password": {
             "NotNull": "Please fill the password",
             "MinimumLength": "Please enter minimum 1 character for password",
             "MaximumLength": "Please enter maximum 5 character for password"
           }
+        },
+        "Others": {
+          "NotFound": "User could not found",
+          "WrongPassword": "Password is wrong"
         }
       }
     },

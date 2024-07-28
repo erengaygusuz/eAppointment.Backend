@@ -34,7 +34,7 @@ namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
 
             if (!result.Succeeded)
             {
-                return Result<string>.Failure(localization[translatedMessagePath + "." + "UserCannotCreated"]);
+                return Result<string>.Failure(localization[translatedMessagePath + "." + "CannotCreated"]);
             }
 
             var addedUser = await userManager.FindByEmailAsync(user.Email!);
@@ -43,7 +43,7 @@ namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
 
             if (!roleResult.Succeeded)
             {
-                return Result<string>.Failure(localization[translatedMessagePath + "." + "RoleCannotAddedToUser"]);
+                return Result<string>.Failure(localization[translatedMessagePath + "." + "RoleCannotAdded"]);
             }
 
             await unitOfWork.SaveChangesAsync(cancellationToken);

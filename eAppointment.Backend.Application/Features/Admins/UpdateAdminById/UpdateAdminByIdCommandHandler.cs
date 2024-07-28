@@ -29,7 +29,7 @@ namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminById
 
             if (user is null)
             {
-                return Result<string>.Failure(localization[translatedMessagePath + "." + "UserCouldNotFound"]);
+                return Result<string>.Failure(localization[translatedMessagePath + "." + "CouldNotFound"]);
             }
 
             mapper.Map(request, user);
@@ -38,10 +38,10 @@ namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminById
 
             if (!result.Succeeded)
             {
-                return Result<string>.Failure(localization[translatedMessagePath + "." + "UserCouldNotUpdated"]);
+                return Result<string>.Failure(localization[translatedMessagePath + "." + "CouldNotUpdated"]);
             }
 
-            return localization[translatedMessagePath + "." + "UserSuccessfullyCreated"].Value;
+            return localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value;
         }
     }
 }
