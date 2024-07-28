@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Domain.Repositories;
+using FluentValidation;
 using GenericRepository;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientById
@@ -13,32 +14,35 @@ namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientById
         IPatientRepository patientRepository,
         IUnitOfWork unitOfWork,
         IMapper mapper,
-        UserManager<User> userManager) : IRequestHandler<UpdatePatientByIdCommand, Result<string>>
+        UserManager<User> userManager,
+        IValidator<UpdatePatientByIdCommand> updatePatientByIdCommandValidator,
+        IStringLocalizer<object> localization) : IRequestHandler<UpdatePatientByIdCommand, Result<string>>
     {
         public async Task<Result<string>> Handle(UpdatePatientByIdCommand request, CancellationToken cancellationToken)
         {
+            var translatedMessagePath = "Features.Patients.UpdatePatient.Others";
+
+            var validationResult = await updatePatientByIdCommandValidator.ValidateAsync(request);
+
+            if (!validationResult.IsValid)
+            {
+                return Result<string>.Failure(validationResult.Errors.Select(x => x.ErrorMessage).ToList());
+            }
+
             User? user = await userManager.FindByIdAsync(request.id.ToString());
 
             if (user is null)
             {
-                return Result<string>.Failure("Patient not found");
+                return Result<string>.Failure(localization[translatedMessagePath + "." + "CouldNotFound"]);
             }
 
-            if (user.UserName != request.userName)
-            {
-
-                if (await userManager.Users.AnyAsync(p => p.UserName == request.userName))
-                {
-                    return Result<string>.Failure("User Name alraedy exists");
-                }
-            }
             mapper.Map(request, user);
 
             IdentityResult result = await userManager.UpdateAsync(user);
 
             if (!result.Succeeded)
             {
-                return Result<string>.Failure(result.Errors.Select(s => s.Description).ToList());
+                return Result<string>.Failure(localization[translatedMessagePath + "." + "CouldNotUpdated"]);
             }
 
             Patient patient = await patientRepository.GetByExpressionAsync(x => x.UserId == request.id);
@@ -51,7 +55,7 @@ namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientById
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return "Patient updated successfully";
+            return localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value;
         }
     }
 }

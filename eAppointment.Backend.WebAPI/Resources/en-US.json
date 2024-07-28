@@ -103,10 +103,10 @@
             "IsValidDate": "End date is not valid"
           },
           "PatientId": {
-            "GreaterThan": "Patient id should be greater than 0"
+            "GreaterThanZero": "Patient id should be greater than 0"
           },
           "DoctorId": {
-            "GreaterThan": "Doctor id should be greater than 0"
+            "GreaterThanZero": "Doctor id should be greater than 0"
           },
           "Composite": {
             "IsAvailable": "Appointment is not available"
@@ -210,7 +210,7 @@
             "MaximumLength": "Please enter maximum 5 character for password"
           },
           "DepartmentId": {
-            "GreaterThan": "Department id should be greater than 0"
+            "GreaterThanZero": "Department id should be greater than 0"
           }
         },
         "Others": {
@@ -255,7 +255,7 @@
             "NotUseLetters": "Please do not use letters in the phone number"
           },
           "DepartmentId": {
-            "GreaterThan": "Department id should be greater than 0"
+            "GreaterThanZero": "Department id should be greater than 0"
           }
         },
         "Others": {
@@ -302,13 +302,17 @@
             "NotUnique": "Please choose a unique username"
           },
           "IdentityNumber": {
-
+            "NotNull": "Please fill the identity number",
+            "NotExactNumberCount": "Please enter 11 numbers for identity number",
+            "NotUseLetters": "Please do not use letters in the identity number"
           },
           "CountyId": {
-
+            "GreaterThanZero": "County id should be greater than 0"
           },
           "FullAddress": {
-
+            "NotNull": "Please fill the full address",
+            "MinimumLength": "Please enter minimum 50 character for full address",
+            "MaximumLength": "Please enter maximum 500 character for full address"
           },
           "Password": {
             "NotNull": "Please fill the password",
@@ -353,18 +357,17 @@
             "NotUnique": "Please choose a unique username"
           },
           "IdentityNumber": {
-
+            "NotNull": "Please fill the identity number",
+            "NotExactNumberCount": "Please enter 11 numbers for identity number",
+            "NotUseLetters": "Please do not use letters in the identity number"
           },
           "CountyId": {
-
+            "GreaterThanZero": "County id should be greater than 0"
           },
           "FullAddress": {
-
-          },
-          "Password": {
-            "NotNull": "Please fill the password",
-            "MinimumLength": "Please enter minimum 1 character for password",
-            "MaximumLength": "Please enter maximum 5 character for password"
+            "NotNull": "Please fill the full address",
+            "MinimumLength": "Please enter minimum 50 character for full address",
+            "MaximumLength": "Please enter maximum 500 character for full address"
           }
         }
       }

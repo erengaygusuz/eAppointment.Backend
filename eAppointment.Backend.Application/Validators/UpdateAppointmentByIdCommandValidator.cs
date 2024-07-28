@@ -4,7 +4,6 @@ using eAppointment.Backend.Domain.Enums;
 using eAppointment.Backend.Domain.Repositories;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
-using System.Threading;
 
 namespace eAppointment.Backend.Application.Validators
 {

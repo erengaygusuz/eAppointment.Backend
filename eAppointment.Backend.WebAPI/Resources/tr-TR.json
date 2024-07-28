@@ -103,10 +103,10 @@
             "IsValidDate": "Bitiş tarihi geçerli değil"
           },
           "PatientId": {
-            "GreaterThan": "Hasta id değeri 0'dan büyük olmalıdır"
+            "GreaterThanZero": "Hasta id değeri 0'dan büyük olmalıdır"
           },
           "DoctorId": {
-            "GreaterThan": "Doktor id değeri 0'dan büyük olmalıdır"
+            "GreaterThanZero": "Doktor id değeri 0'dan büyük olmalıdır"
           },
           "Composite": {
             "IsAvailable": "Bu tarihte alınmış başka bir randevu bulunmaktadır"
@@ -210,7 +210,7 @@
             "MaximumLength": "Lütfen şifre alanı için maksimum 5 karakter giriniz"
           },
           "DepartmentId": {
-            "GreaterThan": "Poliklinik id değeri 0'dan büyük olmalıdır"
+            "GreaterThanZero": "Poliklinik id değeri 0'dan büyük olmalıdır"
           }
         },
         "Others": {
@@ -255,7 +255,7 @@
             "NotUseLetters": "Lütfen telefon numarası alanı için harf kullanmayınız"
           },
           "DepartmentId": {
-            "GreaterThan": "Poliklinik id değeri 0'dan büyük olmalıdır"
+            "GreaterThanZero": "Poliklinik id değeri 0'dan büyük olmalıdır"
           }
         },
         "Others": {
@@ -302,19 +302,28 @@
             "NotUnique": "Please choose a unique username"
           },
           "IdentityNumber": {
-
+            "NotNull": "Lütfen T.C. kimlik no alanını boş bırakmayınız",
+            "NotExactNumberCount": "Lütfen T.C. kimlik no alanı için 11 rakam giriniz",
+            "NotUseLetters": "Lütfen T.C. kimlik no alanı için harf kullanmayınız"
           },
           "CountyId": {
-
+            "GreaterThanZero": "Şehir id değeri 0'dan büyük olmalıdır"
           },
           "FullAddress": {
-
+            "NotNull": "Lütfen tam adres alanını boş bırakmayınız",
+            "MinLength": "Lütfen tam adres için minimum 50 karakter giriniz",
+            "MaxLength": "Lütfen tam adres için maksimum 500 karakter giriniz"
           },
           "Password": {
-            "NotNull": "Please fill the password",
-            "MinimumLength": "Please enter minimum 1 character for password",
-            "MaximumLength": "Please enter maximum 5 character for password"
+            "NotNull": "Lütfen şifre alanını boş bırakmayınız",
+            "MinimumLength": "Lütfen şifre alanı için minimum 1 karakter giriniz",
+            "MaximumLength": "Lütfen şifre alanı için maksimum 5 karakter giriniz"
           }
+        },
+        "Others": {
+          "CannotCreated": "Kullanıcı oluşturulamadı",
+          "RoleCannotAdded": "Rol kullanıcıya eklenemedi",
+          "SuccessfullyCreated": "Hasta başarılı bir şekilde oluşturuldu"
         }
       },
       "UpdatePatient": {
@@ -353,19 +362,23 @@
             "NotUnique": "Please choose a unique username"
           },
           "IdentityNumber": {
-
+            "NotNull": "Lütfen T.C. kimlik no alanını boş bırakmayınız",
+            "NotExactNumberCount": "Lütfen T.C. kimlik no alanı için 11 rakam giriniz",
+            "NotUseLetters": "Lütfen T.C. kimlik no alanı için harf kullanmayınız"
           },
           "CountyId": {
-
+            "GreaterThanZero": "Şehir id değeri 0'dan büyük olmalıdır"
           },
           "FullAddress": {
-
-          },
-          "Password": {
-            "NotNull": "Please fill the password",
-            "MinimumLength": "Please enter minimum 1 character for password",
-            "MaximumLength": "Please enter maximum 5 character for password"
+            "NotNull": "Lütfen tam adres alanını boş bırakmayınız",
+            "MinLength": "Lütfen tam adres için minimum 50 karakter giriniz",
+            "MaxLength": "Lütfen tam adres için maksimum 500 karakter giriniz"
           }
+        },
+        "Others": {
+          "CouldNotFound": "Kullanıcı bulunamadı",
+          "CouldNotUpdated": "Kullanıcı güncellenemedi",
+          "SuccessfullyCreated": "Hasta başarılı bir şekilde güncellendi"
         }
       }
     }

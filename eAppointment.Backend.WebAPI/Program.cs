@@ -2,6 +2,7 @@ using DefaultCorsPolicyNugetPackage;
 using eAppointment.Backend.Application;
 using eAppointment.Backend.Infrastructure;
 using eAppointment.Backend.Infrastructure.Services;
+using eAppointment.Backend.WebAPI.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Localization;
@@ -39,8 +40,6 @@ namespace eAppointment.Backend.WebAPI
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
 
-            // Add services to the container.
-
             builder.Services.AddControllers();
 
             builder.Services.AddLocalization();
@@ -59,7 +58,6 @@ namespace eAppointment.Backend.WebAPI
                 options.SupportedCultures = supportedCultures;
             });
 
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(setup =>
             {
@@ -89,7 +87,8 @@ namespace eAppointment.Backend.WebAPI
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();

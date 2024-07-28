@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Domain.Repositories;
+using FluentValidation;
 using GenericRepository;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System.Data;
+using Microsoft.Extensions.Localization;
 using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Patients.CreatePatient
@@ -14,18 +14,19 @@ namespace eAppointment.Backend.Application.Features.Patients.CreatePatient
         UserManager<User> userManager,
         IPatientRepository patientRepository,
         IUnitOfWork unitOfWork,
-        IMapper mapper) : IRequestHandler<CreatePatientCommand, Result<string>>
+        IMapper mapper,
+        IValidator<CreatePatientCommand> createPatientCommandValidator,
+        IStringLocalizer<object> localization) : IRequestHandler<CreatePatientCommand, Result<string>>
     {
         public async Task<Result<string>> Handle(CreatePatientCommand request, CancellationToken cancellationToken)
         {
-            if (await userManager.Users.AnyAsync(p => p.Email == request.email))
-            {
-                return Result<string>.Failure("Email alraedy exists");
-            }
+            var translatedMessagePath = "Features.Patients.CreatePatient.Others";
 
-            if (await userManager.Users.AnyAsync(p => p.UserName == request.userName))
+            var validationResult = await createPatientCommandValidator.ValidateAsync(request);
+
+            if (!validationResult.IsValid)
             {
-                return Result<string>.Failure("User Name alraedy exists");
+                return Result<string>.Failure(validationResult.Errors.Select(x => x.ErrorMessage).ToList());
             }
 
             User user = mapper.Map<User>(request);
@@ -34,7 +35,7 @@ namespace eAppointment.Backend.Application.Features.Patients.CreatePatient
 
             if (!result.Succeeded)
             {
-                return Result<string>.Failure(result.Errors.Select(s => s.Description).ToList());
+                return Result<string>.Failure(localization[translatedMessagePath + "." + "CannotCreated"]);
             }
 
             var addedUser = await userManager.FindByEmailAsync(user.Email!);
@@ -43,7 +44,7 @@ namespace eAppointment.Backend.Application.Features.Patients.CreatePatient
 
             if (!roleResult.Succeeded)
             {
-                return Result<string>.Failure("Role could not add to user");
+                return Result<string>.Failure(localization[translatedMessagePath + "." + "RoleCannotAdded"]);
             }
 
             Patient patient = new Patient()
@@ -58,7 +59,7 @@ namespace eAppointment.Backend.Application.Features.Patients.CreatePatient
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return "Patient created successfully";
+            return localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value;
         }
     }
 }
