@@ -55,6 +55,9 @@ namespace eAppointment.Backend.Application.Validators
                 .NotNull().WithMessage(_localization[validationMessagePath + "." + "Password.NotNull"])
                 .MinimumLength(1).WithMessage(_localization[validationMessagePath + "." + "Password.MinimumLength"])
                 .MaximumLength(5).WithMessage(_localization[validationMessagePath + "." + "Password.MaximumLength"]);
+
+            RuleFor(x => x.departmentId)
+                .GreaterThan(0).WithMessage(_localization[validationMessagePath + "." + "DepartmentId.GreaterThanZero"]);
         }
 
         private bool UniqueUsername(string username)

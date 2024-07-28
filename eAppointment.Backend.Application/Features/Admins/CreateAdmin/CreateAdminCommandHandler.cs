@@ -48,7 +48,7 @@ namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return localization[translatedMessagePath + "." + "UserSuccessfullyCreated"].Value;
+            return localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value;
         }
     }
 }

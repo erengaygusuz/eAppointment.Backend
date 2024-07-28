@@ -87,7 +87,7 @@
         "Others": {
           "CouldNotFound": "Kullanıcı bulunamadı",
           "CouldNotUpdated": "Kullanıcı güncellenemedi",
-          "SuccessfullyCreated": "Kullanıcı başarılı bir şekilde güncellendi"
+          "SuccessfullyUpdated": "Kullanıcı başarılı bir şekilde güncellendi"
         }
       }
     },
@@ -172,91 +172,96 @@
       "CreateDoctor": {
         "ValidationMessages": {
           "FirstName": {
-            "NotNull": "Please fill the firstname",
-            "MinimumLength": "Please enter minimum 3 character for firstname",
-            "MaximumLength": "Please enter maximum 50 character for firstname",
-            "NotUseNumbers": "Please do not use numbers in the firstname"
+            "NotNull": "Lütfen ad alanını boş bırakmayınız",
+            "MinimumLength": "Lütfen ad alanı için minimum 3 karakter giriniz",
+            "MaximumLength": "Lütfen ad alanı için maksimum 50 karakter giriniz",
+            "NotUseNumbers": "Lütfen ad alanı için rakam kullanmayınız"
           },
           "LastName": {
-            "NotNull": "Please fill the lastname",
-            "MinimumLength": "Please enter minimum 3 character for lastname",
-            "MaximumLength": "Please enter maximum 50 character for lastname",
-            "NotUseNumbers": "Please do not use numbers in the lastname"
+            "NotNull": "Lütfen soyad alanını boş bırakmayınız",
+            "MinimumLength": "Lütfen soyad alanı için minimum 3 karakter giriniz",
+            "MaximumLength": "Lütfen soyad alanı için maksimum 50 karakter giriniz",
+            "NotUseNumbers": "Lütfen soyad alanı için rakam kullanmayınız"
           },
           "UserName": {
-            "NotNull": "Please fill the username",
-            "MinimumLength": "Please enter minimum 3 character for username",
-            "MaximumLength": "Please enter maximum 50 character for username",
-            "NotUseSpaces": "Please do not use spaces for username",
-            "NotUseTurkishCharacters": "Please do not use turkish characters for username",
-            "NotUseUpperLetters": "Please do not use upper letters for username",
-            "NotUseNumbers": "Please do not use numbers in the username",
-            "NotUnique": "Please choose a unique username"
+            "NotNull": "Lütfen kullanıcı adı alanını boş bırakmayınız",
+            "MinimumLength": "Lütfen kullanıcı adı alanı için minimum 3 karakter giriniz",
+            "MaximumLength": "Lütfen kullanıcı adı alanı için maksimum 100 karakter giriniz",
+            "NotUseSpaces": "Lütfen kullanıcı adı alanında boşluk karakteri kullanmayınız",
+            "NotUseTurkishCharacters": "Lütfen kullanıcı adı alanında türkçe karakter kullanmayınız",
+            "NotUseUpperLetters": "Lütfen kullanıcı adı alanında büyük harf kullanmayınız",
+            "NotUseNumbers": "Lütfen kullanıcı adı alanı için rakam kullanmayınız",
+            "NotUnique": "Lütfen benzersiz bir kullanıcı adı giriniz"
           },
           "Email": {
-            "NotNull": "Please fill the e-mail",
-            "MaximumLength": "Please enter maximum 150 character for e-mail",
-            "NotValid": "Please enter a valid e-mail",
-            "NotUnique": "Please choose a unique e-mail"
+            "NotNull": "Lütfen e-posta alanını boş bırakmayınız",
+            "MaximumLength": "Lütfen geçerli bir e-posta giriniz",
+            "NotValid": "Lütfen e-posta alanı için maksimum 150 karakter giriniz",
+            "NotUnique": "Lütfen benzersiz bir e-posta adresi giriniz"
           },
           "PhoneNumber": {
-            "NotNull": "Please fill the phone number",
-            "NotValid": "Please enter a valid phone number",
-            "NotUseLetters": "Please do not use letters in the phone number"
+            "NotNull": "Lütfen telefon numarası alanını boş bırakmayınız",
+            "NotValid": "Lütfen geçerli bir telefon numarası giriniz",
+            "NotUseLetters": "Lütfen telefon numarası alanı için harf kullanmayınız"
           },
           "Password": {
-            "NotNull": "Please fill the password",
-            "MinimumLength": "Please enter minimum 1 character for password",
-            "MaximumLength": "Please enter maximum 5 character for password"
+            "NotNull": "Lütfen şifre alanını boş bırakmayınız",
+            "MinimumLength": "Lütfen şifre alanı için minimum 1 karakter giriniz",
+            "MaximumLength": "Lütfen şifre alanı için maksimum 5 karakter giriniz"
           },
           "DepartmentId": {
-
+            "GreaterThan": "Poliklinik id değeri 0'dan büyük olmalıdır"
           }
+        },
+        "Others": {
+          "CannotCreated": "Kullanıcı oluşturulamadı",
+          "RoleCannotAdded": "Rol kullanıcıya eklenemedi",
+          "SuccessfullyCreated": "Doktor başarılı bir şekilde oluşturuldu"
         }
       },
       "UpdateDoctor": {
         "ValidationMessages": {
           "FirstName": {
-            "NotNull": "Please fill the firstname",
-            "MinimumLength": "Please enter minimum 3 character for firstname",
-            "MaximumLength": "Please enter maximum 50 character for firstname",
-            "NotUseNumbers": "Please do not use numbers in the firstname"
+            "NotNull": "Lütfen ad alanını boş bırakmayınız",
+            "MinimumLength": "Lütfen ad alanı için minimum 3 karakter giriniz",
+            "MaximumLength": "Lütfen ad alanı için maksimum 50 karakter giriniz",
+            "NotUseNumbers": "Lütfen ad alanı için rakam kullanmayınız"
           },
           "LastName": {
-            "NotNull": "Please fill the lastname",
-            "MinimumLength": "Please enter minimum 3 character for lastname",
-            "MaximumLength": "Please enter maximum 50 character for lastname",
-            "NotUseNumbers": "Please do not use numbers in the lastname"
+            "NotNull": "Lütfen soyad alanını boş bırakmayınız",
+            "MinimumLength": "Lütfen soyad alanı için minimum 3 karakter giriniz",
+            "MaximumLength": "Lütfen soyad alanı için maksimum 50 karakter giriniz",
+            "NotUseNumbers": "Lütfen soyad alanı için rakam kullanmayınız"
           },
           "UserName": {
-            "NotNull": "Please fill the username",
-            "MinimumLength": "Please enter minimum 3 character for username",
-            "MaximumLength": "Please enter maximum 50 character for username",
-            "NotUseSpaces": "Please do not use spaces for username",
-            "NotUseTurkishCharacters": "Please do not use turkish characters for username",
-            "NotUseUpperLetters": "Please do not use upper letters for username",
-            "NotUseNumbers": "Please do not use numbers in the username",
-            "NotUnique": "Please choose a unique username"
+            "NotNull": "Lütfen kullanıcı adı alanını boş bırakmayınız",
+            "MinimumLength": "Lütfen kullanıcı adı alanı için minimum 3 karakter giriniz",
+            "MaximumLength": "Lütfen kullanıcı adı alanı için maksimum 100 karakter giriniz",
+            "NotUseSpaces": "Lütfen kullanıcı adı alanında boşluk karakteri kullanmayınız",
+            "NotUseTurkishCharacters": "Lütfen kullanıcı adı alanında türkçe karakter kullanmayınız",
+            "NotUseUpperLetters": "Lütfen kullanıcı adı alanında büyük harf kullanmayınız",
+            "NotUseNumbers": "Lütfen kullanıcı adı alanı için rakam kullanmayınız",
+            "NotUnique": "Lütfen benzersiz bir kullanıcı adı giriniz"
           },
           "Email": {
-            "NotNull": "Please fill the e-mail",
-            "MaximumLength": "Please enter maximum 150 character for e-mail",
-            "NotValid": "Please enter a valid e-mail",
-            "NotUnique": "Please choose a unique e-mail"
+            "NotNull": "Lütfen e-posta alanını boş bırakmayınız",
+            "MaximumLength": "Lütfen geçerli bir e-posta giriniz",
+            "NotValid": "Lütfen e-posta alanı için maksimum 150 karakter giriniz",
+            "NotUnique": "Lütfen benzersiz bir e-posta adresi giriniz"
           },
           "PhoneNumber": {
-            "NotNull": "Please fill the phone number",
-            "NotValid": "Please enter a valid phone number",
-            "NotUseLetters": "Please do not use letters in the phone number"
-          },
-          "Password": {
-            "NotNull": "Please fill the password",
-            "MinimumLength": "Please enter minimum 1 character for password",
-            "MaximumLength": "Please enter maximum 5 character for password"
+            "NotNull": "Lütfen telefon numarası alanını boş bırakmayınız",
+            "NotValid": "Lütfen geçerli bir telefon numarası giriniz",
+            "NotUseLetters": "Lütfen telefon numarası alanı için harf kullanmayınız"
           },
           "DepartmentId": {
-
+            "GreaterThan": "Poliklinik id değeri 0'dan büyük olmalıdır"
           }
+        },
+        "Others": {
+          "CouldNotFound": "Kullanıcı bulunamadı",
+          "CouldNotUpdated": "Kullanıcı güncellenemedi",
+          "SuccessfullyCreated": "Doktor başarılı bir şekilde güncellendi"
         }
       }
     },

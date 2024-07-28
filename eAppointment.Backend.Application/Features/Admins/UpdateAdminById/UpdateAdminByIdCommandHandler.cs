@@ -41,7 +41,7 @@ namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminById
                 return Result<string>.Failure(localization[translatedMessagePath + "." + "CouldNotUpdated"]);
             }
 
-            return localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value;
+            return localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value;
         }
     }
 }

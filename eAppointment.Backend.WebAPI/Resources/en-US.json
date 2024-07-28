@@ -87,7 +87,7 @@
         "Others": {
           "CouldNotFound": "User could not found",
           "CouldNotUpdated": "User could not updated",
-          "SuccessfullyCreated": "User updated successfully"
+          "SuccessfullyUpdated": "User updated successfully"
         }
       }
     },
@@ -210,8 +210,13 @@
             "MaximumLength": "Please enter maximum 5 character for password"
           },
           "DepartmentId": {
-
+            "GreaterThan": "Department id should be greater than 0"
           }
+        },
+        "Others": {
+          "CannotCreated": "User could not created",
+          "RoleCannotAdded": "Role could not add to user",
+          "SuccessfullyCreated": "Doctor created successfully"
         }
       },
       "UpdateDoctor": {
@@ -249,14 +254,14 @@
             "NotValid": "Please enter a valid phone number",
             "NotUseLetters": "Please do not use letters in the phone number"
           },
-          "Password": {
-            "NotNull": "Please fill the password",
-            "MinimumLength": "Please enter minimum 1 character for password",
-            "MaximumLength": "Please enter maximum 5 character for password"
-          },
           "DepartmentId": {
-
+            "GreaterThan": "Department id should be greater than 0"
           }
+        },
+        "Others": {
+          "CouldNotFound": "User could not found",
+          "CouldNotUpdated": "User could not updated",
+          "SuccessfullyCreated": "Doctor updated successfully"
         }
       }
     },
