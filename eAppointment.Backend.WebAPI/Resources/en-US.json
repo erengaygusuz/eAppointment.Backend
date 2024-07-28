@@ -43,9 +43,9 @@
           }
         },
         "Others": {
-          "UserCannotCreated": "User could not created",
-          "RoleCannotAddedToUser": "Role could not add to user",
-          "UserSuccessfullyCreated": "User created successfully"
+          "CannotCreated": "User could not created",
+          "RoleCannotAdded": "Role could not add to user",
+          "SuccessfullyCreated": "User created successfully"
         }
       },
       "UpdateAdmin": {
@@ -85,9 +85,9 @@
           }
         },
         "Others": {
-          "UserCouldNotFound": "User could not found",
-          "UserCouldNotUpdated": "User could not updated",
-          "UserSuccessfullyCreated": "User updated successfully"
+          "CouldNotFound": "User could not found",
+          "CouldNotUpdated": "User could not updated",
+          "SuccessfullyCreated": "User updated successfully"
         }
       }
     },
@@ -113,23 +113,33 @@
           }
         },
         "Others": {
-          "AppointmentSuccessfullyCreated": "Appointment created successfully"
+          "SuccessfullyCreated": "Appointment created successfully"
         }
       },
       "UpdateAppointment": {
         "ValidationMessages": {
+          "Id": {
+            "GreaterThanZero": "Id should be greater than 0"
+          },
           "StartDate": {
-
+            "NotNull": "Please fill the start date",
+            "IsValidDate": "Start date is not valid"
           },
           "EndDate": {
-
+            "NotNull": "Please fill the end date",
+            "IsValidDate": "End date is not valid"
           },
-          "PatientId": {
-
+          "Status": {
+            "GreaterThanZero": "Status should be greater than 0",
+            "IsValidStatus": "Status is not valid"
           },
-          "DoctorId": {
-
+          "Composite": {
+            "IsAvailable": "Appointment is not available"
           }
+        },
+        "Others": {
+          "NotFound": "Appointment could not found",
+          "SuccessfullyUpdated": "Appointment updated successfully"
         }
       }
     },

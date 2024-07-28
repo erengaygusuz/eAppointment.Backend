@@ -1,94 +1,76 @@
 ﻿using eAppointment.Backend.Application.Features.Appointments.UpdateAppointmentById;
 using eAppointment.Backend.Domain.Entities;
+using eAppointment.Backend.Domain.Enums;
+using eAppointment.Backend.Domain.Repositories;
 using FluentValidation;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
+using System.Threading;
 
 namespace eAppointment.Backend.Application.Validators
 {
     public class UpdateAppointmentByIdCommandValidator : AbstractValidator<UpdateAppointmentByIdCommand>
     {
-        private readonly UserManager<User> _userManager;
+        private readonly IAppointmentRepository _appointmentRepository;
         private readonly IStringLocalizer<object> _localization;
 
-        public UpdateAppointmentByIdCommandValidator(UserManager<User> userManager, IStringLocalizer<object> localization)
+        public UpdateAppointmentByIdCommandValidator(IAppointmentRepository appointmentRepository, IStringLocalizer<object> localization)
         {
-            _userManager = userManager;
+            _appointmentRepository = appointmentRepository;
             _localization = localization;
 
-            var validationMessagePath = "Features.Admins.CreateAdmin.ValidationMessages";
+            var validationMessagePath = "Features.Appointments.UpdateAppointment.ValidationMessages";
 
-            RuleFor(x => x.firstName)
-                .NotNull().WithMessage(_localization[validationMessagePath + "." + "FirstName.NotNull"])
-                .MinimumLength(3).WithMessage(_localization[validationMessagePath + "." + "FirstName.MinimumLength"])
-                .MaximumLength(50).WithMessage(_localization[validationMessagePath + "." + "FirstName.MaximumLength"])
-                .Matches("^((?![0-9]).)*$").WithMessage(_localization[validationMessagePath + "." + "FirstName.NotUseNumbers"]);
+            RuleFor(x => x.id)
+                .GreaterThan(0).WithMessage(_localization[validationMessagePath + "." + "Id.GreaterThanZero"]);
 
-            RuleFor(x => x.lastName)
-                .NotNull().WithMessage(_localization[validationMessagePath + "." + "LastName.NotNull"])
-                .MinimumLength(3).WithMessage(_localization[validationMessagePath + "." + "LastName.MinimumLength"])
-                .MaximumLength(50).WithMessage(_localization[validationMessagePath + "." + "LastName.MaximumLength"])
-                .Matches("^((?![0-9]).)*$").WithMessage(_localization[validationMessagePath + "." + "LastName.NotUseNumbers"]);
+            RuleFor(x => x.startDate)
+                .NotNull().WithMessage(_localization[validationMessagePath + "." + "StartDate.NotNull"])
+                .Must(IsValidDate).WithMessage(_localization[validationMessagePath + "." + "StartDate.NotValid"]);
 
-            RuleFor(x => x.userName)
-                .NotNull().WithMessage(_localization[validationMessagePath + "." + "UserName.NotNull"])
-                .MinimumLength(3).WithMessage(_localization[validationMessagePath + "." + "UserName.MinimumLength"])
-                .MaximumLength(100).WithMessage(_localization[validationMessagePath + "." + "UserName.MaximumLength"])
-                .Matches("^((?![ ]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseSpaces"])
-                .Matches("^((?![ğĞçÇşŞüÜöÖıİ]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseTurkishCharacters"])
-                .Matches("^((?![A-Z]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseUpperLetters"])
-                .Matches("^((?![0-9]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseNumbers"])
-                .Must(UniqueUsername).WithMessage(_localization[validationMessagePath + "." + "UserName.NotUnique"]);
+            RuleFor(x => x.endDate)
+                .NotNull().WithMessage(_localization[validationMessagePath + "." + "EndDate.NotNull"])
+                .Must(IsValidDate).WithMessage(_localization[validationMessagePath + "." + "EndDate.NotValid"]);
 
-            RuleFor(x => x.email)
-                .NotNull().WithMessage(_localization[validationMessagePath + "." + "Email.NotNull"])
-                .MaximumLength(150).WithMessage(_localization[validationMessagePath + "." + "Email.MaximumLength"])
-                .EmailAddress().WithMessage(_localization[validationMessagePath + "." + "Email.NotValid"])
-                .Must(UniqueEmail).WithMessage(_localization[validationMessagePath + "." + "Email.NotUnique"]);
+            RuleFor(x => x.status)
+                .GreaterThan(0).WithMessage(_localization[validationMessagePath + "." + "Status.GreaterThanZero"])
+                .Must(IsValidStatus).WithMessage(_localization[validationMessagePath + "." + "Status.IsValidStatus"]);
 
-            RuleFor(x => x.phoneNumber)
-                .NotNull().WithMessage(_localization[validationMessagePath + "." + "PhoneNumber.NotNull"])
-                .Matches("((\\(\\d{3}\\) ?)|(\\d{3}-)) ?\\d{3}-\\d{4}").WithMessage(_localization[validationMessagePath + "." + "PhoneNumber.NotValid"])
-                .Matches("^((?![a-zA-Z]).)*$").WithMessage(_localization[validationMessagePath + "." + "PhoneNumber.NotUseLetters"]);
-
-            RuleFor(x => x.password)
-                .NotNull().WithMessage(_localization[validationMessagePath + "." + "Password.NotNull"])
-                .MinimumLength(1).WithMessage(_localization[validationMessagePath + "." + "Password.MinimumLength"])
-                .MaximumLength(5).WithMessage(_localization[validationMessagePath + "." + "Password.MaximumLength"]);
+            RuleFor(x => new { x.startDate, x.endDate, x.id })
+                .Must(x => IsAvailable(x.startDate, x.endDate, x.id)).WithMessage(_localization[validationMessagePath + "." + "Composite.IsAvailable"]);
         }
 
-        private bool UniqueUsername(string username)
+        private bool IsValidDate(string date)
         {
-            if (string.IsNullOrEmpty(username))
-            {
-                return true;
-            }
+            DateTime resultDate;
 
-            var user = _userManager.FindByNameAsync(username).GetAwaiter().GetResult();
+            var isValid = DateTime.TryParseExact(date, "dd.MM.yyyy HH:mm", null, System.Globalization.DateTimeStyles.AssumeUniversal, out resultDate);
 
-            if (user == null)
-            {
-                return true;
-            }
-
-            return false;
+            return isValid;
         }
 
-        private bool UniqueEmail(string email)
+        private bool IsValidStatus(int status)
         {
-            if (string.IsNullOrEmpty(email))
-            {
-                return true;
-            }
+            var appointmentStatusList = AppointmentStatus.List.Select(x => x.Value).ToList();
 
-            var user = _userManager.FindByEmailAsync(email).GetAwaiter().GetResult();
+            return appointmentStatusList.Contains(status);
+        }
 
-            if (user == null)
-            {
-                return true;
-            }
+        private bool IsAvailable(string startDateStr, string endDateStr, int id)
+        {
+            Appointment? appointment = _appointmentRepository.GetByExpressionWithTracking(p => p.Id == id);
 
-            return false;
+            DateTime startDate = DateTime.ParseExact(startDateStr, "dd.MM.yyyy HH:mm", null);
+            DateTime endDate = DateTime.ParseExact(endDateStr, "dd.MM.yyyy HH:mm", null);
+
+            bool isAppointmentDateNotAvailable = _appointmentRepository
+                    .Any(p => p.DoctorId == appointment.DoctorId &&
+                     ((p.StartDate < endDate && p.StartDate >= startDate) || // Mevcut randevunun bitişi, diğer randevunun başlangıcıyla çakışıyor
+                     (p.EndDate > startDate && p.EndDate <= endDate) || // Mevcut randevunun başlangıcı, diğer randevunun bitişiyle çakışıyor
+                     (p.StartDate >= startDate && p.EndDate <= endDate) || // Mevcut randevu, diğer randevu içinde tamamen
+                     (p.StartDate <= startDate && p.EndDate >= endDate)) // Mevcut randevu, diğer randevuyu tamamen kapsıyor
+                     );
+
+            return isAppointmentDateNotAvailable;
         }
     }
 }

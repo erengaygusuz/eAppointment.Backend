@@ -13,14 +13,14 @@ namespace eAppointment.Backend.Application.Features.Appointments.CreateAppointme
         IAppointmentRepository appointmentRepository,
         IUnitOfWork unitOfWork,
         IMapper mapper,
-        IValidator<CreateAppointmentCommand> createAppoitmentCommandValidator,
+        IValidator<CreateAppointmentCommand> createAppointmentCommandValidator,
         IStringLocalizer<object> localization) : IRequestHandler<CreateAppointmentCommand, Result<string>>
     {
         public async Task<Result<string>> Handle(CreateAppointmentCommand request, CancellationToken cancellationToken)
         {
             var translatedMessagePath = "Features.Appointments.CreateAppointment.Others";
 
-            var validationResult = await createAppoitmentCommandValidator.ValidateAsync(request);
+            var validationResult = await createAppointmentCommandValidator.ValidateAsync(request);
 
             if (!validationResult.IsValid)
             {

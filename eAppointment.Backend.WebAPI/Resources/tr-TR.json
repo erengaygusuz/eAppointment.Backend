@@ -43,9 +43,9 @@
           }
         },
         "Others": {
-          "UserCannotCreated": "Kullanıcı oluşturulamadı",
-          "RoleCannotAddedToUser": "Rol kullanıcıya eklenemedi",
-          "UserSuccessfullyCreated": "Kullanıcı başarılı bir şekilde oluşturuldu"
+          "CannotCreated": "Kullanıcı oluşturulamadı",
+          "RoleCannotAdded": "Rol kullanıcıya eklenemedi",
+          "SuccessfullyCreated": "Kullanıcı başarılı bir şekilde oluşturuldu"
         }
       },
       "UpdateAdmin": {
@@ -85,9 +85,9 @@
           }
         },
         "Others": {
-          "UserCouldNotFound": "Kullanıcı bulunamadı",
-          "UserCouldNotUpdated": "Kullanıcı güncellenemedi",
-          "UserSuccessfullyCreated": "Kullanıcı başarılı bir şekilde güncellendi"
+          "CouldNotFound": "Kullanıcı bulunamadı",
+          "CouldNotUpdated": "Kullanıcı güncellenemedi",
+          "SuccessfullyCreated": "Kullanıcı başarılı bir şekilde güncellendi"
         }
       }
     },
@@ -113,23 +113,33 @@
           }
         },
         "Others": {
-          "AppointmentSuccessfullyCreated": "Randevu başarılı bir şekilde oluşturuldu"
+          "SuccessfullyCreated": "Randevu başarılı bir şekilde oluşturuldu"
         }
       },
       "UpdateAppointment": {
         "ValidationMessages": {
+          "Id": {
+            "GreaterThanZero": "Id değeri 0'dan büyük olmalıdır"
+          },
           "StartDate": {
-
+            "NotNull": "Lütfen başlangıç tarihi alanını boş bırakmayınız",
+            "IsValidDate": "Başlangıç tarihi geçerli değil"
           },
           "EndDate": {
-
+            "NotNull": "Lütfen bitiş tarihi alanını boş bırakmayınız",
+            "IsValidDate": "Bitiş tarihi geçerli değil"
           },
-          "PatientId": {
-
+          "Status": {
+            "GreaterThanZero": "Randevu durumu değeri 0'dan büyük olmalıdır",
+            "IsValidStatus": "Randevu durumu geçerli değil"
           },
-          "DoctorId": {
-
+          "Composite": {
+            "IsAvailable": "Bu tarihte alınmış başka bir randevu bulunmaktadır"
           }
+        },
+        "Others": {
+          "NotFound": "Randevu bulunamadı",
+          "SuccessfullyUpdated": "Randevu başarılı bir şekilde güncellendi"
         }
       }
     },
