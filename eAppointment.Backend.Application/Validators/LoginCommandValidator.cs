@@ -15,13 +15,13 @@ namespace eAppointment.Backend.Application.Validators
             var validationMessagePath = "Features.Auth.Login.ValidationMessages";
 
             RuleFor(x => x.userNameOrEmail)
-                .NotNull().WithMessage(_localization[validationMessagePath + "." + "UserName.NotNull"])
-                .MinimumLength(3).WithMessage(_localization[validationMessagePath + "." + "UserName.MinimumLength"])
-                .MaximumLength(100).WithMessage(_localization[validationMessagePath + "." + "UserName.MaximumLength"])
-                .Matches("^((?![ ]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseSpaces"])
-                .Matches("^((?![ğĞçÇşŞüÜöÖıİ]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseTurkishCharacters"])
-                .Matches("^((?![A-Z]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseUpperLetters"])
-                .Matches("^((?![0-9]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseNumbers"]);
+                .NotNull().WithMessage(_localization[validationMessagePath + "." + "UserNameOrEmail.NotNull"])
+                .MinimumLength(3).WithMessage(_localization[validationMessagePath + "." + "UserNameOrEmail.MinimumLength"])
+                .MaximumLength(100).WithMessage(_localization[validationMessagePath + "." + "UserNameOrEmail.MaximumLength"])
+                .Matches("^((?![ ]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserNameOrEmail.NotUseSpaces"])
+                .Matches("^((?![ğĞçÇşŞüÜöÖıİ]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserNameOrEmail.NotUseTurkishCharacters"])
+                .Matches("^((?![A-Z]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserNameOrEmail.NotUseUpperLetters"])
+                .Matches("^((?![0-9]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserNameOrEmail.NotUseNumbers"]);
 
             RuleFor(x => x.password)
                 .NotNull().WithMessage(_localization[validationMessagePath + "." + "Password.NotNull"])

@@ -153,8 +153,7 @@
             "NotUseSpaces": "Please do not use spaces for username",
             "NotUseTurkishCharacters": "Please do not use turkish characters for username",
             "NotUseUpperLetters": "Please do not use upper letters for username",
-            "NotUseNumbers": "Please do not use numbers in the username",
-            "NotUnique": "Please choose a unique username"
+            "NotUseNumbers": "Please do not use numbers in the username"
           },
           "Password": {
             "NotNull": "Please fill the password",
@@ -372,5 +371,24 @@
         }
       }
     }
+  },
+  "ErrorsCodes": {
+    "400": "The server cannot or will not process the request due to something that is perceived to be a client error.",
+    "401": "The client must authenticate itself to get the requested response.",
+    "403": "The client does not have access rights to the content; that is, it is unauthorized, so the server is refusing to give the requested resource.",
+    "404": "The server cannot find the requested resource.",
+    "405": "The request method is known by the server but is not supported by the target resource.",
+    "408": "This response is sent on an idle connection by some servers, even without any previous request by the client.",
+    "410": "This response is sent when the requested content has been permanently deleted from server, with no forwarding address.",
+    "413": "Request entity is larger than limits defined by server.",
+    "414": "The URI requested by the client is longer than the server is willing to interpret.",
+    "415": "The media format of the requested data is not supported by the server, so the server is rejecting the request.",
+    "429": "The user has sent too many requests in a given amount of time.",
+    "431": "The server is unwilling to process the request because its header fields are too large.",
+    "500": "The server has encountered a situation it does not know how to handle.",
+    "502": "The server, while working as a gateway to get a response needed to handle the request, got an invalid response.",
+    "503": "The server is not ready to handle the request.",
+    "504": "This error response is given when the server is acting as a gateway and cannot get a response in time.",
+    "Unknown": "An unexpected error occurred."
   }
 }
