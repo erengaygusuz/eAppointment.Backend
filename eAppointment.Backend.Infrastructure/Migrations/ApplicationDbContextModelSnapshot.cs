@@ -162,7 +162,7 @@ namespace eAppointment.Backend.Infrastructure.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("Appointments");
+                    b.ToTable("Appointments", (string)null);
                 });
 
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.City", b =>
@@ -185,7 +185,7 @@ namespace eAppointment.Backend.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cities");
+                    b.ToTable("Cities", (string)null);
                 });
 
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.County", b =>
@@ -213,7 +213,7 @@ namespace eAppointment.Backend.Infrastructure.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("Counties");
+                    b.ToTable("Counties", (string)null);
                 });
 
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Department", b =>
@@ -236,7 +236,7 @@ namespace eAppointment.Backend.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Doctor", b =>
@@ -265,7 +265,7 @@ namespace eAppointment.Backend.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Doctors");
+                    b.ToTable("Doctors", (string)null);
                 });
 
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Patient", b =>
@@ -304,7 +304,7 @@ namespace eAppointment.Backend.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Patients");
+                    b.ToTable("Patients", (string)null);
                 });
 
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Role", b =>

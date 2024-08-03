@@ -1,5 +1,7 @@
-﻿using eAppointment.Backend.Domain.Entities;
+﻿using eAppointment.Backend.Domain.Constants;
+using eAppointment.Backend.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace eAppointment.Backend.WebAPI
 {
@@ -27,7 +29,7 @@ namespace eAppointment.Backend.WebAPI
                     {
                         var addedUser = await userManager.FindByEmailAsync("gaygusuzeren@gmail.com");
 
-                        await userManager.AddToRoleAsync(addedUser!, "Admin");
+                        await userManager.AddToRoleAsync(addedUser!, Roles.SuperAdmin);
                     }
                 }
             }
@@ -41,25 +43,62 @@ namespace eAppointment.Backend.WebAPI
 
                 if (!roleManager.Roles.Any())
                 {
-                    await roleManager.CreateAsync(new()
+                    var superAdminResult = await roleManager.CreateAsync(new()
                     {
-                        Name = "SuperAdmin"
+                        Name = Roles.SuperAdmin
                     });
 
-                    await roleManager.CreateAsync(new()
+                    if (superAdminResult.Succeeded)
                     {
-                        Name = "Admin"
+                        await AddClaimsToRolesAsync(roleManager, Roles.SuperAdmin);
+                    }
+
+                    var adminResult = await roleManager.CreateAsync(new()
+                    {
+                        Name = Roles.Admin
                     });
 
-                    await roleManager.CreateAsync(new()
+                    if (adminResult.Succeeded)
                     {
-                        Name = "Doctor"
+                        await AddClaimsToRolesAsync(roleManager, Roles.Admin);
+                    }
+
+                    var doctorResult = await roleManager.CreateAsync(new()
+                    {
+                        Name = Roles.Doctor
                     });
 
-                    await roleManager.CreateAsync(new()
+                    if (doctorResult.Succeeded)
                     {
-                        Name = "Patient"
+                        await AddClaimsToRolesAsync(roleManager, Roles.Doctor);
+                    }
+
+                    var patientResult = await roleManager.CreateAsync(new()
+                    {
+                        Name = Roles.Patient
                     });
+
+                    if (patientResult.Succeeded)
+                    {
+                        await AddClaimsToRolesAsync(roleManager, Roles.Patient);
+                    }
+                }
+            }
+        }
+
+        private static async Task AddClaimsToRolesAsync(RoleManager<Role> roleManager, string roleName)
+        {
+            var role = await roleManager.FindByNameAsync(roleName);
+
+            var allClaims = await roleManager.GetClaimsAsync(role);
+
+            var allPermissions = Permissions.GetAllPermissions(roleName);
+
+            foreach (var permission in allPermissions)
+            {
+                if (!allClaims.Any(a => a.Type == "Permission" && a.Value == permission))
+                {
+                    await roleManager.AddClaimAsync(role, new Claim("Permission", permission));
                 }
             }
         }

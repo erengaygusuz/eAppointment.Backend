@@ -1,8 +1,11 @@
 ﻿using eAppointment.Backend.Application.Features.Admins.CreateAdmin;
 using eAppointment.Backend.Application.Features.Admins.GetUserById;
 using eAppointment.Backend.Application.Features.Admins.UpdateAdminById;
+using eAppointment.Backend.Domain.Constants;
+using eAppointment.Backend.Domain.Enums.Permissions;
 using eAppointment.Backend.WebAPI.Abstractions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eAppointment.Backend.WebAPI.Controllers
@@ -13,6 +16,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
         {
         }
 
+        [Authorize(AdminsPermission.CreateAdminPR)]
         [HttpPost]
         public async Task<IActionResult> Create(CreateAdminCommand request, CancellationToken cancellationToken)
         {
