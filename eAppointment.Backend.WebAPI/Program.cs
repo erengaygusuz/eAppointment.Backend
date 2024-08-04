@@ -21,9 +21,6 @@ namespace eAppointment.Backend.WebAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
-            builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
-
             builder.Services.AddAuthentication().AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -39,6 +36,9 @@ namespace eAppointment.Backend.WebAPI
             });
 
             builder.Services.AddAuthorization();
+
+            builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+            builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
             builder.Services.AddDefaultCors();
 
@@ -92,8 +92,6 @@ namespace eAppointment.Backend.WebAPI
 
             var app = builder.Build();
 
-            app.UseMiddleware<ErrorHandlerMiddleware>();
-
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -112,7 +110,9 @@ namespace eAppointment.Backend.WebAPI
 
             app.UseRequestLocalization(localizationOptions);
 
-            app.UseAuthorization();
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

@@ -1,4 +1,5 @@
 ﻿using eAppointment.Backend.Application.Services;
+using eAppointment.Backend.Domain.Constants;
 using eAppointment.Backend.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +21,8 @@ namespace eAppointment.Backend.Infrastructure.Services
 
             var stringRoles = userRoles!.Select(x => x.ToLower()).ToList();
 
+            var allPermissions = Permissions.GetAllPermissions(userRoles[0]);
+
             List<Claim> claims = new();
 
             if (user.Patient != null)
@@ -31,7 +34,8 @@ namespace eAppointment.Backend.Infrastructure.Services
                     new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
                     new Claim("UserName", user.UserName ?? string.Empty),
                     new Claim("PatientId", user.Patient!.Id.ToString()),
-                    new Claim(ClaimTypes.Role, JsonSerializer.Serialize(stringRoles))
+                    new Claim(ClaimTypes.Role, JsonSerializer.Serialize(userRoles)),
+                    new Claim("Permissions", JsonSerializer.Serialize(allPermissions))
                 });
             }
 
@@ -44,7 +48,8 @@ namespace eAppointment.Backend.Infrastructure.Services
                     new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
                     new Claim("UserName", user.UserName ?? string.Empty),
                     new Claim("DoctorId", user.Doctor!.Id.ToString()),
-                    new Claim(ClaimTypes.Role, JsonSerializer.Serialize(stringRoles))
+                    new Claim(ClaimTypes.Role, JsonSerializer.Serialize(userRoles)),
+                    new Claim("Permissions", JsonSerializer.Serialize(allPermissions))
                 });
             }
 
@@ -56,7 +61,8 @@ namespace eAppointment.Backend.Infrastructure.Services
                     new Claim(ClaimTypes.Name, user.FirstName + " " + user.LastName),
                     new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
                     new Claim("UserName", user.UserName ?? string.Empty),
-                    new Claim(ClaimTypes.Role, JsonSerializer.Serialize(stringRoles))
+                    new Claim(ClaimTypes.Role, JsonSerializer.Serialize(userRoles)),
+                    new Claim("Permissions", JsonSerializer.Serialize(allPermissions))
                 });
             }
 

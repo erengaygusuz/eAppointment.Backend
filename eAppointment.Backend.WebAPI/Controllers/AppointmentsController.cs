@@ -6,8 +6,10 @@ using eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsB
 using eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsByPatientIdByStatus;
 using eAppointment.Backend.Application.Features.Appointments.UpdateAppointmentById;
 using eAppointment.Backend.Application.Features.Appointments.UpdateAppointmentStatusById;
+using eAppointment.Backend.Domain.Constants;
 using eAppointment.Backend.WebAPI.Abstractions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eAppointment.Backend.WebAPI.Controllers
@@ -18,6 +20,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
         {
         }
 
+        [Authorize(Policy = Permissions.CreateAppointment)]
         [HttpPost]
         public async Task<IActionResult> Create(CreateAppointmentCommand request, CancellationToken cancellationToken)
         {
@@ -26,6 +29,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
             return StatusCode(response.StatusCode, response);
         }
 
+        [Authorize(Policy = Permissions.GetAllAppointmentsByDoctorId)]
         [HttpPost]
         public async Task<IActionResult> GetAllByDoctorIdAndByStatus(GetAllAppointmentsByDoctorIdAndByStatusQuery request, CancellationToken cancellationToken)
         {
@@ -34,6 +38,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
             return StatusCode(response.StatusCode, response);
         }
 
+        [Authorize(Policy = Permissions.GetAllAppointmentsByDoctorId)]
         [HttpPost]
         public async Task<IActionResult> GetAllByDoctorId(GetAllAppointmentsByDoctorIdQuery request, CancellationToken cancellationToken)
         {
@@ -42,6 +47,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
             return StatusCode(response.StatusCode, response);
         }
 
+        [Authorize(Policy = Permissions.GetAllAppointmentsByPatientId)]
         [HttpPost]
         public async Task<IActionResult> GetAllByPatientIdAndByStatus(GetAllAppointmentsByPatientIdAndByStatusQuery request, CancellationToken cancellationToken)
         {
@@ -50,6 +56,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
             return StatusCode(response.StatusCode, response);
         }
 
+        [Authorize(Policy = Permissions.GetAllAppointmentsByPatientId)]
         [HttpPost]
         public async Task<IActionResult> GetAllByPatientId(GetAllAppointmentsByPatientIdQuery request, CancellationToken cancellationToken)
         {
@@ -58,6 +65,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
             return StatusCode(response.StatusCode, response);
         }
 
+        [Authorize(Policy = Permissions.UpdateAppointmentById)]
         [HttpPost]
         public async Task<IActionResult> UpdateById(UpdateAppointmentByIdCommand request, CancellationToken cancellationToken)
         {
@@ -66,6 +74,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
             return StatusCode(response.StatusCode, response);
         }
 
+        [Authorize(Policy = Permissions.UpdateAppointmentStatusById)]
         [HttpPost]
         public async Task<IActionResult> UpdateStatusById(UpdateAppointmentStatusByIdCommand request, CancellationToken cancellationToken)
         {
@@ -74,6 +83,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
             return StatusCode(response.StatusCode, response);
         }
 
+        [Authorize(Policy = Permissions.CancelAppointmentById)]
         [HttpPost]
         public async Task<IActionResult> CancelById(CancelAppointmentByIdCommand request, CancellationToken cancellationToken)
         {

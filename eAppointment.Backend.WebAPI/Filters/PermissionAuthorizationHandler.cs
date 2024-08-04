@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using System.Text.Json;
 
 namespace eAppointment.Backend.WebAPI.Filters
 {
@@ -16,7 +17,8 @@ namespace eAppointment.Backend.WebAPI.Filters
                 return;
             }
 
-            var canAccess = context.User.Claims.Any(c => c.Type == "Permission" && c.Value == requirement.Permission && c.Issuer == "LOCAL AUTHORITY");
+            var canAccess = context.User.Claims
+                .Any(c => c.Type == "Permissions" && JsonSerializer.Deserialize<List<string>>(c.Value).Contains(requirement.Permission));
 
             if (canAccess)
             {

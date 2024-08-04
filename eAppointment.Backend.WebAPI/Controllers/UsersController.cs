@@ -1,7 +1,9 @@
 ﻿using eAppointment.Backend.Application.Features.Users.DeleteUserById;
 using eAppointment.Backend.Application.Features.Users.GetAllUsers;
+using eAppointment.Backend.Domain.Constants;
 using eAppointment.Backend.WebAPI.Abstractions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eAppointment.Backend.WebAPI.Controllers
@@ -12,6 +14,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
         {
         }
 
+        [Authorize(Policy = Permissions.GetAllUsers)]
         [HttpPost]
         public async Task<IActionResult> GetAll(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
@@ -20,6 +23,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
             return StatusCode(response.StatusCode, response);
         }
 
+        [Authorize(Policy = Permissions.DeleteUserById)]
         [HttpPost]
         public async Task<IActionResult> DeleteById(DeleteUserByIdCommand request, CancellationToken cancellationToken)
         {
