@@ -22,7 +22,7 @@ namespace eAppointment.Backend.WebAPI
                         LastName = "Gaygusuz",
                         Email = "gaygusuzeren@gmail.com",
                         UserName = "erengaygusuz",
-                        PhoneNumber = "5555555555"
+                        PhoneNumber = "(555) 555-5555"
                     }, "12345");
 
                     if (result.Succeeded)

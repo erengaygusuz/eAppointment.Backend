@@ -20,6 +20,8 @@ namespace eAppointment.Backend.Infrastructure.Context
 
         public DbSet<Appointment> Appointments { get; set; }
 
+        public DbSet<ErrorLog> ErrorLogs { get; set; }
+
         public ApplicationDbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)

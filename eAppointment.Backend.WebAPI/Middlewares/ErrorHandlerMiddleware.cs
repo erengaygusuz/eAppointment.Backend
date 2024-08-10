@@ -9,11 +9,13 @@ namespace eAppointment.Backend.WebAPI.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly IStringLocalizer<object> _localization;
+        private readonly ILogger<ErrorHandlerMiddleware> _logger;
 
-        public ErrorHandlerMiddleware(RequestDelegate next, IStringLocalizer<object> localization)
+        public ErrorHandlerMiddleware(RequestDelegate next, IStringLocalizer<object> localization, ILogger<ErrorHandlerMiddleware> logger)
         {
             _next = next;
             _localization = localization;
+            _logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -24,6 +26,8 @@ namespace eAppointment.Backend.WebAPI.Middlewares
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, _localization["ErrorsCodes.Unknown"].Value);
+
                 await HandleExceptionAsync(context, ex);
             }
         }

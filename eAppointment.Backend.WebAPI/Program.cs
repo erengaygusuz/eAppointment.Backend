@@ -10,8 +10,11 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Localization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog.Events;
+using Serilog;
 using System.Globalization;
 using System.Text;
+using System.Configuration;
 
 namespace eAppointment.Backend.WebAPI
 {
@@ -20,6 +23,20 @@ namespace eAppointment.Backend.WebAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .WriteTo.MSSqlServer(
+                    connectionString: builder.Configuration.GetConnectionString("SqlServer"),
+                    sinkOptions: new Serilog.Sinks.MSSqlServer.MSSqlServerSinkOptions
+                    {
+                        TableName = "ErrorLogs",
+                        AutoCreateSqlTable = false
+                    })
+                .CreateLogger();
 
             builder.Services.AddAuthentication().AddJwtBearer(options =>
             {
@@ -46,6 +63,8 @@ namespace eAppointment.Backend.WebAPI
             builder.Services.AddInfrastructure(builder.Configuration);
 
             builder.Services.AddControllers();
+
+            builder.Host.UseSerilog();
 
             builder.Services.AddLocalization();
             builder.Services.AddDistributedMemoryCache();
