@@ -22,6 +22,8 @@ namespace eAppointment.Backend.Infrastructure.Context
 
         public DbSet<ErrorLog> ErrorLogs { get; set; }
 
+        public DbSet<AuditLog> AuditLogs { get; set; }
+
         public ApplicationDbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)

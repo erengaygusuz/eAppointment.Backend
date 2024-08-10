@@ -10,11 +10,10 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Localization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Serilog.Events;
 using Serilog;
+using Serilog.Events;
 using System.Globalization;
 using System.Text;
-using System.Configuration;
 
 namespace eAppointment.Backend.WebAPI
 {
@@ -110,6 +109,8 @@ namespace eAppointment.Backend.WebAPI
             });
 
             var app = builder.Build();
+
+            app.UseMiddleware<AuditMiddleware>();
 
             if (app.Environment.IsDevelopment())
             {

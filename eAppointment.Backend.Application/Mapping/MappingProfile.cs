@@ -34,15 +34,15 @@ namespace eAppointment.Backend.Application.Mapping
         {
             #region Admin Mappings
 
-            //CreateMap<CreateAdminCommand, User>()
-            //    .ForMember(dest => dest.FirstName, src => src.MapFrom(src => src.firstName))
-            //    .ForMember(dest => dest.LastName, src => src.MapFrom(src => src.lastName))
-            //    .ForMember(dest => dest.PhoneNumber, src => src.MapFrom(src => src.phoneNumber))
-            //    .ForMember(dest => dest.Email, src => src.MapFrom(src => src.email))
-            //    .ForMember(dest => dest.UserName, src => src.MapFrom(src => src.userName))
-            //    .ForMember(dest => dest.PasswordHash, src => src.Ignore())
-            //    .ForMember(dest => dest.Doctor, src => src.Ignore())
-            //    .ForMember(dest => dest.Patient, src => src.Ignore());
+            CreateMap<CreateAdminCommand, User>()
+                .ForMember(dest => dest.FirstName, src => src.MapFrom(src => src.firstName))
+                .ForMember(dest => dest.LastName, src => src.MapFrom(src => src.lastName))
+                .ForMember(dest => dest.PhoneNumber, src => src.MapFrom(src => src.phoneNumber))
+                .ForMember(dest => dest.Email, src => src.MapFrom(src => src.email))
+                .ForMember(dest => dest.UserName, src => src.MapFrom(src => src.userName))
+                .ForMember(dest => dest.PasswordHash, src => src.Ignore())
+                .ForMember(dest => dest.Doctor, src => src.Ignore())
+                .ForMember(dest => dest.Patient, src => src.Ignore());
 
             CreateMap<User, GetAdminByIdQueryResponse>()
                 .ForMember(dest => dest.FirstName, src => src.MapFrom(src => src.FirstName))
