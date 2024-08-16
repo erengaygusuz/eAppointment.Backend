@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace eAppointment.Backend.Infrastructure.Context
 {
-    internal sealed class ApplicationDbContext : IdentityDbContext<User, Role, int>, IUnitOfWork
+    public sealed class ApplicationDbContext : IdentityDbContext<User, Role, int>, IUnitOfWork
     {
         public DbSet<County> Counties { get; set; }
 

@@ -3,7 +3,6 @@ using eAppointment.Backend.Application;
 using eAppointment.Backend.Infrastructure;
 using eAppointment.Backend.Infrastructure.Services;
 using eAppointment.Backend.WebAPI.Filters;
-using eAppointment.Backend.WebAPI.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
@@ -11,7 +10,6 @@ using Microsoft.Extensions.Localization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using Serilog.Events;
 using System.Globalization;
 using System.Text;
 
@@ -23,19 +21,7 @@ namespace eAppointment.Backend.WebAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .WriteTo.MSSqlServer(
-                    connectionString: builder.Configuration.GetConnectionString("SqlServer"),
-                    sinkOptions: new Serilog.Sinks.MSSqlServer.MSSqlServerSinkOptions
-                    {
-                        TableName = "ErrorLogs",
-                        AutoCreateSqlTable = false
-                    })
-                .CreateLogger();
+            builder.Host.UseSerilog((context, loggerConfig) => loggerConfig.ReadFrom.Configuration(context.Configuration));
 
             builder.Services.AddAuthentication().AddJwtBearer(options =>
             {
@@ -62,8 +48,6 @@ namespace eAppointment.Backend.WebAPI
             builder.Services.AddInfrastructure(builder.Configuration);
 
             builder.Services.AddControllers();
-
-            builder.Host.UseSerilog();
 
             builder.Services.AddLocalization();
             builder.Services.AddDistributedMemoryCache();
@@ -110,8 +94,6 @@ namespace eAppointment.Backend.WebAPI
 
             var app = builder.Build();
 
-            app.UseMiddleware<AuditMiddleware>();
-
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -130,11 +112,11 @@ namespace eAppointment.Backend.WebAPI
 
             app.UseRequestLocalization(localizationOptions);
 
-            app.UseMiddleware<ErrorHandlerMiddleware>();
-
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseSerilogRequestLogging();
 
             app.MapControllers();
 

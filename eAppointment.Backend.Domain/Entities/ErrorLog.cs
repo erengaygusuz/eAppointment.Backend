@@ -3,12 +3,17 @@
     public class ErrorLog
     {
         public int Id { get; set; }
-        public string Message { get; set; }
-        public string MessageTemplate { get; set; }
-        public string Level { get; set; }
-        public DateTime TimeStamp { get; set; }
-        public string Exception { get; set; }
-        public string Properties { get; set; }
-        public string LogEvent { get; set; }
+
+        public string ExceptionMessage { get; set; }
+
+        public string ExceptionStackTrace { get; set; }
+
+        public string InnerExceptionMessage { get; set; }
+
+        public string InnerExceptionStackTrace { get; set; }
+
+        public int AuditLogId { get; set; }
+
+        public AuditLog AuditLog { get; set; }
     }
 }
