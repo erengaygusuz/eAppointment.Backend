@@ -1,6 +1,5 @@
 ﻿using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Domain.Repositories;
-using eAppointment.Backend.Infrastructure.Context;
 using GenericRepository;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
@@ -22,70 +21,40 @@ namespace eAppointment.Backend.WebAPI.Middlewares
         {
             try
             {
-                using (var scope = _provider.CreateScope())
-                {
-                    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                var scope = _provider.CreateScope();
 
-                    var auditLogRepository = scope.ServiceProvider.GetRequiredService<IAuditLogRepository>();
-                    var tableLogRepository = scope.ServiceProvider.GetRequiredService<ITableLogRepository>();
+                var auditLogRepository = scope.ServiceProvider.GetRequiredService<IAuditLogRepository>();
+                var tableLogRepository = scope.ServiceProvider.GetRequiredService<ITableLogRepository>();
 
-                    var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+                var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
 
-                    var result = await HandleBeforeRequestAsync(context, auditLogRepository, unitOfWork);
+                await CreateAuditLogAsync(context, auditLogRepository, unitOfWork);
 
-                    await _next(context);
+                await _next(context);
 
-                    try
-                    {
-                        await HandleAfterRequestAsync(context, auditLogRepository, unitOfWork, result);
-                    }
-                    finally
-                    {
-                        if (result.Item1 != null)
-                        {
-                            result.Item1.Dispose();
-                        }
-
-                        if (result.Item2 != null)
-                        {
-                            result.Item2.Dispose();
-                        }
-                    }
-                    
-                }
+                await UpdateAuditLogAsync(context, auditLogRepository, unitOfWork);
             }
 
             catch (Exception exception)
             {
-                using (var scope = _provider.CreateScope())
-                {
-                    var auditLogRepository = scope.ServiceProvider.GetRequiredService<IAuditLogRepository>();
-                    var errorLogRepository = scope.ServiceProvider.GetRequiredService<IErrorLogRepository>();
+                var scope = _provider.CreateScope();
 
-                    var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+                var auditLogRepository = scope.ServiceProvider.GetRequiredService<IAuditLogRepository>();
+                var errorLogRepository = scope.ServiceProvider.GetRequiredService<IErrorLogRepository>();
 
-                    var lastRecord = await auditLogRepository.GetAll().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+                var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
 
-                    await AddErrorLogAsync(exception, errorLogRepository, unitOfWork, lastRecord.Id);
-                }
+                var lastRecord = await auditLogRepository.GetAll().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+
+                await AddErrorLogAsync(exception, errorLogRepository, unitOfWork, lastRecord.Id);
             }
         }
 
-        private async Task<Tuple<Stream, MemoryStream>> HandleBeforeRequestAsync(
+        private async Task CreateAuditLogAsync(
             HttpContext context,
             IAuditLogRepository auditLogRepository,
             IUnitOfWork unitOfWork)
         {
-            context.Request.EnableBuffering();
-
-            var requestBodyText = await new StreamReader(context.Request.Body).ReadToEndAsync();
-
-            context.Request.Body.Position = 0;
-
-            var responseBody = new MemoryStream();
-
-            context.Response.Body = responseBody;
-
             var auditLog = new AuditLog
             {
                 Method = context.Request.Method,
@@ -93,7 +62,7 @@ namespace eAppointment.Backend.WebAPI.Middlewares
                 Path = context.Request.Path,
                 QueryParameters = GetQueryParameters(context.Request.Query),
                 RequestHeaders = GetHeaders(context.Request.Headers),
-                RequestBody = requestBodyText,
+                RequestBody = "",
                 StatusCode = context.Response.StatusCode,
                 ResponseHeaders = "",
                 ResponseBody = "",
@@ -108,30 +77,51 @@ namespace eAppointment.Backend.WebAPI.Middlewares
             await auditLogRepository.AddAsync(auditLog);
 
             await unitOfWork.SaveChangesAsync();
-
-            return Tuple.Create(context.Response.Body, responseBody);
         }
 
-        private async Task HandleAfterRequestAsync(
+        private async Task UpdateAuditLogAsync(
             HttpContext context,
             IAuditLogRepository auditLogRepository,
-            IUnitOfWork unitOfWork,
-            Tuple<Stream, MemoryStream> streams)
+            IUnitOfWork unitOfWork)
         {
-            streams.Item1.Seek(0, SeekOrigin.Begin);
+            context.Request.EnableBuffering();
 
-            var responseBodyText = await new StreamReader(streams.Item1).ReadToEndAsync();
+            var requestBodyText = await new StreamReader(context.Request.Body).ReadToEndAsync();
 
-            streams.Item1.Seek(0, SeekOrigin.Begin);
+            context.Request.Body.Position = 0;
 
-            await streams.Item2.CopyToAsync(streams.Item1);
+            var responseBody = new MemoryStream();
+
+            context.Response.Body = responseBody;
+
+            context.Response.Body.Seek(0, SeekOrigin.Begin);
+
+            var responseBodyText = await new StreamReader(context.Response.Body).ReadToEndAsync();
+
+            context.Response.Body.Seek(0, SeekOrigin.Begin);
+
+            await responseBody.CopyToAsync(context.Response.Body);
 
             var lastAuditLog = await auditLogRepository.GetAllWithTracking().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
 
-            lastAuditLog.ResponseBody = responseBodyText;
-            lastAuditLog.ResponseHeaders = GetHeaders(context.Response.Headers);
-
-            //auditLogRepository.Update(lastAuditLog);
+            lastAuditLog = new AuditLog
+            {
+                Method = context.Request.Method,
+                Url = $"{context.Request.Scheme}://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}",
+                Path = context.Request.Path,
+                QueryParameters = GetQueryParameters(context.Request.Query),
+                RequestHeaders = GetHeaders(context.Request.Headers),
+                RequestBody = requestBodyText,
+                StatusCode = context.Response.StatusCode,
+                ResponseHeaders = GetHeaders(context.Response.Headers),
+                ResponseBody = responseBodyText,
+                UserName = context.User.Identity.Name ?? "Anonymous",
+                RemoteIpAddress = context.Connection.RemoteIpAddress?.ToString(),
+                LocalIpAddress = context.Connection.LocalIpAddress?.ToString(),
+                RemotePort = context.Connection.RemotePort,
+                LocalPort = context.Connection.LocalPort,
+                Timestamp = DateTime.Now
+            };
 
             await unitOfWork.SaveChangesAsync();
         }
