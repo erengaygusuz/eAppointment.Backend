@@ -1,9 +1,15 @@
-﻿namespace eAppointment.Backend.Domain.Enums
+﻿using Ardalis.SmartEnum;
+
+namespace eAppointment.Backend.Domain.Enums
 {
-    public enum TableChangeType
+    public sealed class TableChangeType : SmartEnum<TableChangeType>
     {
-        Create,
-        Update,
-        Delete
+        public static readonly TableChangeType Create = new("Create", 1);
+        public static readonly TableChangeType Update = new("Update", 2);
+        public static readonly TableChangeType Delete = new("Delete", 3);
+
+        public TableChangeType(string name, int value) : base(name, value)
+        {
+        }
     }
 }

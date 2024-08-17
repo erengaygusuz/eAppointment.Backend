@@ -24,13 +24,13 @@ namespace eAppointment.Backend.Domain.Helpers
 
         public TableChangeType TableChangeType { get; set; }
 
-        public List<string> AffectedColumns { get; set; } 
+        public List<string> AffectedColumns { get; } = new();
 
         public TableLog ToTableLog(int auditLogId)
         {
             var tableLog = new TableLog
             {
-                TableChangeType = TableChangeType.ToString(),
+                TableChangeType = TableChangeType,
                 TableName = TableName,
                 OldValues = OldValues.Count == 0 ? null : JsonConvert.SerializeObject(OldValues),
                 NewValues = NewValues.Count == 0 ? null : JsonConvert.SerializeObject(NewValues),

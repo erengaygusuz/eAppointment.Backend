@@ -10,19 +10,24 @@ namespace eAppointment.Backend.Infrastructure.Configurations
         {
             builder.HasKey(p => p.Id);
 
-            builder.Property(p => p.Message).HasColumnType("nvarchar(MAX)");
+            builder.Property(p => p.ExceptionMessage).HasColumnType("nvarchar(MAX)");
 
-            builder.Property(p => p.MessageTemplate).HasColumnType("nvarchar(MAX)");
+            builder.Property(p => p.ExceptionStackTrace).HasColumnType("nvarchar(MAX)");
 
-            builder.Property(p => p.Level).HasColumnType("nvarchar(128)");
+            builder.Property(p => p.InnerExceptionMessage).HasColumnType("nvarchar(MAX)");
 
-            builder.Property(p => p.TimeStamp).HasColumnType("datetime");
+            builder.Property(p => p.InnerExceptionStackTrace).HasColumnType("nvarchar(MAX)");
 
-            builder.Property(p => p.Exception).HasColumnType("nvarchar(MAX)");
+            builder.Property(p => p.AuditLogId).HasColumnType("int");
 
-            builder.Property(p => p.Properties).HasColumnType("nvarchar(MAX)");
+            builder.HasIndex(x => x.AuditLogId).IsUnique(false);
 
-            builder.Property(p => p.LogEvent).HasColumnType("xml");
+            builder
+                .HasOne(e => e.AuditLog)
+                .WithOne(e => e.ErrorLog)
+                .HasForeignKey<ErrorLog>(e => e.AuditLogId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired();
         }
     }
 }

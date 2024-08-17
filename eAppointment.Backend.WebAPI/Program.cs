@@ -3,6 +3,7 @@ using eAppointment.Backend.Application;
 using eAppointment.Backend.Infrastructure;
 using eAppointment.Backend.Infrastructure.Services;
 using eAppointment.Backend.WebAPI.Filters;
+using eAppointment.Backend.WebAPI.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
@@ -111,6 +112,8 @@ namespace eAppointment.Backend.WebAPI
                 .AddSupportedCultures(supportedCultures);
 
             app.UseRequestLocalization(localizationOptions);
+
+            app.UseMiddleware<AuditMiddleware>();
 
             app.UseAuthentication();
 
