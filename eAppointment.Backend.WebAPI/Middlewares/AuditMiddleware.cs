@@ -46,7 +46,9 @@ namespace eAppointment.Backend.WebAPI.Middlewares
 
                 var lastRecord = await auditLogRepository.GetAll().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
 
-                await AddErrorLogAsync(exception, errorLogRepository, unitOfWork, lastRecord.Id);
+                await CreateErrorLogAsync(exception, errorLogRepository, unitOfWork, lastRecord.Id);
+
+                await UpdateAuditLogAsync(context, auditLogRepository, unitOfWork);
             }
         }
 
@@ -102,26 +104,28 @@ namespace eAppointment.Backend.WebAPI.Middlewares
 
             await responseBody.CopyToAsync(context.Response.Body);
 
-            var lastAuditLog = await auditLogRepository.GetAllWithTracking().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+            var lastAuditLog = await auditLogRepository.GetAll().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
 
-            lastAuditLog = new AuditLog
-            {
-                Method = context.Request.Method,
-                Url = $"{context.Request.Scheme}://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}",
-                Path = context.Request.Path,
-                QueryParameters = GetQueryParameters(context.Request.Query),
-                RequestHeaders = GetHeaders(context.Request.Headers),
-                RequestBody = requestBodyText,
-                StatusCode = context.Response.StatusCode,
-                ResponseHeaders = GetHeaders(context.Response.Headers),
-                ResponseBody = responseBodyText,
-                UserName = context.User.Identity.Name ?? "Anonymous",
-                RemoteIpAddress = context.Connection.RemoteIpAddress?.ToString(),
-                LocalIpAddress = context.Connection.LocalIpAddress?.ToString(),
-                RemotePort = context.Connection.RemotePort,
-                LocalPort = context.Connection.LocalPort,
-                Timestamp = DateTime.Now
-            };
+            lastAuditLog.Id = lastAuditLog.Id;
+            lastAuditLog.Method = context.Request.Method;
+            lastAuditLog.Url = $"{context.Request.Scheme}://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}";
+            lastAuditLog.Path = context.Request.Path;
+            lastAuditLog.QueryParameters = GetQueryParameters(context.Request.Query);
+            lastAuditLog.RequestHeaders = GetHeaders(context.Request.Headers);
+            lastAuditLog.RequestBody = requestBodyText;
+            lastAuditLog.StatusCode = context.Response.StatusCode;
+            lastAuditLog.ResponseHeaders = GetHeaders(context.Response.Headers);
+            lastAuditLog.ResponseBody = responseBodyText;
+            lastAuditLog.UserName = context.User.Identity.Name ?? "Anonymous";
+            lastAuditLog.RemoteIpAddress = context.Connection.RemoteIpAddress?.ToString();
+            lastAuditLog.LocalIpAddress = context.Connection.LocalIpAddress?.ToString();
+            lastAuditLog.RemotePort = context.Connection.RemotePort;
+            lastAuditLog.LocalPort = context.Connection.LocalPort;
+            lastAuditLog.Timestamp = DateTime.Now;
+
+            Console.WriteLine(lastAuditLog);
+
+            //auditLogRepository.Update(lastAuditLog);
 
             await unitOfWork.SaveChangesAsync();
         }
@@ -150,7 +154,7 @@ namespace eAppointment.Backend.WebAPI.Middlewares
             return JsonSerializer.Serialize(headerDictionary);
         }
 
-        private async Task AddErrorLogAsync(Exception exception, IErrorLogRepository errorLogRepository, IUnitOfWork unitOfWork, int auditLogId)
+        private async Task CreateErrorLogAsync(Exception exception, IErrorLogRepository errorLogRepository, IUnitOfWork unitOfWork, int auditLogId)
         {
             if (exception != null)
             {

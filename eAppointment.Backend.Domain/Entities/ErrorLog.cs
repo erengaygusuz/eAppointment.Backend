@@ -8,9 +8,9 @@
 
         public string ExceptionStackTrace { get; set; }
 
-        public string InnerExceptionMessage { get; set; }
+        public string? InnerExceptionMessage { get; set; }
 
-        public string InnerExceptionStackTrace { get; set; }
+        public string? InnerExceptionStackTrace { get; set; }
 
         public int AuditLogId { get; set; }
 

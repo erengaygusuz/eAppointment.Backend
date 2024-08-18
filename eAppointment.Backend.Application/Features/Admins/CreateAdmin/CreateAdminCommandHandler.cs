@@ -6,7 +6,6 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using System.Data;
-using System.Net;
 using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
