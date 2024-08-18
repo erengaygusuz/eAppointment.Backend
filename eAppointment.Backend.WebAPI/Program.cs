@@ -57,10 +57,10 @@ namespace eAppointment.Backend.WebAPI
 
             builder.Services.AddDefaultCors();
 
+            builder.Services.AddControllers();
+
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
-
-            builder.Services.AddControllers();
 
             builder.Services.AddLocalization();
             builder.Services.AddDistributedMemoryCache();

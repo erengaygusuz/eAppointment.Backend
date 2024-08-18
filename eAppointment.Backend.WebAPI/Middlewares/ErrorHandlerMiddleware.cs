@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Localization;
+﻿using FluentValidation;
+using Microsoft.Extensions.Localization;
+using System.Text.Json;
 using TS.Result;
 
 namespace eAppointment.Backend.WebAPI.Middlewares
@@ -20,8 +22,6 @@ namespace eAppointment.Backend.WebAPI.Middlewares
         {
             try
             {
-                _logger.LogInformation("Request Started");
-
                 await _next(context);
 
                 if (context.Response.StatusCode == 401)
@@ -43,9 +43,22 @@ namespace eAppointment.Backend.WebAPI.Middlewares
             {
                 _logger.LogError(exception.Message);
 
-                context.Response.StatusCode = 500;
+                if (exception.GetType() == typeof(ValidationException))
+                {
+                    context.Response.StatusCode = 400;
+                    context.Response.ContentType = "application/json";
 
-                await context.Response.WriteAsJsonAsync(Result<string>.Failure(500, _localization["ErrorsCodes.500"].Value));
+                    var errorResult = Result<string>.Failure(400, ((ValidationException)exception).Errors.Select(s => s.PropertyName).ToList());
+
+                    await context.Response.WriteAsync(JsonSerializer.Serialize(errorResult));
+                }
+
+                else
+                {
+                    context.Response.StatusCode = 500;
+
+                    await context.Response.WriteAsJsonAsync(Result<string>.Failure(500, _localization["ErrorsCodes.500"].Value));
+                }
             }
         }
     }

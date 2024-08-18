@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Domain.Repositories;
-using FluentValidation;
 using GenericRepository;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
 using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientById
@@ -15,24 +15,19 @@ namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientById
         IUnitOfWork unitOfWork,
         IMapper mapper,
         UserManager<User> userManager,
-        IValidator<UpdatePatientByIdCommand> updatePatientByIdCommandValidator,
-        IStringLocalizer<object> localization) : IRequestHandler<UpdatePatientByIdCommand, Result<string>>
+        IStringLocalizer<object> localization,
+        ILogger<UpdatePatientByIdCommandHandler> logger) : IRequestHandler<UpdatePatientByIdCommand, Result<string>>
     {
         public async Task<Result<string>> Handle(UpdatePatientByIdCommand request, CancellationToken cancellationToken)
         {
             var translatedMessagePath = "Features.Patients.UpdatePatient.Others";
 
-            var validationResult = await updatePatientByIdCommandValidator.ValidateAsync(request);
-
-            if (!validationResult.IsValid)
-            {
-                return Result<string>.Failure(validationResult.Errors.Select(x => x.ErrorMessage).ToList());
-            }
-
             User? user = await userManager.FindByIdAsync(request.id.ToString());
 
             if (user is null)
             {
+                logger.LogError(localization[translatedMessagePath + "." + "CouldNotFound"].Value);
+
                 return Result<string>.Failure(localization[translatedMessagePath + "." + "CouldNotFound"]);
             }
 
@@ -42,6 +37,8 @@ namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientById
 
             if (!result.Succeeded)
             {
+                logger.LogError(localization[translatedMessagePath + "." + "CouldNotUpdated"].Value);
+
                 return Result<string>.Failure(localization[translatedMessagePath + "." + "CouldNotUpdated"]);
             }
 
@@ -54,6 +51,8 @@ namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientById
             patientRepository.Update(patient);
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
+
+            logger.LogInformation(localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value);
 
             return localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value;
         }

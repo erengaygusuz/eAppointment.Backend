@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
 using eAppointment.Backend.Domain.Entities;
-using FluentValidation;
 using GenericRepository;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using System.Data;
-using System.Text.Json;
 using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
@@ -16,7 +13,6 @@ namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
         UserManager<User> userManager,
         IUnitOfWork unitOfWork,
         IMapper mapper,
-        IValidator<CreateAdminCommand> createAdminCommandValidator,
         IStringLocalizer<object> localization,
         ILogger<CreateAdminCommandHandler> logger) : IRequestHandler<CreateAdminCommand, Result<string>>
     {
@@ -24,26 +20,7 @@ namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
         {
             var translatedMessagePath = "Features.Admins.CreateAdmin.Others";
 
-            logger.LogInformation("Validation Started");
-
-            var validationResult = await createAdminCommandValidator.ValidateAsync(request);
-
-            if (!validationResult.IsValid)
-            {
-                logger.LogError("Validation Completed with Errors: ", JsonSerializer.Serialize(validationResult.Errors.Select(x => x.ErrorMessage).ToList()));
-
-                return Result<string>.Failure(validationResult.Errors.Select(x => x.ErrorMessage).ToList());
-            }
-
-            logger.LogInformation("Validation Completed Successfully");
-
-            logger.LogInformation("Mapping Started");
-
             User user = mapper.Map<User>(request);
-
-            logger.LogInformation("Mapping Completed Successfully");
-
-            logger.LogInformation("User Creation Started");
 
             IdentityResult result = await userManager.CreateAsync(user, request.password);
 
@@ -51,14 +28,10 @@ namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
             {
                 logger.LogError(localization[translatedMessagePath + "." + "CannotCreated"].Value);
 
-                return Result<string>.Failure(localization[translatedMessagePath + "." + "CannotCreated"]);
+                return Result<string>.Failure(500, localization[translatedMessagePath + "." + "CannotCreated"]);
             }
 
-            logger.LogInformation("User Creation Completed Successfully");
-
             var addedUser = await userManager.FindByEmailAsync(user.Email!);
-
-            logger.LogInformation("User Role Addition Started");
 
             var roleResult = await userManager.AddToRoleAsync(addedUser!, "Admin");
 
@@ -66,10 +39,8 @@ namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
             {
                 logger.LogError(localization[translatedMessagePath + "." + "RoleCannotAdded"].Value);
 
-                return Result<string>.Failure(localization[translatedMessagePath + "." + "RoleCannotAdded"]);
+                return Result<string>.Failure(500, localization[translatedMessagePath + "." + "RoleCannotAdded"]);
             }
-
-            logger.LogInformation("User Role Addition Completed Successfully");
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 

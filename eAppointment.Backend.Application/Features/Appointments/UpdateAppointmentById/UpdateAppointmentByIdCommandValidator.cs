@@ -1,11 +1,10 @@
-﻿using eAppointment.Backend.Application.Features.Appointments.UpdateAppointmentById;
-using eAppointment.Backend.Domain.Entities;
+﻿using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Domain.Enums;
 using eAppointment.Backend.Domain.Repositories;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 
-namespace eAppointment.Backend.Application.Validators
+namespace eAppointment.Backend.Application.Features.Appointments.UpdateAppointmentById
 {
     public class UpdateAppointmentByIdCommandValidator : AbstractValidator<UpdateAppointmentByIdCommand>
     {
@@ -63,10 +62,10 @@ namespace eAppointment.Backend.Application.Validators
 
             bool isAppointmentDateNotAvailable = _appointmentRepository
                     .Any(p => p.DoctorId == appointment.DoctorId &&
-                     ((p.StartDate < endDate && p.StartDate >= startDate) || // Mevcut randevunun bitişi, diğer randevunun başlangıcıyla çakışıyor
-                     (p.EndDate > startDate && p.EndDate <= endDate) || // Mevcut randevunun başlangıcı, diğer randevunun bitişiyle çakışıyor
-                     (p.StartDate >= startDate && p.EndDate <= endDate) || // Mevcut randevu, diğer randevu içinde tamamen
-                     (p.StartDate <= startDate && p.EndDate >= endDate)) // Mevcut randevu, diğer randevuyu tamamen kapsıyor
+                     (p.StartDate < endDate && p.StartDate >= startDate || // Mevcut randevunun bitişi, diğer randevunun başlangıcıyla çakışıyor
+                     p.EndDate > startDate && p.EndDate <= endDate || // Mevcut randevunun başlangıcı, diğer randevunun bitişiyle çakışıyor
+                     p.StartDate >= startDate && p.EndDate <= endDate || // Mevcut randevu, diğer randevu içinde tamamen
+                     p.StartDate <= startDate && p.EndDate >= endDate) // Mevcut randevu, diğer randevuyu tamamen kapsıyor
                      );
 
             return isAppointmentDateNotAvailable;

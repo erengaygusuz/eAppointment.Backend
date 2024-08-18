@@ -1,10 +1,10 @@
 ﻿using eAppointment.Backend.Application.Services;
 using eAppointment.Backend.Domain.Entities;
-using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
 using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Auth.Login
@@ -12,19 +12,12 @@ namespace eAppointment.Backend.Application.Features.Auth.Login
     internal sealed class LoginCommandHandler(
         UserManager<User> userManager, 
         IJwtProvider jwtProvider,
-        IValidator<LoginCommand> loginCommandValidator,
-        IStringLocalizer<object> localization) : IRequestHandler<LoginCommand, Result<LoginCommandResponse>>
+        IStringLocalizer<object> localization,
+        ILogger<LoginCommandHandler> logger) : IRequestHandler<LoginCommand, Result<LoginCommandResponse>>
     {
         public async Task<Result<LoginCommandResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             var translatedMessagePath = "Features.Auth.Login.Others";
-
-            var validationResult = await loginCommandValidator.ValidateAsync(request);
-
-            if (!validationResult.IsValid)
-            {
-                return Result<LoginCommandResponse>.Failure(validationResult.Errors.Select(x => x.ErrorMessage).ToList());
-            }
 
             User? appUser = await userManager.Users
                 .Include(x => x.Patient)
@@ -34,6 +27,8 @@ namespace eAppointment.Backend.Application.Features.Auth.Login
 
             if (appUser is null)
             {
+                logger.LogError(localization[translatedMessagePath + "." + "NotFound"].Value);
+
                 return Result<LoginCommandResponse>.Failure(localization[translatedMessagePath + "." + "NotFound"]);
             }
 
@@ -41,12 +36,16 @@ namespace eAppointment.Backend.Application.Features.Auth.Login
 
             if (!isPasswordCorrect)
             {
+                logger.LogError(localization[translatedMessagePath + "." + "WrongPassword"].Value);
+
                 return Result<LoginCommandResponse>.Failure(localization[translatedMessagePath + "." + "WrongPassword"]);
             }
 
             string token = await jwtProvider.CreateTokenAsync(appUser);
 
             LoginCommandResponse response = new(token);
+
+            logger.LogInformation(localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value);
 
             return Result<LoginCommandResponse>.Succeed(response);
         }

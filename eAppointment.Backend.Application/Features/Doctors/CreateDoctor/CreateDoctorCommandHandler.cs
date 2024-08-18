@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using eAppointment.Backend.Application.Features.Admins.CreateAdmin;
 using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Domain.Repositories;
-using FluentValidation;
 using GenericRepository;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
 using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Doctors.CreateDoctor
@@ -16,19 +15,12 @@ namespace eAppointment.Backend.Application.Features.Doctors.CreateDoctor
         IDoctorRepository doctorRepository,
         IUnitOfWork unitOfWork,
         IMapper mapper,
-        IValidator<CreateDoctorCommand> createDoctorCommandValidator,
-        IStringLocalizer<object> localization) : IRequestHandler<CreateDoctorCommand, Result<string>>
+        IStringLocalizer<object> localization,
+        ILogger<CreateDoctorCommandHandler> logger) : IRequestHandler<CreateDoctorCommand, Result<string>>
     {
         public async Task<Result<string>> Handle(CreateDoctorCommand request, CancellationToken cancellationToken)
         {
             var translatedMessagePath = "Features.Doctors.CreateDoctor.Others";
-
-            var validationResult = await createDoctorCommandValidator.ValidateAsync(request);
-
-            if (!validationResult.IsValid)
-            {
-                return Result<string>.Failure(validationResult.Errors.Select(x => x.ErrorMessage).ToList());
-            }
 
             User user = mapper.Map<User>(request);
 
@@ -36,6 +28,8 @@ namespace eAppointment.Backend.Application.Features.Doctors.CreateDoctor
 
             if (!result.Succeeded)
             {
+                logger.LogError(localization[translatedMessagePath + "." + "CannotCreated"].Value);
+
                 return Result<string>.Failure(localization[translatedMessagePath + "." + "CannotCreated"]);
             }
 
@@ -45,6 +39,8 @@ namespace eAppointment.Backend.Application.Features.Doctors.CreateDoctor
 
             if (!roleResult.Succeeded)
             {
+                logger.LogError(localization[translatedMessagePath + "." + "RoleCannotAdded"].Value);
+
                 return Result<string>.Failure(localization[translatedMessagePath + "." + "RoleCannotAdded"]);
             }
 
@@ -57,6 +53,8 @@ namespace eAppointment.Backend.Application.Features.Doctors.CreateDoctor
             await doctorRepository.AddAsync(doctor, cancellationToken);
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
+
+            logger.LogInformation(localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value);
 
             return localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value;
         }

@@ -1,8 +1,7 @@
-﻿using eAppointment.Backend.Application.Features.Auth.Login;
-using FluentValidation;
+﻿using FluentValidation;
 using Microsoft.Extensions.Localization;
 
-namespace eAppointment.Backend.Application.Validators
+namespace eAppointment.Backend.Application.Features.Auth.Login
 {
     public class LoginCommandValidator : AbstractValidator<LoginCommand>
     {

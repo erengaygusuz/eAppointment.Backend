@@ -1,22 +1,21 @@
-﻿using eAppointment.Backend.Application.Features.Doctors.UpdateDoctorById;
-using eAppointment.Backend.Domain.Entities;
+﻿using eAppointment.Backend.Domain.Entities;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 
-namespace eAppointment.Backend.Application.Validators
+namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminById
 {
-    public class UpdateDoctorByIdCommandValidator : AbstractValidator<UpdateDoctorByIdCommand>
+    public class UpdateAdminByIdCommandValidator : AbstractValidator<UpdateAdminByIdCommand>
     {
         private readonly UserManager<User> _userManager;
         private readonly IStringLocalizer<object> _localization;
 
-        public UpdateDoctorByIdCommandValidator(UserManager<User> userManager, IStringLocalizer<object> localization)
+        public UpdateAdminByIdCommandValidator(UserManager<User> userManager, IStringLocalizer<object> localization)
         {
             _userManager = userManager;
             _localization = localization;
 
-            var validationMessagePath = "Features.Doctors.UpdateDoctor.ValidationMessages";
+            var validationMessagePath = "Features.Admins.UpdateAdmin.ValidationMessages";
 
             RuleFor(x => x.firstName)
                 .NotNull().WithMessage(_localization[validationMessagePath + "." + "FirstName.NotNull"])
@@ -50,9 +49,6 @@ namespace eAppointment.Backend.Application.Validators
                 .NotNull().WithMessage(_localization[validationMessagePath + "." + "PhoneNumber.NotNull"])
                 .Matches("((\\(\\d{3}\\) ?)|(\\d{3}-)) ?\\d{3}-\\d{4}").WithMessage(_localization[validationMessagePath + "." + "PhoneNumber.NotValid"])
                 .Matches("^((?![a-zA-Z]).)*$").WithMessage(_localization[validationMessagePath + "." + "PhoneNumber.NotUseLetters"]);
-
-            RuleFor(x => x.departmentId)
-                .GreaterThan(0).WithMessage(_localization[validationMessagePath + "." + "DepartmentId.GreaterThanZero"]);
         }
 
         private bool UniqueUsername(string username)

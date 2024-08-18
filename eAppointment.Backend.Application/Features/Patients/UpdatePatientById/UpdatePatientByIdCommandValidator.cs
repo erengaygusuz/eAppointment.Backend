@@ -1,22 +1,21 @@
-﻿using eAppointment.Backend.Application.Features.Admins.UpdateAdminById;
-using eAppointment.Backend.Domain.Entities;
+﻿using eAppointment.Backend.Domain.Entities;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 
-namespace eAppointment.Backend.Application.Validators
+namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientById
 {
-    public class UpdateAdminByIdCommandValidator : AbstractValidator<UpdateAdminByIdCommand>
+    public class UpdatePatientByIdCommandValidator : AbstractValidator<UpdatePatientByIdCommand>
     {
         private readonly UserManager<User> _userManager;
         private readonly IStringLocalizer<object> _localization;
 
-        public UpdateAdminByIdCommandValidator(UserManager<User> userManager, IStringLocalizer<object> localization)
+        public UpdatePatientByIdCommandValidator(UserManager<User> userManager, IStringLocalizer<object> localization)
         {
             _userManager = userManager;
             _localization = localization;
 
-            var validationMessagePath = "Features.Admins.UpdateAdmin.ValidationMessages";
+            var validationMessagePath = "Features.Patients.CreatePatient.ValidationMessages";
 
             RuleFor(x => x.firstName)
                 .NotNull().WithMessage(_localization[validationMessagePath + "." + "FirstName.NotNull"])
@@ -30,16 +29,6 @@ namespace eAppointment.Backend.Application.Validators
                 .MaximumLength(50).WithMessage(_localization[validationMessagePath + "." + "LastName.MaximumLength"])
                 .Matches("^((?![0-9]).)*$").WithMessage(_localization[validationMessagePath + "." + "LastName.NotUseNumbers"]);
 
-            RuleFor(x => x.userName)
-                .NotNull().WithMessage(_localization[validationMessagePath + "." + "UserName.NotNull"])
-                .MinimumLength(3).WithMessage(_localization[validationMessagePath + "." + "UserName.MinimumLength"])
-                .MaximumLength(100).WithMessage(_localization[validationMessagePath + "." + "UserName.MaximumLength"])
-                .Matches("^((?![ ]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseSpaces"])
-                .Matches("^((?![ğĞçÇşŞüÜöÖıİ]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseTurkishCharacters"])
-                .Matches("^((?![A-Z]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseUpperLetters"])
-                .Matches("^((?![0-9]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseNumbers"])
-                .Must(UniqueUsername).WithMessage(_localization[validationMessagePath + "." + "UserName.NotUnique"]);
-
             RuleFor(x => x.email)
                 .NotNull().WithMessage(_localization[validationMessagePath + "." + "Email.NotNull"])
                 .MaximumLength(150).WithMessage(_localization[validationMessagePath + "." + "Email.MaximumLength"])
@@ -50,6 +39,29 @@ namespace eAppointment.Backend.Application.Validators
                 .NotNull().WithMessage(_localization[validationMessagePath + "." + "PhoneNumber.NotNull"])
                 .Matches("((\\(\\d{3}\\) ?)|(\\d{3}-)) ?\\d{3}-\\d{4}").WithMessage(_localization[validationMessagePath + "." + "PhoneNumber.NotValid"])
                 .Matches("^((?![a-zA-Z]).)*$").WithMessage(_localization[validationMessagePath + "." + "PhoneNumber.NotUseLetters"]);
+
+            RuleFor(x => x.userName)
+                .NotNull().WithMessage(_localization[validationMessagePath + "." + "UserName.NotNull"])
+                .MinimumLength(3).WithMessage(_localization[validationMessagePath + "." + "UserName.MinimumLength"])
+                .MaximumLength(100).WithMessage(_localization[validationMessagePath + "." + "UserName.MaximumLength"])
+                .Matches("^((?![ ]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseSpaces"])
+                .Matches("^((?![ğĞçÇşŞüÜöÖıİ]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseTurkishCharacters"])
+                .Matches("^((?![A-Z]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseUpperLetters"])
+                .Matches("^((?![0-9]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseNumbers"])
+                .Must(UniqueUsername).WithMessage(_localization[validationMessagePath + "." + "UserName.NotUnique"]);
+
+            RuleFor(x => x.identityNumber)
+                .NotNull().WithMessage(_localization[validationMessagePath + "." + "IdentityNumber.NotNull"])
+                .Length(11).WithMessage(_localization[validationMessagePath + "." + "IdentityNumber.NotExactNumberCount"])
+                .Matches("^((?![a-zA-Z]).)*$").WithMessage(_localization[validationMessagePath + "." + "IdentityNumber.NotUseLetters"]);
+
+            RuleFor(x => x.countyId)
+                .GreaterThan(0).WithMessage(_localization[validationMessagePath + "." + "CountyId.GreaterThanZero"]);
+
+            RuleFor(x => x.fullAddress)
+                .NotNull().WithMessage(_localization[validationMessagePath + "." + "FullAddress.NotNull"])
+                .MinimumLength(50).WithMessage(_localization[validationMessagePath + "." + "FullAddress.MinimumLength"])
+                .MaximumLength(500).WithMessage(_localization[validationMessagePath + "." + "FullAddress.MaximumLength"]);
         }
 
         private bool UniqueUsername(string username)
