@@ -22,11 +22,7 @@ namespace eAppointment.Backend.Infrastructure.Context
 
         public DbSet<Appointment> Appointments { get; set; }
 
-        public DbSet<ErrorLog> ErrorLogs { get; set; }
-
         public DbSet<AuditLog> AuditLogs { get; set; }
-
-        public DbSet<TableLog> TableLogs { get; set; }
 
         public ApplicationDbContext(DbContextOptions options) : base(options) { }
 
@@ -50,27 +46,25 @@ namespace eAppointment.Backend.Infrastructure.Context
         {
             ChangeTracker.DetectChanges();
 
-            var tableChangeEntries = new List<TableChangeEntry>();
-
-            AuditLog auditLog = null;
+            var auditEntries = new List<AuditEntry>();
 
             foreach (var entry in ChangeTracker.Entries())
             {
-                if (entry.Entity is ErrorLog || entry.Entity is AuditLog)
+                //if (entry.Entity is ErrorLog || entry.Entity is AuditLog)
+                //{
+                //    continue;
+                //}
+
+                if (entry.Entity is AuditLog || entry.State == EntityState.Detached || entry.State == EntityState.Unchanged)
                 {
                     continue;
                 }
 
-                if (entry.Entity is TableLog || entry.State == EntityState.Detached || entry.State == EntityState.Unchanged)
-                {
-                    continue;
-                }
+                var auditEntry = new AuditEntry(entry);
 
-                var tableChangeEntry = new TableChangeEntry(entry);
+                auditEntry.TableName = entry.Entity.GetType().Name;
 
-                tableChangeEntry.TableName = entry.Entity.GetType().Name;
-
-                tableChangeEntries.Add(tableChangeEntry);
+                auditEntries.Add(auditEntry);
 
                 foreach (var property in entry.Properties)
                 {
@@ -85,7 +79,7 @@ namespace eAppointment.Backend.Infrastructure.Context
                             property.CurrentValue = 0;
                         }
 
-                        tableChangeEntry.KeyValues[propertyName] = property.CurrentValue;
+                        auditEntry.KeyValues[propertyName] = property.CurrentValue;
 
                         continue;
                     }
@@ -94,32 +88,26 @@ namespace eAppointment.Backend.Infrastructure.Context
                     {
                         case EntityState.Added:
 
-                            auditLog = AuditLogs.OrderByDescending(e => e.Id).FirstOrDefault();
-
-                            tableChangeEntry.TableChangeType = TableChangeType.Create;
-                            tableChangeEntry.NewValues[propertyName] = property.CurrentValue;
+                            auditEntry.AuditType = AuditType.Create;
+                            auditEntry.NewValues[propertyName] = property.CurrentValue;
 
                             break;
 
                         case EntityState.Deleted:
 
-                            auditLog = AuditLogs.OrderByDescending(e => e.Id).FirstOrDefault();
-
-                            tableChangeEntry.TableChangeType = TableChangeType.Delete;
-                            tableChangeEntry.OldValues[propertyName] = property.OriginalValue;
+                            auditEntry.AuditType = AuditType.Delete;
+                            auditEntry.OldValues[propertyName] = property.OriginalValue;
 
                             break;
 
                         case EntityState.Modified:
 
-                            auditLog = AuditLogs.OrderByDescending(e => e.Id).FirstOrDefault();
-
                             if (property.IsModified)
                             {
-                                tableChangeEntry.AffectedColumns.Add(propertyName);
-                                tableChangeEntry.TableChangeType = TableChangeType.Update;
-                                tableChangeEntry.OldValues[propertyName] = property.OriginalValue;
-                                tableChangeEntry.NewValues[propertyName] = property.CurrentValue;
+                                auditEntry.AffectedColumns.Add(propertyName);
+                                auditEntry.AuditType = AuditType.Update;
+                                auditEntry.OldValues[propertyName] = property.OriginalValue;
+                                auditEntry.NewValues[propertyName] = property.CurrentValue;
                             }
 
                             break;
@@ -127,9 +115,9 @@ namespace eAppointment.Backend.Infrastructure.Context
                 }
             }
 
-            foreach (var tableChangeEntry in tableChangeEntries)
+            foreach (var auditEntry in auditEntries)
             {
-                TableLogs.AddAsync(tableChangeEntry.ToTableLog(auditLog.Id));
+                AuditLogs.AddAsync(auditEntry.ToAuditLog());
             }
         }
     }

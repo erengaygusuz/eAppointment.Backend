@@ -1,42 +1,22 @@
-﻿namespace eAppointment.Backend.Domain.Entities
+﻿using eAppointment.Backend.Domain.Enums;
+
+namespace eAppointment.Backend.Domain.Entities
 {
     public class AuditLog
     {
         public int Id { get; set; }
 
-        public string Method { get; set; }
+        public AuditType? AuditType { get; set; }
 
-        public string Url { get; set; }
+        public string? TableName { get; set; }
 
-        public string Path { get; set; }
+        public string? OldValues { get; set; }
 
-        public string QueryParameters { get; set; }
+        public string? NewValues { get; set; }
 
-        public string RequestHeaders { get; set; }
+        public string? AffectedColumns { get; set; }
 
-        public string RequestBody { get; set; }
-
-        public int StatusCode { get; set; }
-
-        public string ResponseHeaders { get; set; }
-
-        public string ResponseBody { get; set; }
-
-        public string UserName { get; set; }
-
-        public string RemoteIpAddress { get; set; }
-
-        public string LocalIpAddress { get; set; }
-
-        public int? RemotePort { get; set; }
-
-        public int? LocalPort { get; set; }
-
-        public DateTime Timestamp { get; set; }
-
-        public ICollection<TableLog>? TableLogs { get; set; }
-
-        public ErrorLog? ErrorLog { get; set; }
+        public string? KeyValues { get; set; }
     }
 
 }

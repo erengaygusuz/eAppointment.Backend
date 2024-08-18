@@ -5,9 +5,9 @@ using Newtonsoft.Json;
 
 namespace eAppointment.Backend.Domain.Helpers
 {
-    public class TableChangeEntry
+    public class AuditEntry
     {
-        public TableChangeEntry(EntityEntry entry)
+        public AuditEntry(EntityEntry entry)
         {
             Entry = entry;
         }
@@ -22,24 +22,23 @@ namespace eAppointment.Backend.Domain.Helpers
 
         public Dictionary<string, object> NewValues { get; } = new();
 
-        public TableChangeType TableChangeType { get; set; }
+        public AuditType AuditType { get; set; }
 
         public List<string> AffectedColumns { get; } = new();
 
-        public TableLog ToTableLog(int auditLogId)
+        public AuditLog ToAuditLog()
         {
-            var tableLog = new TableLog
+            var auditLog = new AuditLog
             {
-                TableChangeType = TableChangeType,
+                AuditType = AuditType,
                 TableName = TableName,
                 OldValues = OldValues.Count == 0 ? null : JsonConvert.SerializeObject(OldValues),
                 NewValues = NewValues.Count == 0 ? null : JsonConvert.SerializeObject(NewValues),
                 KeyValues = JsonConvert.SerializeObject(KeyValues),
-                AffectedColumns = AffectedColumns.Count == 0 ? null : JsonConvert.SerializeObject(AffectedColumns),
-                AuditLogId = auditLogId
+                AffectedColumns = AffectedColumns.Count == 0 ? null : JsonConvert.SerializeObject(AffectedColumns)
             };
 
-            return tableLog;
+            return auditLog;
         }
     }
 }

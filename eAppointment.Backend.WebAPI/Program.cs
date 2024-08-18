@@ -113,11 +113,11 @@ namespace eAppointment.Backend.WebAPI
 
             app.UseRequestLocalization(localizationOptions);
 
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+
             app.UseAuthentication();
 
             app.UseAuthorization();
-
-            app.UseMiddleware<AuditMiddleware>();
 
             app.UseSerilogRequestLogging();
 
