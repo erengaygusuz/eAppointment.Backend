@@ -3,6 +3,7 @@ using eAppointment.Backend.Application;
 using eAppointment.Backend.Infrastructure;
 using eAppointment.Backend.Infrastructure.Services;
 using eAppointment.Backend.WebAPI.Filters;
+using eAppointment.Backend.WebAPI.Helpers;
 using eAppointment.Backend.WebAPI.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -22,7 +23,18 @@ namespace eAppointment.Backend.WebAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Host.UseSerilog((context, loggerConfig) => loggerConfig.ReadFrom.Configuration(context.Configuration));
+            builder.Services.AddHttpContextAccessor();
+
+            builder.Services.AddSingleton<HttpContextEnricher>();
+
+            builder.Host.UseSerilog((context, serviceProvider, loggerConfig) => 
+            {
+                var enricher = serviceProvider.GetRequiredService<HttpContextEnricher>();
+
+                loggerConfig.Enrich.With(enricher);
+
+                loggerConfig.ReadFrom.Configuration(context.Configuration);
+            });
 
             builder.Services.AddAuthentication().AddJwtBearer(options =>
             {
