@@ -27,7 +27,7 @@ namespace eAppointment.Backend.Application.Features.Auth.Login
 
             if (appUser is null)
             {
-                logger.LogError(localization[translatedMessagePath + "." + "NotFound"].Value);
+                logger.LogError("User could not found");
 
                 return Result<LoginCommandResponse>.Failure(localization[translatedMessagePath + "." + "NotFound"]);
             }
@@ -36,7 +36,7 @@ namespace eAppointment.Backend.Application.Features.Auth.Login
 
             if (!isPasswordCorrect)
             {
-                logger.LogError(localization[translatedMessagePath + "." + "WrongPassword"].Value);
+                logger.LogError("User password is wrong");
 
                 return Result<LoginCommandResponse>.Failure(localization[translatedMessagePath + "." + "WrongPassword"]);
             }
@@ -45,7 +45,7 @@ namespace eAppointment.Backend.Application.Features.Auth.Login
 
             LoginCommandResponse response = new(token);
 
-            logger.LogInformation(localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value);
+            logger.LogInformation("User successfully logged in");
 
             return Result<LoginCommandResponse>.Succeed(response);
         }

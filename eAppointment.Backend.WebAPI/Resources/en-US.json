@@ -45,7 +45,7 @@
         "Others": {
           "CannotCreated": "User could not created",
           "RoleCannotAdded": "Role could not add to user",
-          "SuccessfullyCreated": "User created successfully"
+          "SuccessfullyCreated": "Admin created successfully"
         }
       },
       "UpdateAdmin": {
@@ -141,6 +141,19 @@
           "NotFound": "Appointment could not found",
           "SuccessfullyUpdated": "Appointment updated successfully"
         }
+      },
+      "UpdateAppointmentStatus": {
+        "Others": {
+          "NotFound": "Appointment could not found",
+          "SuccessfullyUpdated": "Appointment updated successfully"
+        }
+      },
+      "CancelAppointment": {
+        "Others": {
+          "NotFound": "Appointment could not found",
+          "CouldNotCanceled": "Appointment could not cancelled",
+          "SuccessfullyCancelled": "Appointment cancelled successfully"
+        }
       }
     },
     "Auth": {
@@ -163,7 +176,8 @@
         },
         "Others": {
           "NotFound": "User could not found",
-          "WrongPassword": "Password is wrong"
+          "WrongPassword": "User password is wrong",
+          "SuccessfullyLoggedIn": "User successfully logged in"
         }
       }
     },
@@ -368,6 +382,15 @@
             "MinimumLength": "Please enter minimum 50 character for full address",
             "MaximumLength": "Please enter maximum 500 character for full address"
           }
+        }
+      }
+    },
+    "Users": {
+      "DeleteUser": {
+        "Others": {
+          "CouldNotFound": "User could not found",
+          "CouldNotDeleted": "User could not deleted",
+          "SuccessfullyDeleted": "User deleted successfully"
         }
       }
     }

@@ -28,7 +28,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.CreateDoctor
 
             if (!result.Succeeded)
             {
-                logger.LogError(localization[translatedMessagePath + "." + "CannotCreated"].Value);
+                logger.LogError("User could not created");
 
                 return Result<string>.Failure(localization[translatedMessagePath + "." + "CannotCreated"]);
             }
@@ -39,7 +39,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.CreateDoctor
 
             if (!roleResult.Succeeded)
             {
-                logger.LogError(localization[translatedMessagePath + "." + "RoleCannotAdded"].Value);
+                logger.LogError("Role could not add to user");
 
                 return Result<string>.Failure(localization[translatedMessagePath + "." + "RoleCannotAdded"]);
             }
@@ -54,7 +54,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.CreateDoctor
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            logger.LogInformation(localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value);
+            logger.LogInformation("Doctor created successfully");
 
             return localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value;
         }

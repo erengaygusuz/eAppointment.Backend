@@ -26,7 +26,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.CreateAppointme
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            logger.LogInformation(localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value);
+            logger.LogInformation("Appointment created successfully");
 
             return localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value;
         }

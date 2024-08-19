@@ -26,7 +26,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorById
 
             if (user is null)
             {
-                logger.LogError(localization[translatedMessagePath + "." + "CouldNotFound"].Value);
+                logger.LogError("User could not found");
 
                 return Result<string>.Failure(localization[translatedMessagePath + "." + "CouldNotFound"]);
             }
@@ -37,7 +37,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorById
 
             if (!result.Succeeded)
             {
-                logger.LogError(localization[translatedMessagePath + "." + "CouldNotUpdated"].Value);
+                logger.LogError("User could not updated");
 
                 return Result<string>.Failure(localization[translatedMessagePath + "." + "CouldNotUpdated"]);
             }
@@ -50,7 +50,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorById
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            logger.LogInformation(localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value);
+            logger.LogInformation("Doctor updated successfully");
 
             return localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value;
         }
