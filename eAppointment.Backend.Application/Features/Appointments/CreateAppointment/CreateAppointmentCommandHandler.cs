@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
+using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
-using eAppointment.Backend.Domain.Repositories;
-using GenericRepository;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
@@ -24,7 +23,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.CreateAppointme
 
             await appointmentRepository.AddAsync(appointment, cancellationToken);
 
-            await unitOfWork.SaveChangesAsync(cancellationToken);
+            await unitOfWork.SaveAsync(cancellationToken);
 
             logger.LogInformation("Appointment created successfully");
 

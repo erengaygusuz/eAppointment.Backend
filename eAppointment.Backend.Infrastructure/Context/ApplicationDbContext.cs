@@ -1,14 +1,13 @@
 ﻿using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Domain.Enums;
 using eAppointment.Backend.Domain.Helpers;
-using GenericRepository;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace eAppointment.Backend.Infrastructure.Context
 {
-    public sealed class ApplicationDbContext : IdentityDbContext<User, Role, int>, IUnitOfWork
+    public sealed class ApplicationDbContext : IdentityDbContext<User, Role, int>
     {
         public DbSet<County> Counties { get; set; }
 

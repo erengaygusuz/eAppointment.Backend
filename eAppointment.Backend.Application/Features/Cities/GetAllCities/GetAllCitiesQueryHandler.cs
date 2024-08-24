@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
+using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
-using eAppointment.Backend.Domain.Repositories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Cities.GetAllCities
@@ -13,8 +12,12 @@ namespace eAppointment.Backend.Application.Features.Cities.GetAllCities
     {
         public async Task<Result<List<GetAllCitiesQueryResponse>>> Handle(GetAllCitiesQuery request, CancellationToken cancellationToken)
         {
-            List<City> cities = await cityRepository.GetAll()
-                .OrderBy(p => p.Name).ToListAsync(cancellationToken);
+            List<City> cities = await cityRepository.GetAllAsync(
+                expression: null,
+                trackChanges: false,
+                include: null,
+                orderBy: x => x.OrderBy(a => a.CreatedDate),
+                cancellationToken);
 
             var response = mapper.Map<List<GetAllCitiesQueryResponse>>(cities);
 

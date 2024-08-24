@@ -1,7 +1,6 @@
 ﻿using eAppointment.Backend.Domain.Entities;
-using GenericRepository;
 
-namespace eAppointment.Backend.Domain.Repositories
+namespace eAppointment.Backend.Domain.Abstractions
 {
     public interface ICityRepository : IRepository<City>
     {

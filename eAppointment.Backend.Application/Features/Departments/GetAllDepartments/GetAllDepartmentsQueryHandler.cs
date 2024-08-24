@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
+using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
-using eAppointment.Backend.Domain.Repositories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using TS.Result;
 
 namespace eAppointment.Backend.Application.Features.Departments.GetAllDepartments
@@ -13,8 +12,12 @@ namespace eAppointment.Backend.Application.Features.Departments.GetAllDepartment
     {
         public async Task<Result<List<GetAllDepartmentsQueryResponse>>> Handle(GetAllDepartmentsQuery request, CancellationToken cancellationToken)
         {
-            List<Department> departments = await departmentRepository.GetAll()
-                .OrderBy(p => p.Name).ToListAsync(cancellationToken);
+            List<Department> departments = await departmentRepository.GetAllAsync(
+               expression: null,
+               trackChanges: false,
+               include: null,
+               orderBy: x => x.OrderBy(a => a.Name),
+               cancellationToken);
 
             var response = mapper.Map<List<GetAllDepartmentsQueryResponse>>(departments);
 

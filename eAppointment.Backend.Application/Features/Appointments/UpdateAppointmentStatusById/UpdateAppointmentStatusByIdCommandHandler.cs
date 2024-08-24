@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
+using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
-using eAppointment.Backend.Domain.Repositories;
-using GenericRepository;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
@@ -20,7 +19,12 @@ namespace eAppointment.Backend.Application.Features.Appointments.UpdateAppointme
         {
             var translatedMessagePath = "Features.Appointments.UpdateAppointmentStatus.Others";
 
-            Appointment? appointment = await appointmentRepository.GetByExpressionWithTrackingAsync(p => p.Id == request.id, cancellationToken);
+            Appointment? appointment = await appointmentRepository.GetAsync(
+               expression: p => p.Id == request.id,
+               trackChanges: false,
+               include: null,
+               orderBy: null,
+               cancellationToken);
 
             if (appointment is null)
             {
@@ -33,7 +37,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.UpdateAppointme
 
             appointmentRepository.Update(appointment);
 
-            await unitOfWork.SaveChangesAsync(cancellationToken);
+            await unitOfWork.SaveAsync(cancellationToken);
 
             return localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value;
         }

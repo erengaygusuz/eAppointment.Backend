@@ -1,6 +1,7 @@
-﻿using eAppointment.Backend.Domain.Entities;
+﻿using eAppointment.Backend.Domain.Abstractions;
+using eAppointment.Backend.Domain.Entities;
+using eAppointment.Backend.Infrastructure.Concretes;
 using eAppointment.Backend.Infrastructure.Context;
-using GenericRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,7 +29,7 @@ namespace eAppointment.Backend.Infrastructure
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
 
-            services.AddScoped<IUnitOfWork>(srv => srv.GetRequiredService<ApplicationDbContext>());
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
             services.Scan(action => action
                 .FromAssemblies(typeof(DependencyInjection).Assembly)

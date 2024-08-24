@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
-using eAppointment.Backend.Domain.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TS.Result;
@@ -13,9 +13,12 @@ namespace eAppointment.Backend.Application.Features.Counties.GetAllCountiesByCit
     {
         public async Task<Result<List<GetAllCountiesByCityIdQueryResponse>>> Handle(GetAllCountiesByCityIdQuery request, CancellationToken cancellationToken)
         {
-            List<County> counties = await countyRepository
-                .Where(x => x.CityId == request.cityId)
-                .OrderBy(p => p.Name).ToListAsync(cancellationToken);
+            List<County> counties = await countyRepository.GetAllAsync(
+               expression: x => x.CityId == request.cityId,
+               trackChanges: false,
+               include: null,
+               orderBy: x => x.OrderBy(a => a.Name),
+               cancellationToken);
 
             var response = mapper.Map<List<GetAllCountiesByCityIdQueryResponse>>(counties);
 

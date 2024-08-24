@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
+using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
-using eAppointment.Backend.Domain.Repositories;
-using GenericRepository;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
@@ -52,7 +51,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.CreateDoctor
 
             await doctorRepository.AddAsync(doctor, cancellationToken);
 
-            await unitOfWork.SaveChangesAsync(cancellationToken);
+            await unitOfWork.SaveAsync(cancellationToken);
 
             logger.LogInformation("Doctor created successfully");
 

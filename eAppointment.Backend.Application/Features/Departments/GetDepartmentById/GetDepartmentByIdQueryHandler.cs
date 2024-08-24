@@ -1,5 +1,5 @@
-﻿using eAppointment.Backend.Domain.Entities;
-using eAppointment.Backend.Domain.Repositories;
+﻿using eAppointment.Backend.Domain.Abstractions;
+using eAppointment.Backend.Domain.Entities;
 using MediatR;
 using TS.Result;
 
@@ -10,8 +10,12 @@ namespace eAppointment.Backend.Application.Features.Departments.GetDepartmentByI
     {
         public async Task<Result<GetDepartmentByIdQueryResponse>> Handle(GetDepartmentByIdQuery request, CancellationToken cancellationToken)
         {
-            Department department = await departmentRepository
-                .GetByExpressionAsync(x => x.Id == request.id, cancellationToken);
+            Department department = await departmentRepository.GetAsync(
+               expression: p => p.Id == request.id,
+               trackChanges: false,
+               include: null,
+               orderBy: null,
+               cancellationToken);
 
             GetDepartmentByIdQueryResponse response = new GetDepartmentByIdQueryResponse
             (

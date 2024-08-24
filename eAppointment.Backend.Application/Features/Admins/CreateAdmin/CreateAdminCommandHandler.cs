@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
-using GenericRepository;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
@@ -42,7 +42,7 @@ namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
                 return Result<string>.Failure(500, localization[translatedMessagePath + "." + "RoleCannotAdded"]);
             }
 
-            await unitOfWork.SaveChangesAsync(cancellationToken);
+            await unitOfWork.SaveAsync(cancellationToken);
 
             logger.LogInformation("Admin created successfully");
 

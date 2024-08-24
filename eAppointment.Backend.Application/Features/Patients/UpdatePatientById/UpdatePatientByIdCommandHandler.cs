@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
+using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
-using eAppointment.Backend.Domain.Repositories;
-using GenericRepository;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
@@ -42,7 +41,7 @@ namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientById
                 return Result<string>.Failure(localization[translatedMessagePath + "." + "CouldNotUpdated"]);
             }
 
-            Patient patient = await patientRepository.GetByExpressionAsync(x => x.UserId == request.id);
+            Patient patient = await patientRepository.GetAsync(x => x.UserId == request.id);
 
             patient.IdentityNumber = request.identityNumber;
             patient.FullAddress = request.fullAddress;
@@ -50,7 +49,7 @@ namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientById
 
             patientRepository.Update(patient);
 
-            await unitOfWork.SaveChangesAsync(cancellationToken);
+            await unitOfWork.SaveAsync(cancellationToken);
 
             logger.LogInformation("Patient updated successfully");
 

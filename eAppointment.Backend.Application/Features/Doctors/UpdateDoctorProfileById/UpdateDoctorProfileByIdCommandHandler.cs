@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
+using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
-using eAppointment.Backend.Domain.Repositories;
-using GenericRepository;
 using MediatR;
 using TS.Result;
 
@@ -14,7 +13,12 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorProfileB
     {
         public async Task<Result<string>> Handle(UpdateDoctorProfileByIdCommand request, CancellationToken cancellationToken)
         {
-            Doctor? doctor = await doctorRepository.GetByExpressionWithTrackingAsync(p => p.Id == request.id, cancellationToken);
+            Doctor? doctor = await doctorRepository.GetAsync(
+               expression: p => p.Id == request.id,
+               trackChanges: false,
+               include: null,
+               orderBy: null,
+               cancellationToken);
 
             if (doctor is null)
             {
@@ -25,7 +29,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorProfileB
 
             doctorRepository.Update(doctor);
 
-            await unitOfWork.SaveChangesAsync(cancellationToken);
+            await unitOfWork.SaveAsync(cancellationToken);
 
             return "Doctor updated successfully";
         }

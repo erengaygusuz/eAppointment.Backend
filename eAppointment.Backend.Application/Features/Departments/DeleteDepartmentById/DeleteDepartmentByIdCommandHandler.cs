@@ -1,6 +1,5 @@
-﻿using eAppointment.Backend.Domain.Entities;
-using eAppointment.Backend.Domain.Repositories;
-using GenericRepository;
+﻿using eAppointment.Backend.Domain.Abstractions;
+using eAppointment.Backend.Domain.Entities;
 using MediatR;
 using TS.Result;
 
@@ -12,16 +11,21 @@ namespace eAppointment.Backend.Application.Features.Departments.DeleteDepartment
     {
         public async Task<Result<string>> Handle(DeleteDepartmentByIdCommand request, CancellationToken cancellationToken)
         {
-            Department? department = await departmentRepository.GetByExpressionAsync(p => p.Id == request.id, cancellationToken);
+            Department? department = await departmentRepository.GetAsync(
+               expression: p => p.Id == request.id,
+               trackChanges: false,
+               include: null,
+               orderBy: null,
+               cancellationToken);
 
             if (department == null)
             {
                 return Result<string>.Failure("Department not found");
             }
 
-            departmentRepository.Delete(department);
+            departmentRepository.Remove(department);
 
-            await unitOfWork.SaveChangesAsync(cancellationToken);
+            await unitOfWork.SaveAsync(cancellationToken);
 
             return "Department deleted successfully";
         }

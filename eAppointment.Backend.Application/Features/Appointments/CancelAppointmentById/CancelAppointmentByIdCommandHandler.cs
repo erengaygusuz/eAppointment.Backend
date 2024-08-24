@@ -1,7 +1,6 @@
-﻿using eAppointment.Backend.Domain.Entities;
+﻿using eAppointment.Backend.Domain.Abstractions;
+using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Domain.Enums;
-using eAppointment.Backend.Domain.Repositories;
-using GenericRepository;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
@@ -19,7 +18,12 @@ namespace eAppointment.Backend.Application.Features.Appointments.DeleteAppointme
         {
             var translatedMessagePath = "Features.Appointments.CancelAppointment.Others";
 
-            Appointment? appointment = await appointmentRepository.GetByExpressionAsync(p => p.Id == request.id, cancellationToken);
+            Appointment? appointment = await appointmentRepository.GetAsync(
+               expression: p => p.Id == request.id,
+               trackChanges: false,
+               include: null,
+               orderBy: null,
+               cancellationToken);
 
             if (appointment is null)
             {
@@ -38,7 +42,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.DeleteAppointme
 
             appointmentRepository.Update(appointment);
 
-            await unitOfWork.SaveChangesAsync(cancellationToken);
+            await unitOfWork.SaveAsync(cancellationToken);
 
             logger.LogInformation("Appointment cancelled successfully");
 

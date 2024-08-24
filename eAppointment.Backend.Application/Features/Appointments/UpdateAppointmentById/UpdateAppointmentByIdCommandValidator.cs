@@ -1,6 +1,6 @@
-﻿using eAppointment.Backend.Domain.Entities;
+﻿using eAppointment.Backend.Domain.Abstractions;
+using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Domain.Enums;
-using eAppointment.Backend.Domain.Repositories;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 
@@ -55,7 +55,11 @@ namespace eAppointment.Backend.Application.Features.Appointments.UpdateAppointme
 
         private bool IsAvailable(string startDateStr, string endDateStr, int id)
         {
-            Appointment? appointment = _appointmentRepository.GetByExpressionWithTracking(p => p.Id == id);
+            Appointment? appointment = _appointmentRepository.Get(
+               expression: p => p.Id == id,
+               trackChanges: false,
+               include: null,
+               orderBy: null);
 
             DateTime startDate = DateTime.ParseExact(startDateStr, "dd.MM.yyyy HH:mm", null);
             DateTime endDate = DateTime.ParseExact(endDateStr, "dd.MM.yyyy HH:mm", null);

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
+using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
-using eAppointment.Backend.Domain.Repositories;
-using GenericRepository;
 using MediatR;
 using TS.Result;
 
@@ -18,7 +17,7 @@ namespace eAppointment.Backend.Application.Features.Departments.CreateDepartment
 
             await departmentRepository.AddAsync(department, cancellationToken);
 
-            await unitOfWork.SaveChangesAsync(cancellationToken);
+            await unitOfWork.SaveAsync(cancellationToken);
 
             return "Department created successfully";
         }

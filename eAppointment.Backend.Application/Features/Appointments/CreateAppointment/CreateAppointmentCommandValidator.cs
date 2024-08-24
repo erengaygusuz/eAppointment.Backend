@@ -1,4 +1,4 @@
-﻿using eAppointment.Backend.Domain.Repositories;
+﻿using eAppointment.Backend.Domain.Abstractions;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 
