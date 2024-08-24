@@ -4,13 +4,12 @@ using eAppointment.Backend.Domain.Enums;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using TS.Result;
+using eAppointment.Backend.Domain.Helpers;
 
 namespace eAppointment.Backend.Application.Features.Appointments.DeleteAppointmentById
 {
     internal sealed class CancelAppointmentByIdCommandHandler(
         IAppointmentRepository appointmentRepository,
-        IUnitOfWork unitOfWork,
         IStringLocalizer<object> localization,
         ILogger<CancelAppointmentByIdCommandHandler> logger) : IRequestHandler<CancelAppointmentByIdCommand, Result<string>>
     {
@@ -41,8 +40,6 @@ namespace eAppointment.Backend.Application.Features.Appointments.DeleteAppointme
             appointment.Status = AppointmentStatus.Cancelled;
 
             appointmentRepository.Update(appointment);
-
-            await unitOfWork.SaveAsync(cancellationToken);
 
             logger.LogInformation("Appointment cancelled successfully");
 

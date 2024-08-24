@@ -4,13 +4,12 @@ using eAppointment.Backend.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using TS.Result;
+using eAppointment.Backend.Domain.Helpers;
 
 namespace eAppointment.Backend.Application.Features.Appointments.CreateAppointment
 {
     internal sealed class CreateAppointmentCommandHandler(
         IAppointmentRepository appointmentRepository,
-        IUnitOfWork unitOfWork,
         IMapper mapper,
         IStringLocalizer<object> localization,
         ILogger<CreateAppointmentCommandHandler> logger) : IRequestHandler<CreateAppointmentCommand, Result<string>>
@@ -22,8 +21,6 @@ namespace eAppointment.Backend.Application.Features.Appointments.CreateAppointme
             var appointment = mapper.Map<Appointment>(request);
 
             await appointmentRepository.AddAsync(appointment, cancellationToken);
-
-            await unitOfWork.SaveAsync(cancellationToken);
 
             logger.LogInformation("Appointment created successfully");
 

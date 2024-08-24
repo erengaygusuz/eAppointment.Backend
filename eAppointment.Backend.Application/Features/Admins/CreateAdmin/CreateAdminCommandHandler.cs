@@ -1,17 +1,15 @@
 ﻿using AutoMapper;
-using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using TS.Result;
+using eAppointment.Backend.Domain.Helpers;
 
 namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
 {
     internal sealed class CreateAdminCommandHandler(
         UserManager<User> userManager,
-        IUnitOfWork unitOfWork,
         IMapper mapper,
         IStringLocalizer<object> localization,
         ILogger<CreateAdminCommandHandler> logger) : IRequestHandler<CreateAdminCommand, Result<string>>
@@ -41,8 +39,6 @@ namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
 
                 return Result<string>.Failure(500, localization[translatedMessagePath + "." + "RoleCannotAdded"]);
             }
-
-            await unitOfWork.SaveAsync(cancellationToken);
 
             logger.LogInformation("Admin created successfully");
 

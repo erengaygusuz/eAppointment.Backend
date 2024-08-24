@@ -1,5 +1,5 @@
-﻿using MediatR;
-using TS.Result;
+﻿using eAppointment.Backend.Domain.Helpers;
+using MediatR;
 
 namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
 {

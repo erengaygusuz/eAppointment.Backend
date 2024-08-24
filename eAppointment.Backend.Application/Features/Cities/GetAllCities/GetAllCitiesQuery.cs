@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using TS.Result;
+using eAppointment.Backend.Domain.Helpers;
 
 namespace eAppointment.Backend.Application.Features.Cities.GetAllCities
 {

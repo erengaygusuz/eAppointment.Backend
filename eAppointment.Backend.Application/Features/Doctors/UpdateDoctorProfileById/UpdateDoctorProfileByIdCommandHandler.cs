@@ -2,13 +2,12 @@
 using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
 using MediatR;
-using TS.Result;
+using eAppointment.Backend.Domain.Helpers;
 
 namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorProfileById
 {
     internal sealed class UpdateDoctorProfileByIdCommandHandler(
         IDoctorRepository doctorRepository,
-        IUnitOfWork unitOfWork,
         IMapper mapper) : IRequestHandler<UpdateDoctorProfileByIdCommand, Result<string>>
     {
         public async Task<Result<string>> Handle(UpdateDoctorProfileByIdCommand request, CancellationToken cancellationToken)
@@ -28,8 +27,6 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorProfileB
             mapper.Map(request, doctor);
 
             doctorRepository.Update(doctor);
-
-            await unitOfWork.SaveAsync(cancellationToken);
 
             return "Doctor updated successfully";
         }

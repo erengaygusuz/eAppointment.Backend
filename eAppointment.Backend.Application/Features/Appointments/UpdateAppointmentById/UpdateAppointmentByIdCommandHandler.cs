@@ -4,13 +4,12 @@ using eAppointment.Backend.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using TS.Result;
+using eAppointment.Backend.Domain.Helpers;
 
 namespace eAppointment.Backend.Application.Features.Appointments.UpdateAppointmentById
 {
     internal sealed class UpdateAppointmentByIdCommandHandler(
         IAppointmentRepository appointmentRepository,
-        IUnitOfWork unitOfWork,
         IMapper mapper,
         IStringLocalizer<object> localization,
         ILogger<UpdateAppointmentByIdCommandHandler> logger) : IRequestHandler<UpdateAppointmentByIdCommand, Result<string>>
@@ -36,8 +35,6 @@ namespace eAppointment.Backend.Application.Features.Appointments.UpdateAppointme
             mapper.Map(request, appointment);
 
             appointmentRepository.Update(appointment);
-
-            await unitOfWork.SaveAsync(cancellationToken);
 
             logger.LogInformation(localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value);
 

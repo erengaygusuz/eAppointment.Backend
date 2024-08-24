@@ -5,14 +5,13 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using TS.Result;
+using eAppointment.Backend.Domain.Helpers;
 
 namespace eAppointment.Backend.Application.Features.Doctors.CreateDoctor
 {
     internal sealed class CreateDoctorCommandHandler(
         UserManager<User> userManager,
         IDoctorRepository doctorRepository,
-        IUnitOfWork unitOfWork,
         IMapper mapper,
         IStringLocalizer<object> localization,
         ILogger<CreateDoctorCommandHandler> logger) : IRequestHandler<CreateDoctorCommand, Result<string>>
@@ -50,8 +49,6 @@ namespace eAppointment.Backend.Application.Features.Doctors.CreateDoctor
             };
 
             await doctorRepository.AddAsync(doctor, cancellationToken);
-
-            await unitOfWork.SaveAsync(cancellationToken);
 
             logger.LogInformation("Doctor created successfully");
 

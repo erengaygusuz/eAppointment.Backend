@@ -3,7 +3,7 @@ using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using TS.Result;
+using eAppointment.Backend.Domain.Helpers;
 
 namespace eAppointment.Backend.Application.Features.Doctors.GetDoctorById
 {

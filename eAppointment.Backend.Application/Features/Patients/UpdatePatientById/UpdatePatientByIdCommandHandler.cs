@@ -5,13 +5,12 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using TS.Result;
+using eAppointment.Backend.Domain.Helpers;
 
 namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientById
 {
     public sealed class UpdatePatientByIdCommandHandler(
         IPatientRepository patientRepository,
-        IUnitOfWork unitOfWork,
         IMapper mapper,
         UserManager<User> userManager,
         IStringLocalizer<object> localization,
@@ -48,8 +47,6 @@ namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientById
             patient.CountyId = request.countyId;
 
             patientRepository.Update(patient);
-
-            await unitOfWork.SaveAsync(cancellationToken);
 
             logger.LogInformation("Patient updated successfully");
 

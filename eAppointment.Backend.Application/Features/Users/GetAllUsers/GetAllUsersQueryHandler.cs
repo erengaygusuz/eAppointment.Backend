@@ -2,7 +2,7 @@
 using eAppointment.Backend.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using TS.Result;
+using eAppointment.Backend.Domain.Helpers;
 
 namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
 {

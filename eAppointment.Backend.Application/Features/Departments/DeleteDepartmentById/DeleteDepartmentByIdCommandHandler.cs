@@ -1,13 +1,12 @@
 ﻿using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
 using MediatR;
-using TS.Result;
+using eAppointment.Backend.Domain.Helpers;
 
 namespace eAppointment.Backend.Application.Features.Departments.DeleteDepartmentById
 {
     internal sealed class DeleteDepartmentByIdCommandHandler(
-        IDepartmentRepository departmentRepository,
-        IUnitOfWork unitOfWork) : IRequestHandler<DeleteDepartmentByIdCommand, Result<string>>
+        IDepartmentRepository departmentRepository) : IRequestHandler<DeleteDepartmentByIdCommand, Result<string>>
     {
         public async Task<Result<string>> Handle(DeleteDepartmentByIdCommand request, CancellationToken cancellationToken)
         {
@@ -24,8 +23,6 @@ namespace eAppointment.Backend.Application.Features.Departments.DeleteDepartment
             }
 
             departmentRepository.Remove(department);
-
-            await unitOfWork.SaveAsync(cancellationToken);
 
             return "Department deleted successfully";
         }

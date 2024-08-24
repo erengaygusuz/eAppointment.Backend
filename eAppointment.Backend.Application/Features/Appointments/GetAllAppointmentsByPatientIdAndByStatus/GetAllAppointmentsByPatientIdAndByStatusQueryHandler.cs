@@ -4,7 +4,7 @@ using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using TS.Result;
+using eAppointment.Backend.Domain.Helpers;
 
 namespace eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsByPatientIdByStatus
 {

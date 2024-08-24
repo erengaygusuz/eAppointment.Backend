@@ -5,14 +5,13 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using TS.Result;
+using eAppointment.Backend.Domain.Helpers;
 
 namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorById
 {
     internal sealed class UpdateDoctorByIdCommandHandler(
         IMapper mapper,
         IDoctorRepository doctorRepository,
-        IUnitOfWork unitOfWork,
         UserManager<User> userManager,
         IStringLocalizer<object> localization,
         ILogger<UpdateDoctorByIdCommandHandler> logger) : IRequestHandler<UpdateDoctorByIdCommand, Result<string>>
@@ -46,8 +45,6 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorById
             doctor.DepartmentId = request.departmentId;
 
             doctorRepository.Update(doctor);
-
-            await unitOfWork.SaveAsync(cancellationToken);
 
             logger.LogInformation("Doctor updated successfully");
 
