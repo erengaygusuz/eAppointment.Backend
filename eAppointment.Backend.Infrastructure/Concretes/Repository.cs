@@ -65,7 +65,7 @@ namespace eAppointment.Backend.Domain.Abstractions
             return await query.ToListAsync(cancellationToken);
         }
 
-        public async Task<Tuple<int, int, IEnumerable<TEntity>>> GetAllAsync(
+        public async Task<Tuple<int, int, List<TEntity>>> GetAllAsync(
             int page, int pageSize,
             Expression<Func<TEntity, bool>>? expression = null,
             bool trackChanges = false,
@@ -103,7 +103,7 @@ namespace eAppointment.Backend.Domain.Abstractions
 
             var entity = await query.ToListAsync(cancellationToken);
 
-            return new Tuple<int, int, IEnumerable<TEntity>>(totalCount, filteredCount, entity);
+            return new Tuple<int, int, List<TEntity>>(totalCount, filteredCount, entity);
         }
 
         public async Task<TEntity> GetAsync(

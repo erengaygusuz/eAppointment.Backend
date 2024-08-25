@@ -28,7 +28,7 @@ namespace eAppointment.Backend.Domain.Abstractions
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
             CancellationToken cancellationToken = default);
 
-        Task<Tuple<int, int, IEnumerable<TEntity>>> GetAllAsync(
+        Task<Tuple<int, int, List<TEntity>>> GetAllAsync(
             int page, int pageSize,
             Expression<Func<TEntity, bool>>? expression = null,
             bool trackChanges = false,

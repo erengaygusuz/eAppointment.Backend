@@ -20,7 +20,7 @@ namespace eAppointment.Backend.Application.Behaviors
                 return await next();
             }
 
-            using (var transactionScope = new TransactionScope())
+            using (var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 var response = await next();
 
