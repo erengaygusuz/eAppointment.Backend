@@ -1,12 +1,14 @@
-﻿using MediatR;
-using eAppointment.Backend.Domain.Helpers;
+﻿using eAppointment.Backend.Domain.Helpers;
+using MediatR;
 
 namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
 {
     public sealed record GetAllUsersQuery(
-        int skip,
-        int take,
-        string sortFields,
-        string sortOrders,
-        string searchTerm) : IRequest<Result<GetAllUsersQueryTableResponse>>;
+        long first,
+        long rows,
+        string sortField,
+        int sortOrder,
+        object multiSortMeta,
+        Dictionary<string, FilterMetadata[]> filters,
+        string globalFilter) : IRequest<Result<GetAllUsersQueryTableResponse>>;
 }

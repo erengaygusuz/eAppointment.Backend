@@ -2,6 +2,5 @@
 {
     public sealed record GetAllUsersQueryTableResponse(
         int totalCount, 
-        int filteredCount, 
         List<GetAllUsersQueryResponse> getAllUsersQueryResponse);
 }

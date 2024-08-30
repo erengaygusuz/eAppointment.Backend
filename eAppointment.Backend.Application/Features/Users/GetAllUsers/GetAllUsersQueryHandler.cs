@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using eAppointment.Backend.Domain.Entities;
+using eAppointment.Backend.Domain.Extensions;
 using eAppointment.Backend.Domain.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using eAppointment.Backend.Domain.Extensions;
 
 namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
 {
@@ -15,58 +15,38 @@ namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
         {
             var usersWithRolesTuples = new List<Tuple<User, List<string>>>();
 
-            var users = userManager.Users;
-
-            int totalCount = users.Count();
-            int filteredCount = totalCount;
-
-            users = users.Skip(request.skip).Take(request.take);
-
-            if (!string.IsNullOrEmpty(request.searchTerm))
+            LazyLoadEvent2 loadEvent = new() 
             {
-                users = users.Where(c => c.FirstName.Contains(request.searchTerm) ||
-                                         c.LastName.Contains(request.searchTerm) ||
-                                         c.Email.Contains(request.searchTerm) ||
-                                         c.UserName.Contains(request.searchTerm));
-            }
+                first = request.first,
+                rows = request.rows,
+                sortField = request.sortField,
+                sortOrder = request.sortOrder,
+                multiSortMeta = request.multiSortMeta,
+                filters = request.filters,
+                globalFilter = request.globalFilter
+            };
 
-            if (!string.IsNullOrEmpty(request.sortFields))
+            var totalCount = userManager.Users.Count();
+
+            var users = userManager.Users
+                .LazyFilters2(loadEvent)
+                .LazyOrderBy2(loadEvent)
+                .LazyGlobalFilter(loadEvent, x => x.FirstName, x => x.Email, x => x.UserName)
+                .LazySkipTake2(loadEvent)
+                .ToList();
+
+            for (int i = 0; i < users.Count; i++)
             {
-                var sortFieldArray = request.sortFields.Split(',');
-                var sortOrderArray = request.sortOrders.Split(',');
+                var userRoles = await userManager.GetRolesAsync(users[i]);
 
-                for (int i = 0; i < sortFieldArray.Length; i++)
-                {
-                    var sortField = sortFieldArray[i];
-                    var sortOrder = sortOrderArray[i];
-
-                    if (sortOrder.Equals("asc", StringComparison.OrdinalIgnoreCase))
-                    {
-                        users = users.OrderByProperty(sortField);
-                    }
-                    else
-                    {
-                        users = users.OrderByDescendingProperty(sortField);
-                    }
-                }
-            }
-
-            filteredCount = users.Count();
-
-            var userResult = users.ToList();
-
-            for (int i = 0; i < userResult.Count; i++)
-            {
-                var userRoles = await userManager.GetRolesAsync(userResult[i]);
-
-                var tuple = new Tuple<User, List<string>>(userResult[i], userRoles.ToList());
+                var tuple = new Tuple<User, List<string>>(users[i], userRoles.ToList());
 
                 usersWithRolesTuples.Add(tuple);
             }
 
             var allUsersWithRoles = mapper.Map<List<GetAllUsersQueryResponse>>(usersWithRolesTuples);
 
-            GetAllUsersQueryTableResponse response = new(totalCount, filteredCount, allUsersWithRoles);
+            GetAllUsersQueryTableResponse response = new(totalCount, allUsersWithRoles);
 
             return Result<GetAllUsersQueryTableResponse>.Succeed(response);
         }
