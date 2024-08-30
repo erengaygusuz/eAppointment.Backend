@@ -1,4 +1,3 @@
-using DefaultCorsPolicyNugetPackage;
 using eAppointment.Backend.Application;
 using eAppointment.Backend.Infrastructure;
 using eAppointment.Backend.Infrastructure.Services;
@@ -55,7 +54,16 @@ namespace eAppointment.Backend.WebAPI
             builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
             builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
-            builder.Services.AddDefaultCors();
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("CorsSettings",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200")
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
+                    });
+            });
 
             builder.Services.AddControllers();
 
@@ -113,7 +121,7 @@ namespace eAppointment.Backend.WebAPI
                 app.UseSwaggerUI();
             }
 
-            app.UseCors();
+            app.UseCors("CorsSettings");
 
             app.UseHttpsRedirection();
 
