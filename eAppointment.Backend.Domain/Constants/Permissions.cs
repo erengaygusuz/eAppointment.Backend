@@ -57,7 +57,8 @@
                     GetAllUsers,
                     DeleteUserById,
                     GetAllCities,
-                    GetAllCountiesByCityId
+                    GetAllCountiesByCityId,
+                    GetAllDepartments
                 },
                 Roles.Admin => new List<string>()
                 {

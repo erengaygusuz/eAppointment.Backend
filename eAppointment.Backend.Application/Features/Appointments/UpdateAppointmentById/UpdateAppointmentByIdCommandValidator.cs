@@ -23,11 +23,11 @@ namespace eAppointment.Backend.Application.Features.Appointments.UpdateAppointme
 
             RuleFor(x => x.startDate)
                 .NotNull().WithMessage(_localization[validationMessagePath + "." + "StartDate.NotNull"])
-                .Must(IsValidDate).WithMessage(_localization[validationMessagePath + "." + "StartDate.NotValid"]);
+                .Must(IsValidDate).WithMessage(_localization[validationMessagePath + "." + "StartDate.IsValidDate"]);
 
             RuleFor(x => x.endDate)
                 .NotNull().WithMessage(_localization[validationMessagePath + "." + "EndDate.NotNull"])
-                .Must(IsValidDate).WithMessage(_localization[validationMessagePath + "." + "EndDate.NotValid"]);
+                .Must(IsValidDate).WithMessage(_localization[validationMessagePath + "." + "EndDate.IsValidDate"]);
 
             RuleFor(x => x.status)
                 .GreaterThan(0).WithMessage(_localization[validationMessagePath + "." + "Status.GreaterThanZero"])
@@ -72,7 +72,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.UpdateAppointme
                      p.StartDate <= startDate && p.EndDate >= endDate) // Mevcut randevu, diğer randevuyu tamamen kapsıyor
                      );
 
-            return isAppointmentDateNotAvailable;
+            return !isAppointmentDateNotAvailable;
         }
     }
 }
