@@ -19,5 +19,10 @@ RUN dotnet publish "eAppointment.Backend.WebAPI.csproj" -c Release -o /app/publi
 
 FROM base AS final
 WORKDIR /app
+
+RUN mkdir -p /app/resources
+
+COPY ./eAppointment.Backend.WebAPI/Resources/* /app/resources/
+
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "eAppointment.Backend.WebAPI.dll"]
