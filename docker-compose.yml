@@ -1,0 +1,18 @@
+version: '3.5'
+services:
+  e-appointment:
+    image: erengaygusuz/e-appointment:0.0.1
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ConnectionString=Server=localhost;Database=eAppointmentDb;User ID=sa;Password=524746EREN-g;Integrated Security=False;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
+      - Serilog__WriteTo__Args__serverUrl=http://localhost:5341
+      - Jwt__Issuer=https://localhost:7224
+      - Jwt__Audience=https://localhost:7224
+      - Jwt__SecretKey=XA717kdVkpnbhPKLeSrF0csSaUjBskNLhNvXA717kdVkpnbhPKLeSrF0csSaUjBskNLhNvXA717kdVkpnbhPKLeSrF0csSaUjBskNLhNvXA717kdVkpnbhPKLeSrF0csSaUjBskNLhNv
+    ports:
+      - "5000:80"
+      - "5001:443"
+    volumes:
+      - C:\Users\gaygu\.aspnet\https:/https/
+      - E:\DownloadedFiles\StaticFiles:/app/StaticFiles
