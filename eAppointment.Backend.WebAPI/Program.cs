@@ -59,7 +59,7 @@ namespace eAppointment.Backend.WebAPI
                 options.AddPolicy("CorsSettings",
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:4200")
+                        builder.WithOrigins("http://localhost:4200", "https://e-appointment.erengaygusuz.com.tr")
                                .AllowAnyHeader()
                                .AllowAnyMethod();
                     });
@@ -115,11 +115,8 @@ namespace eAppointment.Backend.WebAPI
 
             var app = builder.Build();
 
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.UseCors("CorsSettings");
 

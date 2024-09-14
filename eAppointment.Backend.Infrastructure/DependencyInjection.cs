@@ -13,9 +13,11 @@ namespace eAppointment.Backend.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            DotNetEnv.Env.Load();
+
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("SqlServer"));
+                options.UseSqlServer(Environment.GetEnvironmentVariable("ConnectionString__SqlServer"));
             });
 
             services.AddIdentity<User, Role>(action =>
