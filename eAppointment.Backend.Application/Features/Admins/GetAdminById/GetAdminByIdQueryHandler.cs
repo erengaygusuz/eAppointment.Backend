@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using eAppointment.Backend.Domain.Helpers;
 
-namespace eAppointment.Backend.Application.Features.Admins.GetUserById
+namespace eAppointment.Backend.Application.Features.Admins.GetAdminById
 {
     internal sealed class GetAdminByIdQueryHandler(
         UserManager<User> userManager,

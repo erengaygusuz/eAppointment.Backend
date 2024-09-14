@@ -4,7 +4,9 @@
     {
         public const string CreateAdmin = "Permissions.Admins.CreateAdmin";
         public const string GetAdminById = "Permissions.Admins.GetAdminById";
+        public const string GetAdminProfileById = "Permissions.Admins.GetAdminProfileById";
         public const string UpdateAdminById = "Permissions.Admins.UpdateAdminById";
+        public const string UpdateAdminProfileById = "Permissions.Admins.UpdateAdminProfileById";
 
         public const string CreateDoctor = "Permissions.Doctors.CreateDoctor";
         public const string GetDoctorById = "Permissions.Doctors.GetDoctorById";
@@ -62,6 +64,9 @@
                 },
                 Roles.Admin => new List<string>()
                 {
+                    GetAdminById,
+                    GetAdminProfileById,
+                    UpdateAdminProfileById,
                     CreateDoctor,
                     GetDoctorById,
                     UpdateDoctorById,
@@ -76,6 +81,7 @@
                     GetAllAppointmentsByDoctorId,
                     UpdateAppointmentStatusById,
                     GetAllPatientsByDoctorId,
+                    GetDoctorById,
                     UpdateDoctorProfileById
                 },
                 Roles.Patient => new List<string>()
@@ -86,6 +92,7 @@
                     CancelAppointmentById,
                     GetAllAppointmentsByPatientId,
                     UpdateAppointmentById,
+                    GetPatientById,
                     UpdatePatientProfileById
                 },
                 _ => new List<string>()

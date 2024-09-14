@@ -23,6 +23,8 @@ namespace eAppointment.Backend.Infrastructure.Configurations
             builder.HasIndex(x => x.UserName).IsUnique();
 
             builder.Property(p => p.PhoneNumber).HasColumnType("varchar(50)");
+
+            builder.Property(p => p.ProfilePhotoPath).HasColumnType("nvarchar(max)");
         }
     }
 }

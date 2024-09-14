@@ -89,6 +89,32 @@
           "CouldNotUpdated": "Kullanıcı güncellenemedi",
           "SuccessfullyUpdated": "Kullanıcı başarılı bir şekilde güncellendi"
         }
+      },
+      "UpdateAdminProfile": {
+        "ValidationMessages": {
+          "FirstName": {
+            "NotNull": "Lütfen ad alanını boş bırakmayınız",
+            "MinimumLength": "Lütfen ad alanı için minimum 3 karakter giriniz",
+            "MaximumLength": "Lütfen ad alanı için maksimum 50 karakter giriniz",
+            "NotUseNumbers": "Lütfen ad alanı için rakam kullanmayınız"
+          },
+          "LastName": {
+            "NotNull": "Lütfen soyad alanını boş bırakmayınız",
+            "MinimumLength": "Lütfen soyad alanı için minimum 3 karakter giriniz",
+            "MaximumLength": "Lütfen soyad alanı için maksimum 50 karakter giriniz",
+            "NotUseNumbers": "Lütfen soyad alanı için rakam kullanmayınız"
+          },
+          "PhoneNumber": {
+            "NotNull": "Lütfen telefon numarası alanını boş bırakmayınız",
+            "NotValid": "Lütfen geçerli bir telefon numarası giriniz",
+            "NotUseLetters": "Lütfen telefon numarası alanı için harf kullanmayınız"
+          }
+        },
+        "Others": {
+          "CouldNotFound": "Kullanıcı bulunamadı",
+          "CouldNotUpdated": "Kullanıcı güncellenemedi",
+          "SuccessfullyUpdated": "Kullanıcı başarılı bir şekilde güncellendi"
+        }
       }
     },
     "Appointments": {

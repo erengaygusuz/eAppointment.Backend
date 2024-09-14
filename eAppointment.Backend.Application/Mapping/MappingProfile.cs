@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using eAppointment.Backend.Application.Features.Admins.CreateAdmin;
-using eAppointment.Backend.Application.Features.Admins.GetUserById;
+using eAppointment.Backend.Application.Features.Admins.GetAdminById;
+using eAppointment.Backend.Application.Features.Admins.GetAdminProfileById;
 using eAppointment.Backend.Application.Features.Admins.UpdateAdminById;
+using eAppointment.Backend.Application.Features.Admins.UpdateAdminProfileById;
 using eAppointment.Backend.Application.Features.Appointments.CreateAppointment;
 using eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsByDoctorId;
 using eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsByDoctorIdAndByStatus;
@@ -51,6 +53,14 @@ namespace eAppointment.Backend.Application.Mapping
                 .ForMember(dest => dest.Email, src => src.MapFrom(src => src.Email))
                 .ForMember(dest => dest.UserName, src => src.MapFrom(src => src.UserName));
 
+            CreateMap<User, GetAdminProfileByIdQueryResponse>()
+                .ForMember(dest => dest.FirstName, src => src.MapFrom(src => src.FirstName))
+                .ForMember(dest => dest.LastName, src => src.MapFrom(src => src.LastName))
+                .ForMember(dest => dest.PhoneNumber, src => src.MapFrom(src => src.PhoneNumber))
+                .ForMember(dest => dest.Email, src => src.MapFrom(src => src.Email))
+                .ForMember(dest => dest.UserName, src => src.MapFrom(src => src.UserName))
+                .ForMember(dest => dest.ProfilePhotoPath, src => src.MapFrom(src => src.ProfilePhotoPath));
+
             CreateMap<UpdateAdminByIdCommand, User>()
                 .ForMember(dest => dest.Id, src => src.MapFrom(src => src.id))
                 .ForMember(dest => dest.FirstName, src => src.MapFrom(src => src.firstName))
@@ -58,6 +68,16 @@ namespace eAppointment.Backend.Application.Mapping
                 .ForMember(dest => dest.PhoneNumber, src => src.MapFrom(src => src.phoneNumber))
                 .ForMember(dest => dest.Email, src => src.MapFrom(src => src.email))
                 .ForMember(dest => dest.UserName, src => src.MapFrom(src => src.userName))
+                .ForMember(dest => dest.PasswordHash, src => src.Ignore())
+                .ForMember(dest => dest.Doctor, src => src.Ignore())
+                .ForMember(dest => dest.Patient, src => src.Ignore());
+
+            CreateMap<UpdateAdminProfileByIdCommand, User>()
+                .ForMember(dest => dest.Id, src => src.MapFrom(src => src.id))
+                .ForMember(dest => dest.FirstName, src => src.MapFrom(src => src.firstName))
+                .ForMember(dest => dest.LastName, src => src.MapFrom(src => src.lastName))
+                .ForMember(dest => dest.PhoneNumber, src => src.MapFrom(src => src.phoneNumber))
+                .ForMember(dest => dest.ProfilePhotoPath, src => src.MapFrom(src => src.profilePhotoPath))
                 .ForMember(dest => dest.PasswordHash, src => src.Ignore())
                 .ForMember(dest => dest.Doctor, src => src.Ignore())
                 .ForMember(dest => dest.Patient, src => src.Ignore());

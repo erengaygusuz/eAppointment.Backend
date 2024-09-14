@@ -89,6 +89,32 @@
           "CouldNotUpdated": "User could not updated",
           "SuccessfullyUpdated": "User updated successfully"
         }
+      },
+      "UpdateAdminProfile": {
+        "ValidationMessages": {
+          "FirstName": {
+            "NotNull": "Please fill the firstname",
+            "MinimumLength": "Please enter minimum 3 character for firstname",
+            "MaximumLength": "Please enter maximum 50 character for firstname",
+            "NotUseNumbers": "Please do not use numbers in the firstname"
+          },
+          "LastName": {
+            "NotNull": "Please fill the lastname",
+            "MinimumLength": "Please enter minimum 3 character for lastname",
+            "MaximumLength": "Please enter maximum 50 character for lastname",
+            "NotUseNumbers": "Please do not use numbers in the lastname"
+          },
+          "PhoneNumber": {
+            "NotNull": "Please fill the phone number",
+            "NotValid": "Please enter a valid phone number",
+            "NotUseLetters": "Please do not use letters in the phone number"
+          }
+        },
+        "Others": {
+          "CouldNotFound": "User could not found",
+          "CouldNotUpdated": "User could not updated",
+          "SuccessfullyUpdated": "User updated successfully"
+        }
       }
     },
     "Appointments": {

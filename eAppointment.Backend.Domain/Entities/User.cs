@@ -8,6 +8,8 @@ namespace eAppointment.Backend.Domain.Entities
 
         public string LastName { get; set; } = string.Empty;
 
+        public string ProfilePhotoPath { get; set; } = string.Empty;
+
         public Patient? Patient { get; set; }
 
         public Doctor? Doctor { get; set; }
