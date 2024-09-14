@@ -37,15 +37,17 @@ namespace eAppointment.Backend.WebAPI
 
             builder.Services.AddAuthentication().AddJwtBearer(options =>
             {
+                DotNetEnv.Env.Load();
+
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                    ValidAudience = builder.Configuration["Jwt:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"] ?? ""))
+                    ValidIssuer = Environment.GetEnvironmentVariable("Jwt__Issuer"),
+                    ValidAudience = Environment.GetEnvironmentVariable("Jwt__Audience"),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("Jwt__SecretKey") ?? ""))
                 };
             });
 

@@ -2,7 +2,6 @@
 using eAppointment.Backend.Domain.Constants;
 using eAppointment.Backend.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -12,7 +11,6 @@ using System.Text.Json;
 namespace eAppointment.Backend.Infrastructure.Services
 {
     internal sealed class JwtProvider(
-        IConfiguration configuration,
         UserManager<User> userManager) : IJwtProvider
     {
         public async Task<string> CreateTokenAsync(User user)
@@ -68,13 +66,15 @@ namespace eAppointment.Backend.Infrastructure.Services
 
             DateTime expires = DateTime.Now.AddDays(1);
 
-            SymmetricSecurityKey symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"] ?? ""));
+            DotNetEnv.Env.Load();
+
+            SymmetricSecurityKey symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("Jwt__SecretKey") ?? ""));
 
             SigningCredentials signingCredentials = new(symmetricSecurityKey, SecurityAlgorithms.HmacSha512);
 
             JwtSecurityToken jwtSecurityToken = new(
-                issuer: configuration.GetSection("Jwt:Issuer").Value,
-                audience: configuration.GetSection("Jwt:Audience").Value,
+                issuer: Environment.GetEnvironmentVariable("Jwt__Issuer"),
+                audience: Environment.GetEnvironmentVariable("Jwt__Audience"),
                 claims: claims,
                 notBefore: DateTime.Now,
                 expires: expires,
