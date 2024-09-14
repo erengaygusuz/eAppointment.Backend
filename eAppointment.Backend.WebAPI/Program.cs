@@ -58,10 +58,15 @@ namespace eAppointment.Backend.WebAPI
 
             builder.Services.AddCors(options =>
             {
+                DotNetEnv.Env.Load();
+
                 options.AddPolicy("CorsSettings",
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:4200", "https://e-appointment.erengaygusuz.com.tr")
+                        builder.WithOrigins(
+                            Environment.GetEnvironmentVariable("CORS__Origin1"),
+                            Environment.GetEnvironmentVariable("CORS__Origin2"),
+                            Environment.GetEnvironmentVariable("CORS__Origin3"))
                                .AllowAnyHeader()
                                .AllowAnyMethod();
                     });
