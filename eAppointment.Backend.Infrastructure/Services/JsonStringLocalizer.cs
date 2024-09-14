@@ -67,7 +67,9 @@ namespace eAppointment.Backend.Infrastructure.Services
 
         private string GetString(string key)
         {
-            var filePath = $"Resources/{Thread.CurrentThread.CurrentCulture.Name}.json";
+            DotNetEnv.Env.Load();
+
+            var filePath = $"{Environment.GetEnvironmentVariable("ResourcePath")}{Thread.CurrentThread.CurrentCulture.Name}.json";
 
             var fullFilePath = Path.GetFullPath(filePath);
 
