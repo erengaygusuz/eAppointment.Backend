@@ -73,6 +73,10 @@ namespace eAppointment.Backend.Infrastructure.Services
 
             var fullFilePath = Path.GetFullPath(filePath);
 
+            Console.WriteLine(fullFilePath);
+
+            Console.WriteLine(File.Exists(fullFilePath));
+
             if (File.Exists(fullFilePath))
             {
                 var cacheKey = $"locale_{Thread.CurrentThread.CurrentCulture.Name}_{key}";
