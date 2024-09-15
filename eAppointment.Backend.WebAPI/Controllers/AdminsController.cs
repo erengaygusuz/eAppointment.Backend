@@ -55,7 +55,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
 
         [Authorize(Policy = Permissions.UpdateAdminProfileById)]
         [HttpPost]
-        public async Task<IActionResult> UpdateProfileById(UpdateAdminProfileByIdCommand request, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateProfileById([FromForm] UpdateAdminProfileByIdCommand request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
 
