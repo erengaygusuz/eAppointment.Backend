@@ -26,9 +26,14 @@ namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
                 globalFilter = request.globalFilter
             };
 
-            var totalCount = userManager.Users.Count();
+            var usersTemp = (await userManager.GetUsersInRoleAsync(Domain.Constants.Roles.SuperAdmin))[0];
 
-            var users = userManager.Users
+            var notSuperAdminUsers = userManager.Users
+                .Where(x => x.Id != usersTemp.Id);
+
+            var totalCount = notSuperAdminUsers.Count();
+
+            var users = notSuperAdminUsers
                 .LazyFilters2(loadEvent)
                 .LazyOrderBy2(loadEvent)
                 .LazyGlobalFilter(loadEvent, x => x.FirstName, x => x.Email, x => x.UserName)
