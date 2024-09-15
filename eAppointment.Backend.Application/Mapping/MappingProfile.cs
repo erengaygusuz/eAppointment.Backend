@@ -58,8 +58,7 @@ namespace eAppointment.Backend.Application.Mapping
                 .ForMember(dest => dest.LastName, src => src.MapFrom(src => src.LastName))
                 .ForMember(dest => dest.PhoneNumber, src => src.MapFrom(src => src.PhoneNumber))
                 .ForMember(dest => dest.Email, src => src.MapFrom(src => src.Email))
-                .ForMember(dest => dest.UserName, src => src.MapFrom(src => src.UserName))
-                .ForMember(dest => dest.ProfilePhotoPath, src => src.MapFrom(src => src.ProfilePhotoPath));
+                .ForMember(dest => dest.UserName, src => src.MapFrom(src => src.UserName));
 
             CreateMap<UpdateAdminByIdCommand, User>()
                 .ForMember(dest => dest.Id, src => src.MapFrom(src => src.id))

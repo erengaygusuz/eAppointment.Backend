@@ -17,6 +17,16 @@ namespace eAppointment.Backend.Application.Features.Admins.GetAdminProfileById
 
             var response = mapper.Map<GetAdminProfileByIdQueryResponse>(user);
 
+            if (File.Exists(user.ProfilePhotoPath))
+            {
+                var fileBytes = File.ReadAllBytes(user.ProfilePhotoPath);
+
+                var base64Content = Convert.ToBase64String(fileBytes);
+
+                response.ProfilePhotoContentType = "image/png";
+                response.ProfilePhotoBase64Content = base64Content;
+            }
+
             return response;
         }
     }
