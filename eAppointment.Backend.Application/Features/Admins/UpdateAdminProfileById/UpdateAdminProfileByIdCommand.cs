@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminProfileById
 {
     public sealed record UpdateAdminProfileByIdCommand(
-        int id,
+        string id,
         string firstName,
         string lastName,
         string phoneNumber,

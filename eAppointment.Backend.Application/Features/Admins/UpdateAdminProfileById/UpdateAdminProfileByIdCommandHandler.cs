@@ -27,7 +27,37 @@ namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminProfileByI
                 return Result<string>.Failure(localization[translatedMessagePath + "." + "CouldNotFound"]);
             }
 
-            mapper.Map(request, user);
+            if (request.profilePhoto != null)
+            {
+                DotNetEnv.Env.Load();
+
+                var userProfileImagesFolderPath = $"{Environment.GetEnvironmentVariable("User__Proile__Image__Folder__Path")}";
+
+                if (!Directory.Exists(userProfileImagesFolderPath))
+                {
+                    Directory.CreateDirectory(userProfileImagesFolderPath);
+                }
+
+                if (!string.IsNullOrEmpty(user.ProfilePhotoPath))
+                {
+                    File.Delete(user.ProfilePhotoPath);
+
+                    user.ProfilePhotoPath = "";
+                }
+
+                mapper.Map(request, user);
+
+                user.ProfilePhotoPath = $"{Environment.GetEnvironmentVariable("User__Proile__Image__Folder__Path")}/{Guid.NewGuid()}.png";
+
+                using var stream = new FileStream(user.ProfilePhotoPath, FileMode.Create);
+
+                await request.profilePhoto.CopyToAsync(stream);
+            }
+
+            else
+            {
+                mapper.Map(request, user);
+            }
 
             IdentityResult result = await userManager.UpdateAsync(user);
 

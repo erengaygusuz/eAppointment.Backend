@@ -24,5 +24,7 @@ RUN mkdir -p /app/resources
 
 COPY ./eAppointment.Backend.WebAPI/Resources/* /app/resources/
 
+RUN mkdir -p /app/resources/users/images/profile
+
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "eAppointment.Backend.WebAPI.dll"]

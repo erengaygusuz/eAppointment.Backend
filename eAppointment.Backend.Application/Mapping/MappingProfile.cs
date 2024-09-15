@@ -73,11 +73,10 @@ namespace eAppointment.Backend.Application.Mapping
                 .ForMember(dest => dest.Patient, src => src.Ignore());
 
             CreateMap<UpdateAdminProfileByIdCommand, User>()
-                .ForMember(dest => dest.Id, src => src.MapFrom(src => src.id))
+                .ForMember(dest => dest.Id, src => src.MapFrom(src => Convert.ToInt32(src.id)))
                 .ForMember(dest => dest.FirstName, src => src.MapFrom(src => src.firstName))
                 .ForMember(dest => dest.LastName, src => src.MapFrom(src => src.lastName))
                 .ForMember(dest => dest.PhoneNumber, src => src.MapFrom(src => src.phoneNumber))
-                .ForMember(dest => dest.ProfilePhotoPath, src => src.MapFrom(src => src.profilePhoto.FileName))
                 .ForMember(dest => dest.PasswordHash, src => src.Ignore())
                 .ForMember(dest => dest.Doctor, src => src.Ignore())
                 .ForMember(dest => dest.Patient, src => src.Ignore());
