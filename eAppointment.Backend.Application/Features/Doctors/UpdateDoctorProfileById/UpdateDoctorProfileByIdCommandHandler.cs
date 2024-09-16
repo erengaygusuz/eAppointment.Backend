@@ -3,6 +3,7 @@ using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
 using MediatR;
 using eAppointment.Backend.Domain.Helpers;
+using Microsoft.EntityFrameworkCore;
 
 namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorProfileById
 {
@@ -15,7 +16,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorProfileB
             Doctor? doctor = await doctorRepository.GetAsync(
                expression: p => p.Id == request.id,
                trackChanges: false,
-               include: null,
+               include: d => d.Include(x => x.User),
                orderBy: null,
                cancellationToken);
 
@@ -24,7 +25,37 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorProfileB
                 return Result<string>.Failure("Doctor not found");
             }
 
-            mapper.Map(request, doctor);
+            if (request.profilePhoto != null)
+            {
+                DotNetEnv.Env.Load();
+
+                var userProfileImagesFolderPath = $"{Environment.GetEnvironmentVariable("User__Profile__Image__Folder__Path")}";
+
+                if (!Directory.Exists(userProfileImagesFolderPath))
+                {
+                    Directory.CreateDirectory(userProfileImagesFolderPath);
+                }
+
+                if (!string.IsNullOrEmpty(doctor.User.ProfilePhotoPath))
+                {
+                    File.Delete(doctor.User.ProfilePhotoPath);
+
+                    doctor.User.ProfilePhotoPath = "";
+                }
+
+                mapper.Map(request, doctor.User);
+
+                doctor.User.ProfilePhotoPath = Guid.NewGuid() + ".png";
+
+                using var stream = new FileStream($"{Environment.GetEnvironmentVariable("User__Profile__Image__Folder__Path")}" + doctor.User.ProfilePhotoPath, FileMode.Create);
+
+                await request.profilePhoto.CopyToAsync(stream);
+            }
+
+            else
+            {
+                mapper.Map(request, doctor.User);
+            }
 
             doctorRepository.Update(doctor);
 

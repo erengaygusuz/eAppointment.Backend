@@ -1,17 +1,17 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.Localization;
 
-namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminProfileById
+namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorProfileById
 {
-    public class UpdateAdminProfileByIdCommandValidator : AbstractValidator<UpdateAdminProfileByIdCommand>
+    public class UpdateDoctorProfileByIdCommandValidator : AbstractValidator<UpdateDoctorProfileByIdCommand>
     {
         private readonly IStringLocalizer<object> _localization;
 
-        public UpdateAdminProfileByIdCommandValidator(IStringLocalizer<object> localization)
+        public UpdateDoctorProfileByIdCommandValidator(IStringLocalizer<object> localization)
         {
             _localization = localization;
 
-            var validationMessagePath = "Features.Admins.UpdateAdminProfile.ValidationMessages";
+            var validationMessagePath = "Features.Doctors.UpdateDoctorProfile.ValidationMessages";
 
             RuleFor(x => x.firstName)
                 .NotNull().WithMessage(_localization[validationMessagePath + "." + "FirstName.NotNull"])

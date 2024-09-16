@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using eAppointment.Backend.Domain.Helpers;
+using Microsoft.AspNetCore.Http;
 
 namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorProfileById
 {
@@ -7,5 +8,6 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorProfileB
         int id,
         string firstName,
         string lastName,
-        string phoneNumber) : IRequest<Result<string>>;
+        string phoneNumber,
+        IFormFile? profilePhoto) : IRequest<Result<string>>;
 }
