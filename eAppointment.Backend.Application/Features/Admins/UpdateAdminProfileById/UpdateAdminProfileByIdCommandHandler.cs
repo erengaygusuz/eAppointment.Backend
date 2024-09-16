@@ -31,7 +31,7 @@ namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminProfileByI
             {
                 DotNetEnv.Env.Load();
 
-                var userProfileImagesFolderPath = $"{Environment.GetEnvironmentVariable("User__Proile__Image__Folder__Path")}";
+                var userProfileImagesFolderPath = $"{Environment.GetEnvironmentVariable("User__Profile__Image__Folder__Path")}";
 
                 if (!Directory.Exists(userProfileImagesFolderPath))
                 {
@@ -47,9 +47,9 @@ namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminProfileByI
 
                 mapper.Map(request, user);
 
-                user.ProfilePhotoPath = $"{Environment.GetEnvironmentVariable("User__Proile__Image__Folder__Path")}/{Guid.NewGuid()}.png";
+                user.ProfilePhotoPath = Guid.NewGuid() + ".png";
 
-                using var stream = new FileStream(user.ProfilePhotoPath, FileMode.Create);
+                using var stream = new FileStream($"{Environment.GetEnvironmentVariable("User__Profile__Image__Folder__Path")}" + user.ProfilePhotoPath, FileMode.Create);
 
                 await request.profilePhoto.CopyToAsync(stream);
             }
