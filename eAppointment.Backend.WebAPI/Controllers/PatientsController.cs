@@ -1,6 +1,7 @@
 ﻿using eAppointment.Backend.Application.Features.Patients.CreatePatient;
 using eAppointment.Backend.Application.Features.Patients.GetAllPatientsByDoctorId;
 using eAppointment.Backend.Application.Features.Patients.GetPatientById;
+using eAppointment.Backend.Application.Features.Patients.GetPatientProfileById;
 using eAppointment.Backend.Application.Features.Patients.UpdatePatientById;
 using eAppointment.Backend.Application.Features.Patients.UpdatePatientProfileById;
 using eAppointment.Backend.Domain.Constants;
@@ -35,6 +36,15 @@ namespace eAppointment.Backend.WebAPI.Controllers
             return StatusCode(response.StatusCode, response);
         }
 
+        [Authorize(Policy = Permissions.GetPatientProfileById)]
+        [HttpPost]
+        public async Task<IActionResult> GetProfileById(GetPatientProfileByIdQuery request, CancellationToken cancellationToken)
+        {
+            var response = await _mediator.Send(request, cancellationToken);
+
+            return StatusCode(response.StatusCode, response);
+        }
+
         [Authorize(Policy = Permissions.GetAllPatientsByDoctorId)]
         [HttpPost]
         public async Task<IActionResult> GetAllByDoctorId(GetAllPatientsByDoctorIdQuery request, CancellationToken cancellationToken)
@@ -55,7 +65,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
 
         [Authorize(Policy = Permissions.UpdatePatientProfileById)]
         [HttpPost]
-        public async Task<IActionResult> UpdateProfileById(UpdatePatientProfileByIdCommand request, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateProfileById([FromForm] UpdatePatientProfileByIdCommand request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
 

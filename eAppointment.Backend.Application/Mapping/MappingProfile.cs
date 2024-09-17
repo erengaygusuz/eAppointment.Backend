@@ -198,12 +198,14 @@ namespace eAppointment.Backend.Application.Mapping
                 .ForMember(dest => dest.Patient, src => src.Ignore());
 
             CreateMap<UpdateDoctorProfileByIdCommand, User>()
-                .ForMember(dest => dest.Id, src => src.MapFrom(src => src.id))
+                .ForMember(dest => dest.Id, src => src.Ignore())
                 .ForMember(dest => dest.FirstName, src => src.MapFrom(src => src.firstName))
                 .ForMember(dest => dest.LastName, src => src.MapFrom(src => src.lastName))
                 .ForMember(dest => dest.PhoneNumber, src => src.MapFrom(src => src.phoneNumber))
                 .ForMember(dest => dest.PasswordHash, src => src.Ignore())
-                .ForMember(dest => dest.Patient, src => src.Ignore());
+                .ForMember(dest => dest.Patient, src => src.Ignore())
+                .ForPath(dest => dest.Doctor.Department, src => src.Ignore())
+                .ForPath(dest => dest.Doctor.Appointments, src => src.Ignore());
 
             #endregion
 
@@ -264,6 +266,7 @@ namespace eAppointment.Backend.Application.Mapping
                 .ForMember(dest => dest.Patient, src => src.Ignore());
 
             CreateMap<UpdatePatientProfileByIdCommand, User>()
+                .ForMember(dest => dest.Id, src => src.Ignore())
                 .ForMember(dest => dest.FirstName, src => src.MapFrom(src => src.firstName))
                 .ForMember(dest => dest.LastName, src => src.MapFrom(src => src.lastName))
                 .ForMember(dest => dest.PhoneNumber, src => src.MapFrom(src => src.phoneNumber))

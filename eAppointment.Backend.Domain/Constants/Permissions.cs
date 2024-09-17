@@ -10,12 +10,14 @@
 
         public const string CreateDoctor = "Permissions.Doctors.CreateDoctor";
         public const string GetDoctorById = "Permissions.Doctors.GetDoctorById";
+        public const string GetDoctorProfileById = "Permissions.Doctors.GetDoctorProfileById";
         public const string UpdateDoctorById = "Permissions.Doctors.UpdateDoctorById";
         public const string GetAllDoctorsByDepartmentId = "Permissions.Doctors.GetAllDoctorsByDepartmentId";
-        public const string UpdateDoctorProfileById = "Permissions.Patients.UpdateDoctorProfileById";
+        public const string UpdateDoctorProfileById = "Permissions.Doctors.UpdateDoctorProfileById";
 
         public const string CreatePatient = "Permissions.Patients.CreatePatient";
         public const string GetPatientById = "Permissions.Patients.GetPatientById";
+        public const string GetPatientProfileById = "Permissions.Patients.GetPatientProfileById";
         public const string GetAllPatientsByDoctorId = "Permissions.Patients.GetAllPatientsByDoctorId";
         public const string UpdatePatientById = "Permissions.Patients.UpdatePatientById";
         public const string UpdatePatientProfileById = "Permissions.Patients.UpdatePatientProfileById";
@@ -82,7 +84,9 @@
                     UpdateAppointmentStatusById,
                     GetAllPatientsByDoctorId,
                     GetDoctorById,
-                    UpdateDoctorProfileById
+                    UpdateDoctorProfileById,
+                    GetDoctorProfileById,
+                    GetAllDepartments
                 },
                 Roles.Patient => new List<string>()
                 {
@@ -93,7 +97,10 @@
                     GetAllAppointmentsByPatientId,
                     UpdateAppointmentById,
                     GetPatientById,
-                    UpdatePatientProfileById
+                    UpdatePatientProfileById,
+                    GetPatientProfileById,
+                    GetAllCities,
+                    GetAllCountiesByCityId
                 },
                 _ => new List<string>()
             };

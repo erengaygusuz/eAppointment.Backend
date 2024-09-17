@@ -43,7 +43,7 @@ namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientProfil
                     patient.User.ProfilePhotoPath = "";
                 }
 
-                mapper.Map(request, patient);
+                mapper.Map(request, patient.User);
 
                 patient.User.ProfilePhotoPath = Guid.NewGuid() + ".png";
 
@@ -54,7 +54,7 @@ namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientProfil
 
             else
             {
-                mapper.Map(request, patient);
+                mapper.Map(request, patient.User);
             }
 
             patientRepository.Update(patient);

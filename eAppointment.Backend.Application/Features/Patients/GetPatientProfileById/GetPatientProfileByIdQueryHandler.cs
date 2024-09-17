@@ -14,7 +14,7 @@ namespace eAppointment.Backend.Application.Features.Patients.GetPatientProfileBy
         public async Task<Result<GetPatientProfileByIdQueryResponse>> Handle(GetPatientProfileByIdQuery request, CancellationToken cancellationToken)
         {
             Patient? patient = await patientRepository.GetAsync(
-               expression: x => x.UserId == request.id,
+               expression: x => x.Id == request.id,
                trackChanges: false,
                include: x => x.Include(p => p.User).Include(c => c.County),
                orderBy: x => x.OrderBy(p => p.User.FirstName),
