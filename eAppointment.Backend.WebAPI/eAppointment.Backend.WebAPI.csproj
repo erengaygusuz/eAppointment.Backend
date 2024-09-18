@@ -10,13 +10,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Content Remove="Resources\en-US.json" />
-	  <Content Remove="Resources\tr-TR.json" />
+	  <None Include="Resources\en-US.json" />
+	  <None Include="Resources\tr-TR.json" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Include="Resources\en-US.json" />
-	  <None Include="Resources\tr-TR.json" />
+		<Content Update="appsettings*.json" CopyToPublishDirectory="Never" />
 	</ItemGroup>
 
 	<ItemGroup>

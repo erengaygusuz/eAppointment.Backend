@@ -7,7 +7,7 @@ namespace eAppointment.Backend.Domain.Helpers
     {
         public T? Data { get; set; }
         public List<string>? ErrorMessages { get; set; }
-        public bool IsSuccessful { get; set; } = true;
+        public bool IsSuccessfull { get; set; } = true;
 
         [JsonIgnore]
         public int StatusCode { get; set; } = (int)HttpStatusCode.OK;
@@ -19,14 +19,14 @@ namespace eAppointment.Backend.Domain.Helpers
 
         public Result(int statusCode, List<string> errorMessages)
         {
-            IsSuccessful = false;
+            IsSuccessfull = false;
             StatusCode = statusCode;
             ErrorMessages = errorMessages;
         }
 
         public Result(int statusCode, string errorMessage)
         {
-            IsSuccessful = false;
+            IsSuccessfull = false;
             StatusCode = statusCode;
             ErrorMessages = new() { errorMessage };
         }
