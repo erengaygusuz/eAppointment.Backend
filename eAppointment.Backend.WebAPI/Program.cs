@@ -7,6 +7,7 @@ using eAppointment.Backend.WebAPI.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Localization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -21,6 +22,24 @@ namespace eAppointment.Backend.WebAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddResponseCompression(opt =>
+            {
+                opt.EnableForHttps = true;
+                opt.Providers.Add<BrotliCompressionProvider>();
+                opt.Providers.Add<GzipCompressionProvider>();
+                opt.MimeTypes = ResponseCompressionDefaults.MimeTypes;
+            });
+
+            builder.Services.Configure<BrotliCompressionProviderOptions>(opt =>
+            {
+                opt.Level = System.IO.Compression.CompressionLevel.Fastest;
+            });
+
+            builder.Services.Configure<GzipCompressionProviderOptions>(opt =>
+            {
+                opt.Level = System.IO.Compression.CompressionLevel.SmallestSize;
+            });
 
             builder.Services.AddHttpContextAccessor();
 
@@ -121,6 +140,8 @@ namespace eAppointment.Backend.WebAPI
             });
 
             var app = builder.Build();
+
+            app.UseResponseCompression();
 
             app.UseSwagger();
             app.UseSwaggerUI();
