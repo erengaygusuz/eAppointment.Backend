@@ -139,6 +139,8 @@ namespace eAppointment.Backend.WebAPI
 
             app.UseMiddleware<ErrorHandlerMiddleware>();
 
+            app.UseMiddleware<EncryptionDecryptionMiddleware>();
+
             app.UseAuthentication();
 
             app.UseAuthorization();
