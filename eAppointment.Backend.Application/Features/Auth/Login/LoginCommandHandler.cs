@@ -22,8 +22,7 @@ namespace eAppointment.Backend.Application.Features.Auth.Login
             User? appUser = await userManager.Users
                 .Include(x => x.Patient)
                 .Include(x => x.Doctor)
-                .FirstOrDefaultAsync(p => p.UserName == request.userNameOrEmail ||
-               p.Email == request.userNameOrEmail, cancellationToken);
+                .FirstOrDefaultAsync(p => p.UserName == request.userName, cancellationToken);
 
             if (appUser is null)
             {

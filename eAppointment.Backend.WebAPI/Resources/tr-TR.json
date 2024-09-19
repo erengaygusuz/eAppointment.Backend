@@ -172,7 +172,7 @@
     "Auth": {
       "Login": {
         "ValidationMessages": {
-          "UserNameOrEmail": {
+          "UserName": {
             "NotNull": "Lütfen kullanıcı adı alanını boş bırakmayınız",
             "MinimumLength": "Lütfen kullanıcı adı alanı için minimum 3 karakter giriniz",
             "MaximumLength": "Lütfen kullanıcı adı alanı için maksimum 100 karakter giriniz",

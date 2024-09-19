@@ -185,7 +185,7 @@
     "Auth": {
       "Login": {
         "ValidationMessages": {
-          "UserNameOrEmail": {
+          "UserName": {
             "NotNull": "Please fill the username",
             "MinimumLength": "Please enter minimum 3 character for username",
             "MaximumLength": "Please enter maximum 50 character for username",
