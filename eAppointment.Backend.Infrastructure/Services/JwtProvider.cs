@@ -1,6 +1,7 @@
 ﻿using eAppointment.Backend.Application.Services;
 using eAppointment.Backend.Domain.Constants;
 using eAppointment.Backend.Domain.Entities;
+using eAppointment.Backend.Domain.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,7 +12,8 @@ using System.Text.Json;
 namespace eAppointment.Backend.Infrastructure.Services
 {
     internal sealed class JwtProvider(
-        UserManager<User> userManager) : IJwtProvider
+        UserManager<User> userManager,
+        RoleManager<Role> roleManager) : IJwtProvider
     {
         public async Task<string> CreateTokenAsync(User user)
         {
@@ -20,6 +22,29 @@ namespace eAppointment.Backend.Infrastructure.Services
             var stringRoles = userRoles!.Select(x => x.ToLower()).ToList();
 
             var allPermissions = Permissions.GetAllPermissions(userRoles[0]);
+
+            var roleWithMenuItems = roleManager.Roles.Where(x => x.Name == userRoles[0]).FirstOrDefault();
+
+            var menuTreeItems = roleWithMenuItems.MenuItems.Where(x => x.ParentId == null).Select(x => new MenuTreeItem()
+            {
+                Key = x.MenuKey,
+                Items = x.Children != null ? x.Children.Select(x => new MenuTreeItem()
+                {
+                    Key = x.MenuKey,
+                    Items = x.Children != null ? x.Children.Select(x => new MenuTreeItem()
+                    {
+                        Key = x.MenuKey,
+                        Items = x.Children != null ? x.Children.Select(x => new MenuTreeItem()
+                        {
+                            Key = x.MenuKey,
+                            Items = x.Children != null ? x.Children.Select(x => new MenuTreeItem()
+                            {
+                                Key = x.MenuKey
+                            }).ToList() : null
+                        }).ToList() : null
+                    }).ToList() : null
+                }).ToList() : null
+            });
 
             List<Claim> claims = new();
 
@@ -33,7 +58,8 @@ namespace eAppointment.Backend.Infrastructure.Services
                     new Claim("UserName", user.UserName ?? string.Empty),
                     new Claim("PatientId", user.Patient!.Id.ToString()),
                     new Claim(ClaimTypes.Role, JsonSerializer.Serialize(userRoles)),
-                    new Claim("Permissions", JsonSerializer.Serialize(allPermissions))
+                    new Claim("Permissions", JsonSerializer.Serialize(allPermissions)),
+                    new Claim("MenuItems", JsonSerializer.Serialize(menuTreeItems))
                 });
             }
 
@@ -47,7 +73,8 @@ namespace eAppointment.Backend.Infrastructure.Services
                     new Claim("UserName", user.UserName ?? string.Empty),
                     new Claim("DoctorId", user.Doctor!.Id.ToString()),
                     new Claim(ClaimTypes.Role, JsonSerializer.Serialize(userRoles)),
-                    new Claim("Permissions", JsonSerializer.Serialize(allPermissions))
+                    new Claim("Permissions", JsonSerializer.Serialize(allPermissions)),
+                    new Claim("MenuItems", JsonSerializer.Serialize(menuTreeItems))
                 });
             }
 
@@ -60,7 +87,8 @@ namespace eAppointment.Backend.Infrastructure.Services
                     new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
                     new Claim("UserName", user.UserName ?? string.Empty),
                     new Claim(ClaimTypes.Role, JsonSerializer.Serialize(userRoles)),
-                    new Claim("Permissions", JsonSerializer.Serialize(allPermissions))
+                    new Claim("Permissions", JsonSerializer.Serialize(allPermissions)),
+                    new Claim("MenuItems", JsonSerializer.Serialize(menuTreeItems))
                 });
             }
 
