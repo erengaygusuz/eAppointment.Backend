@@ -5,50 +5,48 @@
 namespace eAppointment.Backend.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class mig9 : Migration
+    public partial class mig2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "InnerExceptionStackTrace",
-                table: "ErrorLogs",
-                type: "nvarchar(MAX)",
+                name: "RouterLink",
+                table: "MenuItems",
+                type: "varchar(250)",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(MAX)");
+                oldType: "nvarchar(max)");
 
             migrationBuilder.AlterColumn<string>(
-                name: "InnerExceptionMessage",
-                table: "ErrorLogs",
-                type: "nvarchar(MAX)",
-                nullable: true,
+                name: "Icon",
+                table: "MenuItems",
+                type: "varchar(250)",
+                nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(MAX)");
+                oldType: "nvarchar(max)");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "InnerExceptionStackTrace",
-                table: "ErrorLogs",
-                type: "nvarchar(MAX)",
+                name: "RouterLink",
+                table: "MenuItems",
+                type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "",
                 oldClrType: typeof(string),
-                oldType: "nvarchar(MAX)",
+                oldType: "varchar(250)",
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "InnerExceptionMessage",
-                table: "ErrorLogs",
-                type: "nvarchar(MAX)",
+                name: "Icon",
+                table: "MenuItems",
+                type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "",
                 oldClrType: typeof(string),
-                oldType: "nvarchar(MAX)",
-                oldNullable: true);
+                oldType: "varchar(250)");
         }
     }
 }

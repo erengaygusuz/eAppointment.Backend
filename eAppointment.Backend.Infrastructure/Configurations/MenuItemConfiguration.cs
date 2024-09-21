@@ -12,6 +12,10 @@ namespace eAppointment.Backend.Infrastructure.Configurations
 
             builder.Property(p => p.MenuKey).HasColumnType("varchar(50)");
 
+            builder.Property(p => p.Icon).HasColumnType("varchar(250)");
+
+            builder.Property(p => p.RouterLink).HasColumnType("varchar(250)");
+
             builder.Property(p => p.ParentId).HasColumnType("int");
 
             builder.HasIndex(x => x.ParentId).IsUnique(false);
@@ -26,16 +30,7 @@ namespace eAppointment.Backend.Infrastructure.Configurations
                    r => r.HasOne(typeof(MenuItem)).WithMany().HasForeignKey("MenuItemId").HasPrincipalKey(nameof(MenuItem.Id)),
                    j => j.HasKey("RoleId", "MenuItemId"));
 
-            builder.HasMany(e => e.Translations)
-               .WithMany(e => e.MenuItems)
-               .UsingEntity<MenuItemTranslation>(
-                   l => l.HasOne(mt => mt.Language).WithMany().HasForeignKey(mt => mt.LanguageId).HasPrincipalKey(l => l.Id),
-                   r => r.HasOne(mt => mt.MenuItem).WithMany().HasForeignKey(mt => mt.MenuItemId).HasPrincipalKey(l => l.Id),
-                   j =>
-                   {
-                       j.Property(mt => mt.TranslationText).HasColumnType("varchar(50)");
-                       j.HasKey(mt => new { mt.MenuItemId, mt.LanguageId });
-                   });
+            builder.Navigation(p => p.MenuItemTranslations).AutoInclude();
         }
     }
 }

@@ -27,19 +27,29 @@ namespace eAppointment.Backend.Infrastructure.Services
 
             var menuTreeItems = roleWithMenuItems.MenuItems.Where(x => x.ParentId == null).Select(x => new MenuTreeItem()
             {
-                Key = x.MenuKey,
+                Label = x.MenuItemTranslations.FirstOrDefault(a => a.Language.Code == "tr-TR").TranslationText,
+                Icon = x.Icon,
+                RouterLink = x.RouterLink,
                 Items = x.Children != null ? x.Children.Select(x => new MenuTreeItem()
                 {
-                    Key = x.MenuKey,
+                    Label = x.MenuItemTranslations.FirstOrDefault(a => a.Language.Code == "tr-TR").TranslationText,
+                    Icon = x.Icon,
+                    RouterLink = x.RouterLink,
                     Items = x.Children != null ? x.Children.Select(x => new MenuTreeItem()
                     {
-                        Key = x.MenuKey,
+                        Label = x.MenuItemTranslations.FirstOrDefault(a => a.Language.Code == "tr-TR").TranslationText,
+                        Icon = x.Icon,
+                        RouterLink = x.RouterLink,
                         Items = x.Children != null ? x.Children.Select(x => new MenuTreeItem()
                         {
-                            Key = x.MenuKey,
+                            Label = x.MenuItemTranslations.FirstOrDefault(a => a.Language.Code == "tr-TR").TranslationText,
+                            Icon = x.Icon,
+                            RouterLink = x.RouterLink,
                             Items = x.Children != null ? x.Children.Select(x => new MenuTreeItem()
                             {
-                                Key = x.MenuKey
+                                Label = x.MenuItemTranslations.FirstOrDefault(a => a.Language.Code == "tr-TR").TranslationText,
+                                Icon = x.Icon,
+                                RouterLink = x.RouterLink
                             }).ToList() : null
                         }).ToList() : null
                     }).ToList() : null
@@ -88,7 +98,11 @@ namespace eAppointment.Backend.Infrastructure.Services
                     new Claim("UserName", user.UserName ?? string.Empty),
                     new Claim(ClaimTypes.Role, JsonSerializer.Serialize(userRoles)),
                     new Claim("Permissions", JsonSerializer.Serialize(allPermissions)),
-                    new Claim("MenuItems", JsonSerializer.Serialize(menuTreeItems))
+                    new Claim("MenuItems", JsonSerializer.Serialize(menuTreeItems, 
+                                            new JsonSerializerOptions 
+                                            {
+                                                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                                            }))
                 });
             }
 

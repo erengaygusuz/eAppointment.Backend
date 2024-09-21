@@ -12,6 +12,6 @@
 
         public Doctor? Doctor { get; set; }
 
-        public ICollection<Language> Translations { get; set; }
+        public ICollection<DepartmentTranslation> Translations { get; set; }
     }
 }

@@ -8,8 +8,8 @@
 
         public string Name { get; set; }
 
-        public ICollection<Department> Departments { get; set; }
+        public ICollection<MenuItemTranslation> MenuItemTranslations { get; set; }
 
-        public ICollection<MenuItem> MenuItems { get; set; }
+        public ICollection<DepartmentTranslation> DepartmentTranslations { get; set; }
     }
 }

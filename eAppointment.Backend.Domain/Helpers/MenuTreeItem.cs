@@ -2,7 +2,11 @@
 {
     public class MenuTreeItem
     {
-        public string Key { get; set; }
+        public string Label { get; set; }
+
+        public string Icon { get; set; }
+
+        public string RouterLink { get; set; }
 
         public List<MenuTreeItem>? Items { get; set; }
     }

@@ -6,6 +6,10 @@
 
         public string MenuKey { get; set; } = string.Empty;
 
+        public string Icon { get; set; } = string.Empty;
+
+        public string? RouterLink { get; set; }
+
         public int? ParentId { get; set; }
 
         public MenuItem? Parent { get; set; }
@@ -18,6 +22,6 @@
 
         public ICollection<Role> Roles { get; set; }
 
-        public ICollection<Language> Translations { get; set; }
+        public ICollection<MenuItemTranslation> MenuItemTranslations { get; set; }
     }
 }

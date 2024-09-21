@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -35,6 +36,7 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "varchar(50)", nullable: false),
                     LastName = table.Column<string>(type: "varchar(50)", nullable: false),
+                    ProfilePhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserName = table.Column<string>(type: "varchar(100)", maxLength: 256, nullable: true),
@@ -55,6 +57,24 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AuditLogs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AuditType = table.Column<int>(type: "int", nullable: true),
+                    TableName = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
+                    OldValues = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
+                    NewValues = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
+                    AffectedColumns = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
+                    KeyValues = table.Column<string>(type: "nvarchar(MAX)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuditLogs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,6 +105,58 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Departments", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Language",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "varchar(20)", nullable: false),
+                    Name = table.Column<string>(type: "varchar(50)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Language", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MenuItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MenuKey = table.Column<string>(type: "varchar(50)", nullable: false),
+                    Icon = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RouterLink = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ParentId = table.Column<int>(type: "int", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MenuItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MenuItems_MenuItems_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "MenuItems",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Pages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PageKey = table.Column<string>(type: "varchar(50)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pages", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -242,6 +314,108 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DepartmentTranslations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LanguageId = table.Column<int>(type: "int", nullable: false),
+                    DepartmentId = table.Column<int>(type: "int", nullable: false),
+                    TranslationText = table.Column<string>(type: "varchar(100)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DepartmentTranslations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DepartmentTranslations_Departments_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Departments",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_DepartmentTranslations_Language_LanguageId",
+                        column: x => x.LanguageId,
+                        principalTable: "Language",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MenuItemTranslations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LanguageId = table.Column<int>(type: "int", nullable: false),
+                    MenuItemId = table.Column<int>(type: "int", nullable: false),
+                    TranslationText = table.Column<string>(type: "varchar(100)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MenuItemTranslations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MenuItemTranslations_Language_LanguageId",
+                        column: x => x.LanguageId,
+                        principalTable: "Language",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_MenuItemTranslations_MenuItems_MenuItemId",
+                        column: x => x.MenuItemId,
+                        principalTable: "MenuItems",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RoleMenuItemMappings",
+                columns: table => new
+                {
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    MenuItemId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoleMenuItemMappings", x => new { x.RoleId, x.MenuItemId });
+                    table.ForeignKey(
+                        name: "FK_RoleMenuItemMappings_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RoleMenuItemMappings_MenuItems_MenuItemId",
+                        column: x => x.MenuItemId,
+                        principalTable: "MenuItems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RolePageMappings",
+                columns: table => new
+                {
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    PageId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RolePageMappings", x => new { x.RoleId, x.PageId });
+                    table.ForeignKey(
+                        name: "FK_RolePageMappings_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RolePageMappings_Pages_PageId",
+                        column: x => x.PageId,
+                        principalTable: "Pages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Patients",
                 columns: table => new
                 {
@@ -250,7 +424,7 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false),
                     IdentityNumber = table.Column<string>(type: "varchar(11)", nullable: false),
                     CountyId = table.Column<int>(type: "int", nullable: true),
-                    FullAddress = table.Column<string>(type: "varchar(50)", nullable: true),
+                    FullAddress = table.Column<string>(type: "varchar(500)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -368,6 +542,16 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DepartmentTranslations_DepartmentId",
+                table: "DepartmentTranslations",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DepartmentTranslations_LanguageId",
+                table: "DepartmentTranslations",
+                column: "LanguageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Doctors_DepartmentId",
                 table: "Doctors",
                 column: "DepartmentId");
@@ -376,6 +560,21 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                 name: "IX_Doctors_UserId",
                 table: "Doctors",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MenuItems_ParentId",
+                table: "MenuItems",
+                column: "ParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MenuItemTranslations_LanguageId",
+                table: "MenuItemTranslations",
+                column: "LanguageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MenuItemTranslations_MenuItemId",
+                table: "MenuItemTranslations",
+                column: "MenuItemId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Patients_CountyId",
@@ -392,6 +591,16 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                 name: "IX_Patients_UserId",
                 table: "Patients",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RoleMenuItemMappings_MenuItemId",
+                table: "RoleMenuItemMappings",
+                column: "MenuItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RolePageMappings_PageId",
+                table: "RolePageMappings",
+                column: "PageId");
         }
 
         /// <inheritdoc />
@@ -416,13 +625,37 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "AuditLogs");
+
+            migrationBuilder.DropTable(
+                name: "DepartmentTranslations");
+
+            migrationBuilder.DropTable(
+                name: "MenuItemTranslations");
+
+            migrationBuilder.DropTable(
+                name: "RoleMenuItemMappings");
+
+            migrationBuilder.DropTable(
+                name: "RolePageMappings");
+
+            migrationBuilder.DropTable(
                 name: "Doctors");
 
             migrationBuilder.DropTable(
                 name: "Patients");
 
             migrationBuilder.DropTable(
+                name: "Language");
+
+            migrationBuilder.DropTable(
+                name: "MenuItems");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Pages");
 
             migrationBuilder.DropTable(
                 name: "Departments");

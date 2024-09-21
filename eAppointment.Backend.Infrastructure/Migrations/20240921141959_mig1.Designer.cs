@@ -12,8 +12,8 @@ using eAppointment.Backend.Infrastructure.Context;
 namespace eAppointment.Backend.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240817172353_mig9")]
-    partial class mig9
+    [Migration("20240921141959_mig1")]
+    partial class mig1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace eAppointment.Backend.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .UseCollation("Turkish_CI_AS")
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -129,6 +129,36 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("RoleMenuItemMappings", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MenuItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RoleId", "MenuItemId");
+
+                    b.HasIndex("MenuItemId");
+
+                    b.ToTable("RoleMenuItemMappings");
+                });
+
+            modelBuilder.Entity("RolePageMappings", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PageId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RoleId", "PageId");
+
+                    b.HasIndex("PageId");
+
+                    b.ToTable("RolePageMappings");
+                });
+
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Appointment", b =>
                 {
                     b.Property<int>("Id")
@@ -176,60 +206,23 @@ namespace eAppointment.Backend.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("LocalIpAddress")
-                        .IsRequired()
-                        .HasColumnType("varchar(45)");
-
-                    b.Property<int?>("LocalPort")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Method")
-                        .IsRequired()
-                        .HasColumnType("varchar(10)");
-
-                    b.Property<string>("Path")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(2048)");
-
-                    b.Property<string>("QueryParameters")
-                        .IsRequired()
+                    b.Property<string>("AffectedColumns")
                         .HasColumnType("nvarchar(MAX)");
 
-                    b.Property<string>("RemoteIpAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(45)");
+                    b.Property<int?>("AuditType")
+                        .HasColumnType("int")
+                        .HasColumnName("AuditType");
 
-                    b.Property<int?>("RemotePort")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RequestBody")
-                        .IsRequired()
+                    b.Property<string>("KeyValues")
                         .HasColumnType("nvarchar(MAX)");
 
-                    b.Property<string>("RequestHeaders")
-                        .IsRequired()
+                    b.Property<string>("NewValues")
                         .HasColumnType("nvarchar(MAX)");
 
-                    b.Property<string>("ResponseBody")
-                        .IsRequired()
+                    b.Property<string>("OldValues")
                         .HasColumnType("nvarchar(MAX)");
 
-                    b.Property<string>("ResponseHeaders")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(MAX)");
-
-                    b.Property<int>("StatusCode")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Timestamp")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(2048)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
+                    b.Property<string>("TableName")
                         .HasColumnType("nvarchar(MAX)");
 
                     b.HasKey("Id");
@@ -311,6 +304,39 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                     b.ToTable("Departments");
                 });
 
+            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.DepartmentTranslation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LanguageId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TranslationText")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("LanguageId");
+
+                    b.ToTable("DepartmentTranslations");
+                });
+
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Doctor", b =>
                 {
                     b.Property<int>("Id")
@@ -340,7 +366,7 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                     b.ToTable("Doctors");
                 });
 
-            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.ErrorLog", b =>
+            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Language", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -348,28 +374,113 @@ namespace eAppointment.Backend.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AuditLogId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ExceptionMessage")
+                    b.Property<string>("Code")
                         .IsRequired()
-                        .HasColumnType("nvarchar(MAX)");
+                        .HasColumnType("varchar(20)");
 
-                    b.Property<string>("ExceptionStackTrace")
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(MAX)");
-
-                    b.Property<string>("InnerExceptionMessage")
-                        .HasColumnType("nvarchar(MAX)");
-
-                    b.Property<string>("InnerExceptionStackTrace")
-                        .HasColumnType("nvarchar(MAX)");
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuditLogId");
+                    b.ToTable("Language");
+                });
 
-                    b.ToTable("ErrorLogs");
+            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.MenuItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MenuKey")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RouterLink")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("MenuItems");
+                });
+
+            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.MenuItemTranslation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("LanguageId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MenuItemId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TranslationText")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("MenuItemId");
+
+                    b.ToTable("MenuItemTranslations");
+                });
+
+            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Page", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PageKey")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pages");
                 });
 
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Patient", b =>
@@ -447,43 +558,6 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.TableLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AffectedColumns")
-                        .HasColumnType("nvarchar(MAX)");
-
-                    b.Property<int>("AuditLogId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("KeyValues")
-                        .HasColumnType("nvarchar(MAX)");
-
-                    b.Property<string>("NewValues")
-                        .HasColumnType("nvarchar(MAX)");
-
-                    b.Property<string>("OldValues")
-                        .HasColumnType("nvarchar(MAX)");
-
-                    b.Property<int?>("TableChangeType")
-                        .HasColumnType("int")
-                        .HasColumnName("TableChangeType");
-
-                    b.Property<string>("TableName")
-                        .HasColumnType("nvarchar(MAX)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuditLogId");
-
-                    b.ToTable("TableLogs");
-                });
-
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -542,6 +616,10 @@ namespace eAppointment.Backend.Infrastructure.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ProfilePhotoPath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -625,6 +703,36 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("RoleMenuItemMappings", b =>
+                {
+                    b.HasOne("eAppointment.Backend.Domain.Entities.MenuItem", null)
+                        .WithMany()
+                        .HasForeignKey("MenuItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("eAppointment.Backend.Domain.Entities.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("RolePageMappings", b =>
+                {
+                    b.HasOne("eAppointment.Backend.Domain.Entities.Page", null)
+                        .WithMany()
+                        .HasForeignKey("PageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("eAppointment.Backend.Domain.Entities.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Appointment", b =>
                 {
                     b.HasOne("eAppointment.Backend.Domain.Entities.Doctor", "Doctor")
@@ -655,6 +763,25 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                     b.Navigation("City");
                 });
 
+            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.DepartmentTranslation", b =>
+                {
+                    b.HasOne("eAppointment.Backend.Domain.Entities.Department", "Department")
+                        .WithMany("Translations")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("eAppointment.Backend.Domain.Entities.Language", "Language")
+                        .WithMany("DepartmentTranslations")
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Language");
+                });
+
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Doctor", b =>
                 {
                     b.HasOne("eAppointment.Backend.Domain.Entities.Department", "Department")
@@ -674,15 +801,32 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.ErrorLog", b =>
+            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.MenuItem", b =>
                 {
-                    b.HasOne("eAppointment.Backend.Domain.Entities.AuditLog", "AuditLog")
-                        .WithOne("ErrorLog")
-                        .HasForeignKey("eAppointment.Backend.Domain.Entities.ErrorLog", "AuditLogId")
+                    b.HasOne("eAppointment.Backend.Domain.Entities.MenuItem", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.MenuItemTranslation", b =>
+                {
+                    b.HasOne("eAppointment.Backend.Domain.Entities.Language", "Language")
+                        .WithMany("MenuItemTranslations")
+                        .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("AuditLog");
+                    b.HasOne("eAppointment.Backend.Domain.Entities.MenuItem", "MenuItem")
+                        .WithMany("MenuItemTranslations")
+                        .HasForeignKey("MenuItemId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Language");
+
+                    b.Navigation("MenuItem");
                 });
 
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Patient", b =>
@@ -702,24 +846,6 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.TableLog", b =>
-                {
-                    b.HasOne("eAppointment.Backend.Domain.Entities.AuditLog", "AuditLog")
-                        .WithMany("TableLogs")
-                        .HasForeignKey("AuditLogId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("AuditLog");
-                });
-
-            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.AuditLog", b =>
-                {
-                    b.Navigation("ErrorLog");
-
-                    b.Navigation("TableLogs");
-                });
-
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.City", b =>
                 {
                     b.Navigation("Counties");
@@ -728,11 +854,27 @@ namespace eAppointment.Backend.Infrastructure.Migrations
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Department", b =>
                 {
                     b.Navigation("Doctor");
+
+                    b.Navigation("Translations");
                 });
 
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Doctor", b =>
                 {
                     b.Navigation("Appointments");
+                });
+
+            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Language", b =>
+                {
+                    b.Navigation("DepartmentTranslations");
+
+                    b.Navigation("MenuItemTranslations");
+                });
+
+            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.MenuItem", b =>
+                {
+                    b.Navigation("Children");
+
+                    b.Navigation("MenuItemTranslations");
                 });
 
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Patient", b =>
