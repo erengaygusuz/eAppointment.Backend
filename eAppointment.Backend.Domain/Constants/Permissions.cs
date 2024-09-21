@@ -23,6 +23,7 @@
         public const string UpdatePatientProfileById = "Permissions.Patients.UpdatePatientProfileById";
 
         public const string GetAllRoles = "Permissions.Roles.GetAllRoles";
+        public const string GetMenuItems = "Permissions.Roles.GetMenuItems";
 
         public const string GetAllUsers = "Permissions.Users.GetAllUsers";
         public const string DeleteUserById = "Permissions.Users.DeleteUserById";
@@ -62,7 +63,8 @@
                     DeleteUserById,
                     GetAllCities,
                     GetAllCountiesByCityId,
-                    GetAllDepartments
+                    GetAllDepartments,
+                    GetMenuItems
                 },
                 Roles.Admin => new List<string>()
                 {
@@ -76,7 +78,8 @@
                     GetPatientById,
                     UpdatePatientById,
                     GetAllCities,
-                    GetAllCountiesByCityId
+                    GetAllCountiesByCityId,
+                    GetMenuItems
                 },
                 Roles.Doctor => new List<string>()
                 {
@@ -86,7 +89,8 @@
                     GetDoctorById,
                     UpdateDoctorProfileById,
                     GetDoctorProfileById,
-                    GetAllDepartments
+                    GetAllDepartments,
+                    GetMenuItems
                 },
                 Roles.Patient => new List<string>()
                 {
@@ -100,7 +104,8 @@
                     UpdatePatientProfileById,
                     GetPatientProfileById,
                     GetAllCities,
-                    GetAllCountiesByCityId
+                    GetAllCountiesByCityId,
+                    GetMenuItems
                 },
                 _ => new List<string>()
             };

@@ -151,6 +151,7 @@ namespace eAppointment.Backend.WebAPI.Middlewares
             List<string> includedURL = new List<string>();
 
             includedURL.Add("/api/users/getall");
+            includedURL.Add("/api/roles/getmenuitems");
 
             return includedURL;
         }
@@ -160,6 +161,7 @@ namespace eAppointment.Backend.WebAPI.Middlewares
             List<string> includedURL = new List<string>();
 
             includedURL.Add("/api/users/getall");
+            includedURL.Add("/api/roles/getmenuitems");
 
             return includedURL;
         }

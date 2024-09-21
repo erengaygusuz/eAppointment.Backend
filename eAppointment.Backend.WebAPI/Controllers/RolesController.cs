@@ -1,4 +1,5 @@
 ﻿using eAppointment.Backend.Application.Features.Roles.GetAllRoles;
+using eAppointment.Backend.Application.Features.Roles.GetMenuItems;
 using eAppointment.Backend.Domain.Constants;
 using eAppointment.Backend.WebAPI.Abstractions;
 using MediatR;
@@ -16,6 +17,15 @@ namespace eAppointment.Backend.WebAPI.Controllers
         [Authorize(Policy = Permissions.GetAllRoles)]
         [HttpPost]
         public async Task<IActionResult> GetAll(GetAllRolesQuery request, CancellationToken cancellationToken)
+        {
+            var response = await _mediator.Send(request, cancellationToken);
+
+            return StatusCode(response.StatusCode, response);
+        }
+
+        [Authorize(Policy = Permissions.GetMenuItems)]
+        [HttpPost]
+        public async Task<IActionResult> GetMenuItems(GetMenuItemsQuery request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
 
