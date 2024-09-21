@@ -23,6 +23,14 @@ namespace eAppointment.Backend.Infrastructure.Context
 
         public DbSet<AuditLog> AuditLogs { get; set; }
 
+        public DbSet<MenuItem> MenuItems { get; set; }
+
+        public DbSet<Page> Pages { get; set; }
+
+        public DbSet<MenuItemTranslation> MenuItemTranslations { get; set; }
+
+        public DbSet<DepartmentTranslation> DepartmentTranslations { get; set; }
+
         public ApplicationDbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)

@@ -21,10 +21,21 @@ namespace eAppointment.Backend.Infrastructure.Configurations
             builder.HasMany(e => e.Roles)
                .WithMany(e => e.MenuItems)
                .UsingEntity(
-                   "RoleMenuItemMapping",
+                   "RoleMenuItemMappings",
                    l => l.HasOne(typeof(Role)).WithMany().HasForeignKey("RoleId").HasPrincipalKey(nameof(Role.Id)),
                    r => r.HasOne(typeof(MenuItem)).WithMany().HasForeignKey("MenuItemId").HasPrincipalKey(nameof(MenuItem.Id)),
                    j => j.HasKey("RoleId", "MenuItemId"));
+
+            builder.HasMany(e => e.Translations)
+               .WithMany(e => e.MenuItems)
+               .UsingEntity<MenuItemTranslation>(
+                   l => l.HasOne(mt => mt.Language).WithMany().HasForeignKey(mt => mt.LanguageId).HasPrincipalKey(l => l.Id),
+                   r => r.HasOne(mt => mt.MenuItem).WithMany().HasForeignKey(mt => mt.MenuItemId).HasPrincipalKey(l => l.Id),
+                   j =>
+                   {
+                       j.Property(mt => mt.TranslationText).HasColumnType("varchar(50)");
+                       j.HasKey(mt => new { mt.MenuItemId, mt.LanguageId });
+                   });
         }
     }
 }

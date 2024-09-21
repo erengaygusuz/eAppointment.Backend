@@ -17,7 +17,7 @@ namespace eAppointment.Backend.Infrastructure.Configurations
             builder.HasMany(e => e.Roles)
                .WithMany(e => e.Pages)
                .UsingEntity(
-                   "RolePageMapping",
+                   "RolePageMappings",
                    l => l.HasOne(typeof(Role)).WithMany().HasForeignKey("RoleId").HasPrincipalKey(nameof(Role.Id)),
                    r => r.HasOne(typeof(Page)).WithMany().HasForeignKey("PageId").HasPrincipalKey(nameof(Page.Id)),
                    j => j.HasKey("RoleId", "PageId"));

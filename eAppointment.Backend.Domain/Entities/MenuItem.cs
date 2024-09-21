@@ -17,5 +17,7 @@
         public ICollection<MenuItem>? Children { get; set; }
 
         public ICollection<Role> Roles { get; set; }
+
+        public ICollection<Language> Translations { get; set; }
     }
 }

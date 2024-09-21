@@ -11,5 +11,7 @@
         public DateTime? ModifiedDate { get; set; }
 
         public Doctor? Doctor { get; set; }
+
+        public ICollection<Language> Translations { get; set; }
     }
 }

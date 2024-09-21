@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eAppointment.Backend.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using eAppointment.Backend.Infrastructure.Context;
 namespace eAppointment.Backend.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240921083643_mig15")]
+    partial class mig15
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -301,25 +304,6 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                     b.ToTable("Departments");
                 });
 
-            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.DepartmentTranslation", b =>
-                {
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LanguageId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TranslationText")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)");
-
-                    b.HasKey("DepartmentId", "LanguageId");
-
-                    b.HasIndex("LanguageId");
-
-                    b.ToTable("DepartmentTranslations");
-                });
-
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Doctor", b =>
                 {
                     b.Property<int>("Id")
@@ -347,27 +331,6 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Doctors");
-                });
-
-            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Language", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Language");
                 });
 
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.MenuItem", b =>
@@ -398,25 +361,6 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                     b.HasIndex("ParentId");
 
                     b.ToTable("MenuItems");
-                });
-
-            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.MenuItemTranslation", b =>
-                {
-                    b.Property<int>("MenuItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LanguageId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TranslationText")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)");
-
-                    b.HasKey("MenuItemId", "LanguageId");
-
-                    b.HasIndex("LanguageId");
-
-                    b.ToTable("MenuItemTranslations");
                 });
 
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Page", b =>
@@ -724,25 +668,6 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                     b.Navigation("City");
                 });
 
-            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.DepartmentTranslation", b =>
-                {
-                    b.HasOne("eAppointment.Backend.Domain.Entities.Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("eAppointment.Backend.Domain.Entities.Language", "Language")
-                        .WithMany()
-                        .HasForeignKey("LanguageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Department");
-
-                    b.Navigation("Language");
-                });
-
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Doctor", b =>
                 {
                     b.HasOne("eAppointment.Backend.Domain.Entities.Department", "Department")
@@ -769,25 +694,6 @@ namespace eAppointment.Backend.Infrastructure.Migrations
                         .HasForeignKey("ParentId");
 
                     b.Navigation("Parent");
-                });
-
-            modelBuilder.Entity("eAppointment.Backend.Domain.Entities.MenuItemTranslation", b =>
-                {
-                    b.HasOne("eAppointment.Backend.Domain.Entities.Language", "Language")
-                        .WithMany()
-                        .HasForeignKey("LanguageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("eAppointment.Backend.Domain.Entities.MenuItem", "MenuItem")
-                        .WithMany()
-                        .HasForeignKey("MenuItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Language");
-
-                    b.Navigation("MenuItem");
                 });
 
             modelBuilder.Entity("eAppointment.Backend.Domain.Entities.Patient", b =>

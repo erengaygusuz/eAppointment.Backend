@@ -44,7 +44,7 @@ namespace eAppointment.Backend.Infrastructure.Services
                         }).ToList() : null
                     }).ToList() : null
                 }).ToList() : null
-            });
+            }).ToList();
 
             List<Claim> claims = new();
 
