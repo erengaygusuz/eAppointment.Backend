@@ -116,7 +116,7 @@ namespace eAppointment.Backend.Application.Mapping
                 .ForPath(dest => dest.Title, src => src.MapFrom(src => src.Patient.User!.FirstName + " " + src.Patient.User!.LastName));
 
             CreateMap<Appointment, GetAllAppointmentsByPatientIdQueryResponse>()
-                .ForPath(dest => dest.DepartmentName, src => src.MapFrom(src => src.Doctor.Department!.Name))
+                .ForPath(dest => dest.DepartmentName, src => src.MapFrom(src => src.Doctor.Department!.DepartmentTranslations.FirstOrDefault(a => a.Language.Code == Thread.CurrentThread.CurrentCulture.Name).TranslationText))
                 .ForPath(dest => dest.DoctorName, src => src.MapFrom(src => src.Doctor.User!.FirstName + " " + src.Doctor.User!.LastName))
                 .ForMember(dest => dest.StartDate, src => src.MapFrom(src => src.StartDate.ToString("dd.MM.yyyy HH:mm")))
                 .ForMember(dest => dest.EndDate, src => src.MapFrom(src => src.EndDate.ToString("dd.MM.yyyy HH:mm")))
@@ -151,8 +151,8 @@ namespace eAppointment.Backend.Application.Mapping
             #region Department Mappings
 
             CreateMap<Department, GetAllDepartmentsQueryResponse>()
-                .ForPath(dest => dest.id, src => src.MapFrom(src => src.Id))
-                .ForPath(dest => dest.name, src => src.MapFrom(src => src.Name));
+                .ForCtorParam(nameof(GetAllDepartmentsQueryResponse.id), src => src.MapFrom(src => src.Id))
+                .ForCtorParam(nameof(GetAllDepartmentsQueryResponse.name), src => src.MapFrom(src => src.DepartmentTranslations.FirstOrDefault(a => a.Language.Code == Thread.CurrentThread.CurrentCulture.Name).TranslationText));
 
             #endregion
 

@@ -381,8 +381,8 @@
           },
           "FullAddress": {
             "NotNull": "Lütfen tam adres alanını boş bırakmayınız",
-            "MinLength": "Lütfen tam adres için minimum 50 karakter giriniz",
-            "MaxLength": "Lütfen tam adres için maksimum 500 karakter giriniz"
+            "MinimumLength": "Lütfen tam adres için minimum 50 karakter giriniz",
+            "MaximumLength": "Lütfen tam adres için maksimum 500 karakter giriniz"
           },
           "Password": {
             "NotNull": "Lütfen şifre alanını boş bırakmayınız",

@@ -2,6 +2,7 @@
 using eAppointment.Backend.Domain.Entities;
 using MediatR;
 using eAppointment.Backend.Domain.Helpers;
+using Microsoft.EntityFrameworkCore;
 
 namespace eAppointment.Backend.Application.Features.Departments.GetDepartmentById
 {
@@ -13,14 +14,14 @@ namespace eAppointment.Backend.Application.Features.Departments.GetDepartmentByI
             Department department = await departmentRepository.GetAsync(
                expression: p => p.Id == request.id,
                trackChanges: false,
-               include: null,
+               include: d => d.Include(d => d.DepartmentTranslations),
                orderBy: null,
                cancellationToken);
 
             GetDepartmentByIdQueryResponse response = new GetDepartmentByIdQueryResponse
             (
                 id: department.Id,
-                name: department.Name
+                name: department.DepartmentTranslations.FirstOrDefault(a => a.Language.Code == Thread.CurrentThread.CurrentCulture.Name).TranslationText
             );
 
             return response;

@@ -17,7 +17,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.GetDoctorById
                expression: p => p.Id == request.id,
                trackChanges: false,
                include: x => x.Include(u => u.User).Include(d => d.Department),
-               orderBy: x => x.OrderBy(p => p.Department!.Name).ThenBy(p => p.User!.FirstName),
+               orderBy: x => x.OrderBy(p => p.Department!.DepartmentKey).ThenBy(p => p.User!.FirstName),
                cancellationToken);
 
             var response = mapper.Map<GetDoctorByIdQueryResponse>(doctor);

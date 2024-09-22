@@ -22,7 +22,7 @@ namespace eAppointment.Backend.Infrastructure.Configurations
 
             builder
                 .HasOne<Department>(d => d.Department)
-                .WithMany(a => a.Translations)
+                .WithMany(a => a.DepartmentTranslations)
                 .HasForeignKey(e => e.DepartmentId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();

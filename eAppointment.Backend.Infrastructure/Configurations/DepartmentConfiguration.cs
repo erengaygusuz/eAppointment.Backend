@@ -10,7 +10,7 @@ namespace eAppointment.Backend.Infrastructure.Configurations
         {
             builder.HasKey(p => p.Id);
 
-            builder.Property(p => p.Name).HasColumnType("varchar(100)");
+            builder.Property(p => p.DepartmentKey).HasColumnType("varchar(100)");
         }
     }
 }
