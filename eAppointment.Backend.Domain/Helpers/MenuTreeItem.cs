@@ -6,7 +6,7 @@
 
         public string Icon { get; set; }
 
-        public string RouterLink { get; set; }
+        public List<string>? RouterLink { get; set; }
 
         public List<MenuTreeItem>? Items { get; set; }
     }

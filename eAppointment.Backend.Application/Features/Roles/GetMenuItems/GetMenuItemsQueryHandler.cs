@@ -20,27 +20,27 @@ namespace eAppointment.Backend.Application.Features.Roles.GetMenuItems
             {
                 Label = x.MenuItemTranslations.FirstOrDefault(a => a.Language.Code == Thread.CurrentThread.CurrentCulture.Name).TranslationText,
                 Icon = x.Icon,
-                RouterLink = x.RouterLink,
+                RouterLink = string.IsNullOrEmpty(x.RouterLink) ? null : new List<string>() { x.RouterLink },
                 Items = x.Children != null ? x.Children.Select(x => new MenuTreeItem()
                 {
                     Label = x.MenuItemTranslations.FirstOrDefault(a => a.Language.Code == Thread.CurrentThread.CurrentCulture.Name).TranslationText,
                     Icon = x.Icon,
-                    RouterLink = x.RouterLink,
+                    RouterLink = string.IsNullOrEmpty(x.RouterLink) ? null : new List<string>() { x.RouterLink },
                     Items = x.Children != null ? x.Children.Select(x => new MenuTreeItem()
                     {
                         Label = x.MenuItemTranslations.FirstOrDefault(a => a.Language.Code == Thread.CurrentThread.CurrentCulture.Name).TranslationText,
                         Icon = x.Icon,
-                        RouterLink = x.RouterLink,
+                        RouterLink = string.IsNullOrEmpty(x.RouterLink) ? null : new List<string>() { x.RouterLink },
                         Items = x.Children != null ? x.Children.Select(x => new MenuTreeItem()
                         {
                             Label = x.MenuItemTranslations.FirstOrDefault(a => a.Language.Code == Thread.CurrentThread.CurrentCulture.Name).TranslationText,
                             Icon = x.Icon,
-                            RouterLink = x.RouterLink,
+                            RouterLink = string.IsNullOrEmpty(x.RouterLink) ? null : new List<string>() { x.RouterLink },
                             Items = x.Children != null ? x.Children.Select(x => new MenuTreeItem()
                             {
                                 Label = x.MenuItemTranslations.FirstOrDefault(a => a.Language.Code == Thread.CurrentThread.CurrentCulture.Name).TranslationText,
                                 Icon = x.Icon,
-                                RouterLink = x.RouterLink
+                                RouterLink = string.IsNullOrEmpty(x.RouterLink) ? null : new List<string>() { x.RouterLink }
                             }).ToList() : null
                         }).ToList() : null
                     }).ToList() : null
