@@ -12,7 +12,9 @@ namespace eAppointment.Backend.Infrastructure.Configurations
 
             builder.Property(p => p.PageKey).HasColumnType("varchar(50)");
 
-            builder.Property(p => p.CreatedDate).HasDefaultValueSql("GETDATE()");
+            builder.Property(p => p.CreatedDate).HasColumnType("datetime").HasDefaultValueSql("GETDATE()");
+
+            builder.Property(p => p.ModifiedDate).HasColumnType("datetime");
 
             builder.HasMany(e => e.Roles)
                .WithMany(e => e.Pages)

@@ -17,6 +17,8 @@ namespace eAppointment.Backend.Domain.Entities
         public string? AffectedColumns { get; set; }
 
         public string? KeyValues { get; set; }
+
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
     }
 
 }

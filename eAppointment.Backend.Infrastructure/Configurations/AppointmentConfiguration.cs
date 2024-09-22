@@ -23,6 +23,10 @@ namespace eAppointment.Backend.Infrastructure.Configurations
 
             builder.Property(p => p.EndDate).HasColumnType("datetime");
 
+            builder.Property(p => p.CreatedDate).HasColumnType("datetime").HasDefaultValueSql("GETDATE()");
+
+            builder.Property(p => p.ModifiedDate).HasColumnType("datetime");
+
             builder.Property(p => p.Status)
                 .HasConversion(v => v.Value, v => AppointmentStatus.FromValue(v))
                 .HasColumnName("Status");

@@ -11,6 +11,10 @@ namespace eAppointment.Backend.Infrastructure.Configurations
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.DepartmentKey).HasColumnType("varchar(100)");
+
+            builder.Property(p => p.CreatedDate).HasColumnType("datetime").HasDefaultValueSql("GETDATE()");
+
+            builder.Property(p => p.ModifiedDate).HasColumnType("datetime");
         }
     }
 }

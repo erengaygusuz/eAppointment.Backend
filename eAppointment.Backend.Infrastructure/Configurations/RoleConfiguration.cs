@@ -13,6 +13,10 @@ namespace eAppointment.Backend.Infrastructure.Configurations
             builder.Property(p => p.Name).HasColumnType("varchar(50)");
 
             builder.Navigation(p => p.MenuItems).AutoInclude();
+
+            builder.Property(p => p.CreatedDate).HasColumnType("datetime").HasDefaultValueSql("GETDATE()");
+
+            builder.Property(p => p.ModifiedDate).HasColumnType("datetime");
         }
     }
 }

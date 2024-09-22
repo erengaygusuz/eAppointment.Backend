@@ -24,6 +24,8 @@ namespace eAppointment.Backend.Infrastructure.Configurations
             builder.Property(p => p.AffectedColumns).HasColumnType("nvarchar(MAX)");
 
             builder.Property(p => p.KeyValues).HasColumnType("nvarchar(MAX)");
+
+            builder.Property(p => p.CreatedDate).HasColumnType("datetime").HasDefaultValueSql("GETDATE()");
         }
     }
 }

@@ -20,6 +20,10 @@ namespace eAppointment.Backend.Infrastructure.Configurations
 
             builder.Property(p => p.TranslationText).HasColumnType("varchar(100)");
 
+            builder.Property(p => p.CreatedDate).HasColumnType("datetime").HasDefaultValueSql("GETDATE()");
+
+            builder.Property(p => p.ModifiedDate).HasColumnType("datetime");
+
             builder
                 .HasOne<MenuItem>(d => d.MenuItem)
                 .WithMany(a => a.MenuItemTranslations)

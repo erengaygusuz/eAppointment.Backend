@@ -25,6 +25,10 @@ namespace eAppointment.Backend.Infrastructure.Configurations
             builder.Property(p => p.PhoneNumber).HasColumnType("varchar(50)");
 
             builder.Property(p => p.ProfilePhotoPath).HasColumnType("nvarchar(max)");
+
+            builder.Property(p => p.CreatedDate).HasColumnType("datetime").HasDefaultValueSql("GETDATE()");
+
+            builder.Property(p => p.ModifiedDate).HasColumnType("datetime");
         }
     }
 }
