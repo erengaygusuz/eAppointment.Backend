@@ -37,7 +37,7 @@ namespace eAppointment.Backend.Application.Features.Users.DeleteUserById
 
             logger.LogInformation("User deleted successfully");
 
-            return new Result<string>((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyDeleted"].Value);
+            return Result<string>.Succeed((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyDeleted"].Value);
         }
     }
 }

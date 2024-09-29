@@ -25,7 +25,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.CreateAppointme
 
             logger.LogInformation("Appointment created successfully");
 
-            return new Result<string>((int)HttpStatusCode.Created, localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value);
+            return Result<string>.Succeed((int)HttpStatusCode.Created, localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value);
         }
     }
 }

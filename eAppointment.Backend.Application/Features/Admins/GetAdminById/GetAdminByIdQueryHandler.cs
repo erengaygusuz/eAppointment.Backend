@@ -30,7 +30,7 @@ namespace eAppointment.Backend.Application.Features.Admins.GetAdminById
 
             var response = mapper.Map<GetAdminByIdQueryResponse>(user);
 
-            return new Result<GetAdminByIdQueryResponse>((int)HttpStatusCode.OK, response);
+            return Result<GetAdminByIdQueryResponse>.Succeed((int)HttpStatusCode.OK, response);
         }
     }
 }

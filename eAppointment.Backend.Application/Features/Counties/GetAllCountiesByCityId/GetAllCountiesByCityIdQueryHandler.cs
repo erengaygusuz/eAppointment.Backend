@@ -22,7 +22,7 @@ namespace eAppointment.Backend.Application.Features.Counties.GetAllCountiesByCit
 
             var response = mapper.Map<List<GetAllCountiesByCityIdQueryResponse>>(counties);
 
-            return new Result<List<GetAllCountiesByCityIdQueryResponse>>((int)HttpStatusCode.OK, response);
+            return Result<List<GetAllCountiesByCityIdQueryResponse>>.Succeed((int)HttpStatusCode.OK, response);
         }
     }
 }

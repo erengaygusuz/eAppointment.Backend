@@ -28,7 +28,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.GetDoctorById
 
             var response = mapper.Map<GetDoctorByIdQueryResponse>(doctor);
 
-            return new Result<GetDoctorByIdQueryResponse>((int)HttpStatusCode.OK, response);
+            return Result<GetDoctorByIdQueryResponse>.Succeed((int)HttpStatusCode.OK, response);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace eAppointment.Backend.Application.Features.Cities.GetAllCities
 
             var response = mapper.Map<List<GetAllCitiesQueryResponse>>(cities);
 
-            return new Result<List<GetAllCitiesQueryResponse>>((int)HttpStatusCode.OK, response);
+            return Result<List<GetAllCitiesQueryResponse>>.Succeed((int)HttpStatusCode.OK, response);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.UpdateAppointme
 
             appointmentRepository.Update(appointment);
 
-            return new Result<string>((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value);
+            return Result<string>.Succeed((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value);
         }
     }
 }

@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
 using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
+using eAppointment.Backend.Domain.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using eAppointment.Backend.Domain.Helpers;
 using System.Net;
-using eAppointment.Backend.Application.Features.Patients.GetPatientProfileById;
 
 namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientById
 {
@@ -57,7 +56,7 @@ namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientById
 
             logger.LogInformation("Patient updated successfully");
 
-            return new Result<string>((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value);
+            return Result<string>.Succeed((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value);
         }
     }
 }

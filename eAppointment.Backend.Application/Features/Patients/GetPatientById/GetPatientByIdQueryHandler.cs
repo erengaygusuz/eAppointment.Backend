@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
 using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
+using eAppointment.Backend.Domain.Helpers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using eAppointment.Backend.Domain.Helpers;
-using eAppointment.Backend.Application.Features.Doctors.GetDoctorProfileById;
 using System.Net;
-using eAppointment.Backend.Application.Features.Patients.GetAllPatientsByDoctorId;
-using System.Numerics;
 
 namespace eAppointment.Backend.Application.Features.Patients.GetPatientById
 {
@@ -31,7 +28,7 @@ namespace eAppointment.Backend.Application.Features.Patients.GetPatientById
 
             var response = mapper.Map<GetPatientByIdQueryResponse>(patient);
 
-            return new Result<GetPatientByIdQueryResponse>((int)HttpStatusCode.OK, response);
+            return Result<GetPatientByIdQueryResponse>.Succeed((int)HttpStatusCode.OK, response);
         }
     }
 }

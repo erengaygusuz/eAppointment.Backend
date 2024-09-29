@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
+using eAppointment.Backend.Domain.Helpers;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using eAppointment.Backend.Domain.Helpers;
-using eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsByDoctorIdAndByStatus;
 using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Appointments.UpdateAppointmentById
@@ -40,7 +39,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.UpdateAppointme
 
             logger.LogInformation(localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value);
 
-            return new Result<string>((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value);
+            return Result<string>.Succeed((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value);
         }
     }
 }

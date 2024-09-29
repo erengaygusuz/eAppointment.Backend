@@ -42,7 +42,7 @@ namespace eAppointment.Backend.Application.Features.Patients.GetPatientProfileBy
                 response.ProfilePhotoBase64Content = base64Content;
             }
 
-            return new Result<GetPatientProfileByIdQueryResponse>((int)HttpStatusCode.OK, response);
+            return Result<GetPatientProfileByIdQueryResponse>.Succeed((int)HttpStatusCode.OK, response);
         }
     }
 }

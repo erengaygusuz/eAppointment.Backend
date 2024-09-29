@@ -43,7 +43,7 @@ namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
 
             logger.LogInformation("Admin created successfully");
 
-            return new Result<string>((int)HttpStatusCode.Created, localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value);
+            return Result<string>.Succeed((int)HttpStatusCode.Created, localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value);
         }
     }
 }

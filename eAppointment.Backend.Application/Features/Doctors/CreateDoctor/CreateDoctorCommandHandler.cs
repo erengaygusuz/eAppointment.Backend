@@ -60,7 +60,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.CreateDoctor
 
             logger.LogInformation("Doctor created successfully");
 
-            return new Result<string>((int)HttpStatusCode.Created, localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value);
+            return Result<string>.Succeed((int)HttpStatusCode.Created, localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value);
         }
     }
 }

@@ -54,7 +54,7 @@ namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
 
             GetAllUsersQueryTableResponse response = new(totalCount, allUsersWithRoles);
 
-            return new Result<GetAllUsersQueryTableResponse>((int)HttpStatusCode.OK, response);
+            return Result<GetAllUsersQueryTableResponse>.Succeed((int)HttpStatusCode.OK, response);
         }
     }
 }

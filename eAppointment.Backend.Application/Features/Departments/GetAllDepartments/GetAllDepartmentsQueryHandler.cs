@@ -23,7 +23,7 @@ namespace eAppointment.Backend.Application.Features.Departments.GetAllDepartment
 
             var response = mapper.Map<List<GetAllDepartmentsQueryResponse>>(departments);
 
-            return new Result<List<GetAllDepartmentsQueryResponse>>((int)HttpStatusCode.OK, response);
+            return Result<List<GetAllDepartmentsQueryResponse>>.Succeed((int)HttpStatusCode.OK, response);
         }
     }
 }

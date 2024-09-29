@@ -44,7 +44,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.DeleteAppointme
 
             logger.LogInformation("Appointment cancelled successfully");
 
-            return new Result<string>((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyCancelled"].Value);
+            return Result<string>.Succeed((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyCancelled"].Value);
         }
     }
 }

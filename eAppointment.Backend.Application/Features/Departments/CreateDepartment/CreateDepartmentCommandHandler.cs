@@ -17,7 +17,7 @@ namespace eAppointment.Backend.Application.Features.Departments.CreateDepartment
 
             await departmentRepository.AddAsync(department, cancellationToken);
 
-            return new Result<string>((int)HttpStatusCode.Created, "Department created successfully");
+            return Result<string>.Succeed((int)HttpStatusCode.Created, "Department created successfully");
         }
     }
 }

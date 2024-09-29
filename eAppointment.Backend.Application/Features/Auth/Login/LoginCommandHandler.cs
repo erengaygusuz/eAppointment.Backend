@@ -47,7 +47,7 @@ namespace eAppointment.Backend.Application.Features.Auth.Login
 
             logger.LogInformation("User successfully logged in");
 
-            return new Result<LoginCommandResponse>((int)HttpStatusCode.OK, response);
+            return Result<LoginCommandResponse>.Succeed((int)HttpStatusCode.OK, response);
         }
     }
 }

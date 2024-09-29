@@ -71,7 +71,7 @@ namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminProfileByI
 
             logger.LogInformation("Admin profile updated successfully");
 
-            return new Result<string>((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value);
+            return Result<string>.Succeed((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value);
         }
     }
 }

@@ -54,7 +54,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorById
 
             logger.LogInformation("Doctor updated successfully");
 
-            return new Result<string>((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value);
+            return Result<string>.Succeed((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value);
         }
     }
 }

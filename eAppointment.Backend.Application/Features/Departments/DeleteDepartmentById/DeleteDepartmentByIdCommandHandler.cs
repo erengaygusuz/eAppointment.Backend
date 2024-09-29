@@ -25,7 +25,7 @@ namespace eAppointment.Backend.Application.Features.Departments.DeleteDepartment
 
             departmentRepository.Remove(department);
 
-            return new Result<string>((int)HttpStatusCode.OK, "Department deleted successfully");
+            return Result<string>.Succeed((int)HttpStatusCode.OK, "Department deleted successfully");
         }
     }
 }

@@ -1,9 +1,8 @@
 ﻿using eAppointment.Backend.Domain.Entities;
+using eAppointment.Backend.Domain.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using eAppointment.Backend.Domain.Helpers;
-using eAppointment.Backend.Application.Features.Patients.GetPatientProfileById;
 using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Roles.GetMenuItems
@@ -51,7 +50,7 @@ namespace eAppointment.Backend.Application.Features.Roles.GetMenuItems
 
             var response = new GetMenuItemsQueryResponse(menuTreeItems);
 
-            return new Result<GetMenuItemsQueryResponse>((int)HttpStatusCode.OK, response);
+            return Result<GetMenuItemsQueryResponse>.Succeed((int)HttpStatusCode.OK, response);
         }
     }
 }

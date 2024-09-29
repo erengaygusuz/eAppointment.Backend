@@ -36,14 +36,18 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorById
                 .Matches("^((?![ ]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseSpaces"])
                 .Matches("^((?![ğĞçÇşŞüÜöÖıİ]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseTurkishCharacters"])
                 .Matches("^((?![A-Z]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseUpperLetters"])
-                .Matches("^((?![0-9]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseNumbers"])
-                .Must(UniqueUsername).WithMessage(_localization[validationMessagePath + "." + "UserName.NotUnique"]);
+                .Matches("^((?![0-9]).)*$").WithMessage(_localization[validationMessagePath + "." + "UserName.NotUseNumbers"]);
+
+            RuleFor(x => new { x.id, x.userName })
+                .Must(x => UniqueUsername(x.id, x.userName)).WithMessage(_localization[validationMessagePath + "." + "UserName.NotUnique"]);
 
             RuleFor(x => x.email)
                 .NotNull().WithMessage(_localization[validationMessagePath + "." + "Email.NotNull"])
                 .MaximumLength(150).WithMessage(_localization[validationMessagePath + "." + "Email.MaximumLength"])
-                .EmailAddress().WithMessage(_localization[validationMessagePath + "." + "Email.NotValid"])
-                .Must(UniqueEmail).WithMessage(_localization[validationMessagePath + "." + "Email.NotUnique"]);
+                .EmailAddress().WithMessage(_localization[validationMessagePath + "." + "Email.NotValid"]);
+
+            RuleFor(x => new { x.id, x.email })
+                .Must(x => UniqueEmail(x.id, x.email)).WithMessage(_localization[validationMessagePath + "." + "Email.NotUnique"]);
 
             RuleFor(x => x.phoneNumber)
                 .NotNull().WithMessage(_localization[validationMessagePath + "." + "PhoneNumber.NotNull"])
@@ -54,14 +58,18 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorById
                 .GreaterThan(0).WithMessage(_localization[validationMessagePath + "." + "DepartmentId.GreaterThanZero"]);
         }
 
-        private bool UniqueUsername(string username)
+        private bool UniqueUsername(int id, string username)
         {
             if (string.IsNullOrEmpty(username))
             {
                 return true;
             }
 
-            var user = _userManager.FindByNameAsync(username).GetAwaiter().GetResult();
+            var myUser = _userManager.Users.Where(x => x.Id == id).FirstOrDefault();
+
+            var otherUsers = _userManager.Users.Where(x => x.UserName != myUser.UserName).ToList();
+
+            var user = otherUsers.Where(x => x.UserName == username).FirstOrDefault();
 
             if (user == null)
             {
@@ -71,14 +79,18 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorById
             return false;
         }
 
-        private bool UniqueEmail(string email)
+        private bool UniqueEmail(int id, string email)
         {
             if (string.IsNullOrEmpty(email))
             {
                 return true;
             }
 
-            var user = _userManager.FindByEmailAsync(email).GetAwaiter().GetResult();
+            var myUser = _userManager.Users.Where(x => x.Id == id).FirstOrDefault();
+
+            var otherUsers = _userManager.Users.Where(x => x.Email != myUser.Email).ToList();
+
+            var user = otherUsers.Where(x => x.Email == email).FirstOrDefault();
 
             if (user == null)
             {

@@ -23,7 +23,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.GetAllDoctorsByDepar
 
             var response = mapper.Map<List<GetAllDoctorsByDepartmentIdQueryResponse>>(doctors);
 
-            return new Result<List<GetAllDoctorsByDepartmentIdQueryResponse>>((int)HttpStatusCode.OK, response);
+            return Result<List<GetAllDoctorsByDepartmentIdQueryResponse>>.Succeed((int)HttpStatusCode.OK, response);
         }
     }
 }

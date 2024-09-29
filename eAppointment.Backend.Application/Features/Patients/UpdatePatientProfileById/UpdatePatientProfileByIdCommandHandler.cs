@@ -60,7 +60,7 @@ namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientProfil
 
             patientRepository.Update(patient);
 
-            return new Result<string>((int)HttpStatusCode.OK, "Patient updated successfully");
+            return Result<string>.Succeed((int)HttpStatusCode.OK, "Patient updated successfully");
         }
     }
 }

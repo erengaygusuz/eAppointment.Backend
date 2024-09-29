@@ -29,7 +29,7 @@ namespace eAppointment.Backend.Application.Features.Departments.UpdateDepartment
 
             departmentRepository.Update(department);
 
-            return new Result<string>((int)HttpStatusCode.OK, "Department updated successfully");
+            return Result<string>.Succeed((int)HttpStatusCode.OK, "Department updated successfully");
         }
     }
 }

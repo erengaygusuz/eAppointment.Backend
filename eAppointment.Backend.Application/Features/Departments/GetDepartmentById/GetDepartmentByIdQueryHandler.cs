@@ -38,7 +38,7 @@ namespace eAppointment.Backend.Application.Features.Departments.GetDepartmentByI
                 name: department.DepartmentTranslations.FirstOrDefault(a => a.Language.Code == Thread.CurrentThread.CurrentCulture.Name).TranslationText
             );
 
-            return new Result<GetDepartmentByIdQueryResponse>((int)HttpStatusCode.OK, response);
+            return Result<GetDepartmentByIdQueryResponse>.Succeed((int)HttpStatusCode.OK, response);
         }
     }
 }

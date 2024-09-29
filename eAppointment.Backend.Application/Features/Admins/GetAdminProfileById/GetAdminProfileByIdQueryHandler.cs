@@ -45,7 +45,7 @@ namespace eAppointment.Backend.Application.Features.Admins.GetAdminProfileById
                 response.ProfilePhotoBase64Content = base64Content;
             }
 
-            return new Result<GetAdminProfileByIdQueryResponse>((int)HttpStatusCode.OK, response);
+            return Result<GetAdminProfileByIdQueryResponse>.Succeed((int)HttpStatusCode.OK, response);
         }
     }
 }
