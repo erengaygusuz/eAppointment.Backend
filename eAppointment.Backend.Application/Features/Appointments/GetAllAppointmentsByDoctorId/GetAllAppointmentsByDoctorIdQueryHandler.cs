@@ -4,6 +4,7 @@ using eAppointment.Backend.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using eAppointment.Backend.Domain.Helpers;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsByDoctorId
 {
@@ -22,7 +23,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.GetAllAppointme
 
             var response = mapper.Map<List<GetAllAppointmentsByDoctorIdQueryResponse>>(appointments);
 
-            return response;
+            return new Result<List<GetAllAppointmentsByDoctorIdQueryResponse>>((int)HttpStatusCode.OK, response);
         }
     }
 }

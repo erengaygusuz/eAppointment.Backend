@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using eAppointment.Backend.Domain.Helpers;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Appointments.CreateAppointment
 {
@@ -24,7 +25,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.CreateAppointme
 
             logger.LogInformation("Appointment created successfully");
 
-            return localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value;
+            return new Result<string>((int)HttpStatusCode.Created, localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value);
         }
     }
 }

@@ -5,6 +5,8 @@ using MediatR;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using eAppointment.Backend.Domain.Helpers;
+using eAppointment.Backend.Application.Features.Appointments.GetAllAppointmentsByDoctorIdAndByStatus;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Appointments.UpdateAppointmentById
 {
@@ -29,7 +31,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.UpdateAppointme
             {
                 logger.LogError(localization[translatedMessagePath + "." + "NotFound"].Value);
 
-                return Result<string>.Failure(localization[translatedMessagePath + "." + "NotFound"]);
+                return Result<string>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "NotFound"]);
             }
 
             mapper.Map(request, appointment);
@@ -38,7 +40,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.UpdateAppointme
 
             logger.LogInformation(localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value);
 
-            return localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value;
+            return new Result<string>((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value);
         }
     }
 }

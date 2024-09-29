@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using eAppointment.Backend.Domain.Entities;
+using eAppointment.Backend.Domain.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using eAppointment.Backend.Domain.Helpers;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminProfileById
 {
@@ -24,7 +25,7 @@ namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminProfileByI
             {
                 logger.LogError("User could not found");
 
-                return Result<string>.Failure(localization[translatedMessagePath + "." + "CouldNotFound"]);
+                return Result<string>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "CouldNotFound"]);
             }
 
             if (request.profilePhoto != null)
@@ -65,12 +66,12 @@ namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminProfileByI
             {
                 logger.LogError("User could not updated");
 
-                return Result<string>.Failure(localization[translatedMessagePath + "." + "CouldNotUpdated"]);
+                return Result<string>.Failure((int)HttpStatusCode.InternalServerError, localization[translatedMessagePath + "." + "CouldNotUpdated"]);
             }
 
             logger.LogInformation("Admin profile updated successfully");
 
-            return localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value;
+            return new Result<string>((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value);
         }
     }
 }

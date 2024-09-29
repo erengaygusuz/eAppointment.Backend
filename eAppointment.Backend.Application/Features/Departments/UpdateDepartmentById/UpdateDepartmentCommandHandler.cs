@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
-using MediatR;
 using eAppointment.Backend.Domain.Helpers;
+using MediatR;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Departments.UpdateDepartment
 {
@@ -21,14 +22,14 @@ namespace eAppointment.Backend.Application.Features.Departments.UpdateDepartment
 
             if (department is null)
             {
-                return Result<string>.Failure("Department not found");
+                return Result<string>.Failure((int)HttpStatusCode.NotFound, "Department not found");
             }
 
             mapper.Map(request, department);
 
             departmentRepository.Update(department);
 
-            return "Department updated successfully";
+            return new Result<string>((int)HttpStatusCode.OK, "Department updated successfully");
         }
     }
 }

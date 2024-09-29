@@ -1,11 +1,12 @@
 ﻿using eAppointment.Backend.Application.Services;
 using eAppointment.Backend.Domain.Entities;
+using eAppointment.Backend.Domain.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using eAppointment.Backend.Domain.Helpers;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Auth.Login
 {
@@ -28,7 +29,7 @@ namespace eAppointment.Backend.Application.Features.Auth.Login
             {
                 logger.LogError("User could not found");
 
-                return Result<LoginCommandResponse>.Failure(localization[translatedMessagePath + "." + "NotFound"]);
+                return Result<LoginCommandResponse>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "NotFound"]);
             }
 
             bool isPasswordCorrect = await userManager.CheckPasswordAsync(appUser, request.password);
@@ -37,7 +38,7 @@ namespace eAppointment.Backend.Application.Features.Auth.Login
             {
                 logger.LogError("User password is wrong");
 
-                return Result<LoginCommandResponse>.Failure(localization[translatedMessagePath + "." + "WrongPassword"]);
+                return Result<LoginCommandResponse>.Failure((int)HttpStatusCode.InternalServerError, localization[translatedMessagePath + "." + "WrongPassword"]);
             }
 
             string token = await jwtProvider.CreateTokenAsync(appUser);
@@ -46,7 +47,7 @@ namespace eAppointment.Backend.Application.Features.Auth.Login
 
             logger.LogInformation("User successfully logged in");
 
-            return Result<LoginCommandResponse>.Succeed(response);
+            return new Result<LoginCommandResponse>((int)HttpStatusCode.OK, response);
         }
     }
 }

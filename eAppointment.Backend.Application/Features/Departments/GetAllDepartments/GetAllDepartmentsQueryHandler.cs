@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
-using MediatR;
 using eAppointment.Backend.Domain.Helpers;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Departments.GetAllDepartments
 {
@@ -22,7 +23,7 @@ namespace eAppointment.Backend.Application.Features.Departments.GetAllDepartment
 
             var response = mapper.Map<List<GetAllDepartmentsQueryResponse>>(departments);
 
-            return response;
+            return new Result<List<GetAllDepartmentsQueryResponse>>((int)HttpStatusCode.OK, response);
         }
     }
 }

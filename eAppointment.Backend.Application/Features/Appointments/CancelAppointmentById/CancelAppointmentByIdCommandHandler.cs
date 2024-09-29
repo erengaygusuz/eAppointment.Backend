@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using eAppointment.Backend.Domain.Helpers;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Appointments.DeleteAppointmentById
 {
@@ -28,13 +29,13 @@ namespace eAppointment.Backend.Application.Features.Appointments.DeleteAppointme
             {
                 logger.LogError("User could not found");
 
-                return Result<string>.Failure(localization[translatedMessagePath + "." + "NotFound"]);
+                return Result<string>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "NotFound"]);
             }
 
             if (appointment.Status == AppointmentStatus.SuccessfullyCompleted ||
                appointment.Status == AppointmentStatus.NotAttended)
             {
-                return Result<string>.Failure(localization[translatedMessagePath + "." + "CouldNotCanceled"]);
+                return Result<string>.Failure((int)HttpStatusCode.InternalServerError, localization[translatedMessagePath + "." + "CouldNotCanceled"]);
             }
 
             appointment.Status = AppointmentStatus.Cancelled;
@@ -43,7 +44,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.DeleteAppointme
 
             logger.LogInformation("Appointment cancelled successfully");
 
-            return localization[translatedMessagePath + "." + "SuccessfullyCancelled"].Value;
+            return new Result<string>((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyCancelled"].Value);
         }
     }
 }

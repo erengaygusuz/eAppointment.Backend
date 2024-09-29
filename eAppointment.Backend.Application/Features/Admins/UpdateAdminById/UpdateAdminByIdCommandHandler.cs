@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using eAppointment.Backend.Domain.Helpers;
+using eAppointment.Backend.Application.Features.Roles.GetMenuItems;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminById
 {
@@ -24,7 +26,7 @@ namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminById
             {
                 logger.LogError("User could not found");
 
-                return Result<string>.Failure(localization[translatedMessagePath + "." + "CouldNotFound"]);
+                return Result<string>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "CouldNotFound"]);
             }
 
             mapper.Map(request, user);
@@ -35,12 +37,12 @@ namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminById
             {
                 logger.LogError("User could not updated");
 
-                return Result<string>.Failure(localization[translatedMessagePath + "." + "CouldNotUpdated"]);
+                return Result<string>.Failure((int)HttpStatusCode.InternalServerError, localization[translatedMessagePath + "." + "CouldNotUpdated"]);
             }
 
             logger.LogInformation("Admin updated successfully");
 
-            return localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value;
+            return new Result<string>((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value);
         }
     }
 }

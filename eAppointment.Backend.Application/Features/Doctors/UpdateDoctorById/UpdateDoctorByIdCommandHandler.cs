@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
+using eAppointment.Backend.Domain.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using eAppointment.Backend.Domain.Helpers;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorById
 {
@@ -26,7 +27,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorById
             {
                 logger.LogError("User could not found");
 
-                return Result<string>.Failure(localization[translatedMessagePath + "." + "CouldNotFound"]);
+                return Result<string>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "CouldNotFound"]);
             }
 
             mapper.Map(request, user);
@@ -37,10 +38,15 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorById
             {
                 logger.LogError("User could not updated");
 
-                return Result<string>.Failure(localization[translatedMessagePath + "." + "CouldNotUpdated"]);
+                return Result<string>.Failure((int)HttpStatusCode.InternalServerError, localization[translatedMessagePath + "." + "CouldNotUpdated"]);
             }
 
             Doctor doctor = await doctorRepository.GetAsync(x => x.UserId == request.id);
+
+            if (doctor == null)
+            {
+                return Result<string>.Failure((int)HttpStatusCode.NotFound, "Doctor not found");
+            }
 
             doctor.DepartmentId = request.departmentId;
 
@@ -48,7 +54,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorById
 
             logger.LogInformation("Doctor updated successfully");
 
-            return localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value;
+            return new Result<string>((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value);
         }
     }
 }

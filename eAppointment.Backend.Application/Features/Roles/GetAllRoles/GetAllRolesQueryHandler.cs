@@ -3,6 +3,8 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using eAppointment.Backend.Domain.Helpers;
+using eAppointment.Backend.Application.Features.Patients.GetAllPatientsByDoctorId;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Roles.GetAllRoles
 {
@@ -22,7 +24,7 @@ namespace eAppointment.Backend.Application.Features.Roles.GetAllRoles
                         name: s.Name
                     )).ToList();
 
-            return response;
+            return new Result<List<GetAllRolesQueryResponse>>((int)HttpStatusCode.OK, response);
         }
     }
 }

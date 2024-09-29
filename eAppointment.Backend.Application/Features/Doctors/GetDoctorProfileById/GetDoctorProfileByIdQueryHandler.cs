@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
+using eAppointment.Backend.Domain.Helpers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using eAppointment.Backend.Domain.Helpers;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Doctors.GetDoctorProfileById
 {
@@ -19,6 +20,11 @@ namespace eAppointment.Backend.Application.Features.Doctors.GetDoctorProfileById
                include: x => x.Include(u => u.User).Include(d => d.Department),
                orderBy: x => x.OrderBy(p => p.Department!.DepartmentKey).ThenBy(p => p.User!.FirstName),
                cancellationToken);
+
+            if (doctor == null)
+            {
+                return Result<GetDoctorProfileByIdQueryResponse>.Failure((int)HttpStatusCode.NotFound, "Doctor not found");
+            }
 
             var response = mapper.Map<GetDoctorProfileByIdQueryResponse>(doctor);
 
@@ -36,7 +42,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.GetDoctorProfileById
                 response.ProfilePhotoBase64Content = base64Content;
             }
 
-            return response;
+            return new Result<GetDoctorProfileByIdQueryResponse>((int)HttpStatusCode.OK, response);
         }
     }
 }

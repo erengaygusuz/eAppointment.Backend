@@ -4,6 +4,7 @@ using eAppointment.Backend.Domain.Entities;
 using MediatR;
 using eAppointment.Backend.Domain.Helpers;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorProfileById
 {
@@ -22,7 +23,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorProfileB
 
             if (doctor is null)
             {
-                return Result<string>.Failure("Doctor not found");
+                return Result<string>.Failure((int)HttpStatusCode.NotFound, "Doctor not found");
             }
 
             if (request.profilePhoto != null)
@@ -59,7 +60,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorProfileB
 
             doctorRepository.Update(doctor);
 
-            return "Doctor updated successfully";
+            return new Result<string>((int)HttpStatusCode.OK, "Doctor updated successfully");
         }
     }
 }

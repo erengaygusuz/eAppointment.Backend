@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace eAppointment.Backend.Domain.Helpers
 {
@@ -10,10 +9,11 @@ namespace eAppointment.Backend.Domain.Helpers
         public bool IsSuccessfull { get; set; } = true;
 
         [JsonIgnore]
-        public int StatusCode { get; set; } = (int)HttpStatusCode.OK;
+        public int StatusCode { get; set; }
 
-        public Result(T data)
+        public Result(int statusCode, T data)
         {
+            StatusCode = statusCode;
             Data = data;
         }
 
@@ -31,9 +31,9 @@ namespace eAppointment.Backend.Domain.Helpers
             ErrorMessages = new() { errorMessage };
         }
 
-        public static implicit operator Result<T>(T data)
+        public static implicit operator Result<T>((int statusCode, T data) parameters)
         {
-            return new(data);
+            return new(parameters.statusCode, parameters.data);
         }
 
         public static implicit operator Result<T>((int statusCode, List<string> errorMessages) parameters)
@@ -47,9 +47,9 @@ namespace eAppointment.Backend.Domain.Helpers
         }
 
 
-        public static Result<T> Succeed(T data)
+        public static Result<T> Succeed(int statusCode, T data)
         {
-            return new(data);
+            return new(statusCode, data);
         }
 
         public static Result<T> Failure(int statusCode, List<string> errorMessages)

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
 using eAppointment.Backend.Domain.Helpers;
+using MediatR;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Counties.GetAllCountiesByCityId
 {
@@ -22,7 +22,7 @@ namespace eAppointment.Backend.Application.Features.Counties.GetAllCountiesByCit
 
             var response = mapper.Map<List<GetAllCountiesByCityIdQueryResponse>>(counties);
 
-            return response;
+            return new Result<List<GetAllCountiesByCityIdQueryResponse>>((int)HttpStatusCode.OK, response);
         }
     }
 }

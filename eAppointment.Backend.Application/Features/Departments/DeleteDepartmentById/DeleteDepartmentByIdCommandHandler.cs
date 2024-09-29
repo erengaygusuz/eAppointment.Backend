@@ -2,6 +2,7 @@
 using eAppointment.Backend.Domain.Entities;
 using MediatR;
 using eAppointment.Backend.Domain.Helpers;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Departments.DeleteDepartmentById
 {
@@ -19,12 +20,12 @@ namespace eAppointment.Backend.Application.Features.Departments.DeleteDepartment
 
             if (department == null)
             {
-                return Result<string>.Failure("Department not found");
+                return Result<string>.Failure((int)HttpStatusCode.NotFound, "Department not found");
             }
 
             departmentRepository.Remove(department);
 
-            return "Department deleted successfully";
+            return new Result<string>((int)HttpStatusCode.OK, "Department deleted successfully");
         }
     }
 }

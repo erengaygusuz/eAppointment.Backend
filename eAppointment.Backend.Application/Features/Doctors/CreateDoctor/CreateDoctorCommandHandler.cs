@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using eAppointment.Backend.Domain.Helpers;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Doctors.CreateDoctor
 {
@@ -28,18 +29,25 @@ namespace eAppointment.Backend.Application.Features.Doctors.CreateDoctor
             {
                 logger.LogError("User could not created");
 
-                return Result<string>.Failure(localization[translatedMessagePath + "." + "CannotCreated"]);
+                return Result<string>.Failure((int)HttpStatusCode.InternalServerError, localization[translatedMessagePath + "." + "CannotCreated"]);
             }
 
             var addedUser = await userManager.FindByEmailAsync(user.Email!);
 
-            var roleResult = await userManager.AddToRoleAsync(addedUser!, "Doctor");
+            if (addedUser is null)
+            {
+                logger.LogError("User could not found");
+
+                return Result<string>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "CouldNotFound"]);
+            }
+
+            var roleResult = await userManager.AddToRoleAsync(addedUser!, Domain.Constants.Roles.Doctor);
 
             if (!roleResult.Succeeded)
             {
                 logger.LogError("Role could not add to user");
 
-                return Result<string>.Failure(localization[translatedMessagePath + "." + "RoleCannotAdded"]);
+                return Result<string>.Failure((int)HttpStatusCode.InternalServerError, localization[translatedMessagePath + "." + "RoleCannotAdded"]);
             }
 
             Doctor doctor = new Doctor()
@@ -52,7 +60,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.CreateDoctor
 
             logger.LogInformation("Doctor created successfully");
 
-            return localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value;
+            return new Result<string>((int)HttpStatusCode.Created, localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value);
         }
     }
 }

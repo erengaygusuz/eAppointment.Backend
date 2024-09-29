@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using eAppointment.Backend.Domain.Helpers;
+using System.Net;
+using eAppointment.Backend.Application.Features.Patients.GetPatientProfileById;
 
 namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientById
 {
@@ -42,6 +44,11 @@ namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientById
 
             Patient patient = await patientRepository.GetAsync(x => x.UserId == request.id);
 
+            if (patient == null)
+            {
+                return Result<string>.Failure((int)HttpStatusCode.NotFound, "Patient not found");
+            }
+
             patient.IdentityNumber = request.identityNumber;
             patient.FullAddress = request.fullAddress;
             patient.CountyId = request.countyId;
@@ -50,7 +57,7 @@ namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientById
 
             logger.LogInformation("Patient updated successfully");
 
-            return localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value;
+            return new Result<string>((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value);
         }
     }
 }

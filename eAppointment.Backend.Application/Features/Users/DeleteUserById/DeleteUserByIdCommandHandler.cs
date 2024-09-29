@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using eAppointment.Backend.Domain.Helpers;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Users.DeleteUserById
 {
@@ -22,7 +23,7 @@ namespace eAppointment.Backend.Application.Features.Users.DeleteUserById
             {
                 logger.LogError("User could not found");
 
-                return Result<string>.Failure(localization[translatedMessagePath + "." + "CouldNotFound"]);
+                return Result<string>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "CouldNotFound"]);
             }
 
             IdentityResult result = await userManager.DeleteAsync(user);
@@ -31,12 +32,12 @@ namespace eAppointment.Backend.Application.Features.Users.DeleteUserById
             {
                 logger.LogError("User could not deleted");
 
-                return Result<string>.Failure(result.Errors.Select(s => s.Description).ToList());
+                return Result<string>.Failure((int)HttpStatusCode.InternalServerError, result.Errors.Select(s => s.Description).ToList());
             }
 
             logger.LogInformation("User deleted successfully");
 
-            return localization[translatedMessagePath + "." + "SuccessfullyDeleted"].Value;
+            return new Result<string>((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyDeleted"].Value);
         }
     }
 }

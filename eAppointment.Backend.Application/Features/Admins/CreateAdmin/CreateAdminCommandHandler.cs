@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using eAppointment.Backend.Domain.Entities;
+using eAppointment.Backend.Domain.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using eAppointment.Backend.Domain.Helpers;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
 {
@@ -26,23 +27,23 @@ namespace eAppointment.Backend.Application.Features.Admins.CreateAdmin
             {
                 logger.LogError("User could not created");
 
-                return Result<string>.Failure(500, localization[translatedMessagePath + "." + "CannotCreated"]);
+                return Result<string>.Failure((int)HttpStatusCode.InternalServerError, localization[translatedMessagePath + "." + "CannotCreated"]);
             }
 
             var addedUser = await userManager.FindByEmailAsync(user.Email!);
 
-            var roleResult = await userManager.AddToRoleAsync(addedUser!, "Admin");
+            var roleResult = await userManager.AddToRoleAsync(addedUser!, Domain.Constants.Roles.Admin);
 
             if (!roleResult.Succeeded)
             {
                 logger.LogError("Role could not add to user");
 
-                return Result<string>.Failure(500, localization[translatedMessagePath + "." + "RoleCannotAdded"]);
+                return Result<string>.Failure((int)HttpStatusCode.InternalServerError, localization[translatedMessagePath + "." + "RoleCannotAdded"]);
             }
 
             logger.LogInformation("Admin created successfully");
 
-            return Result<string>.Succeed(localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value);
+            return new Result<string>((int)HttpStatusCode.Created, localization[translatedMessagePath + "." + "SuccessfullyCreated"].Value);
         }
     }
 }

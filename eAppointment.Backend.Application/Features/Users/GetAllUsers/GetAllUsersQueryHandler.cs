@@ -4,6 +4,7 @@ using eAppointment.Backend.Domain.Extensions;
 using eAppointment.Backend.Domain.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
 {
@@ -53,7 +54,7 @@ namespace eAppointment.Backend.Application.Features.Users.GetAllUsers
 
             GetAllUsersQueryTableResponse response = new(totalCount, allUsersWithRoles);
 
-            return Result<GetAllUsersQueryTableResponse>.Succeed(response);
+            return new Result<GetAllUsersQueryTableResponse>((int)HttpStatusCode.OK, response);
         }
     }
 }

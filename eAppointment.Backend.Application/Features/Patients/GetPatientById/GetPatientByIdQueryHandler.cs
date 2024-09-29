@@ -4,6 +4,10 @@ using eAppointment.Backend.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using eAppointment.Backend.Domain.Helpers;
+using eAppointment.Backend.Application.Features.Doctors.GetDoctorProfileById;
+using System.Net;
+using eAppointment.Backend.Application.Features.Patients.GetAllPatientsByDoctorId;
+using System.Numerics;
 
 namespace eAppointment.Backend.Application.Features.Patients.GetPatientById
 {
@@ -20,9 +24,14 @@ namespace eAppointment.Backend.Application.Features.Patients.GetPatientById
                orderBy: x => x.OrderBy(p => p.User.FirstName),
                cancellationToken);
 
+            if (patient == null)
+            {
+                return Result<GetPatientByIdQueryResponse>.Failure((int)HttpStatusCode.NotFound, "Patient not found");
+            }
+
             var response = mapper.Map<GetPatientByIdQueryResponse>(patient);
 
-            return response;
+            return new Result<GetPatientByIdQueryResponse>((int)HttpStatusCode.OK, response);
         }
     }
 }

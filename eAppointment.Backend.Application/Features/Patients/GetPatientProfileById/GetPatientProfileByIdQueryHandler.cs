@@ -4,6 +4,7 @@ using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Domain.Helpers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Patients.GetPatientProfileById
 {
@@ -19,6 +20,11 @@ namespace eAppointment.Backend.Application.Features.Patients.GetPatientProfileBy
                include: x => x.Include(p => p.User).Include(c => c.County),
                orderBy: x => x.OrderBy(p => p.User.FirstName),
                cancellationToken);
+
+            if (patient == null)
+            {
+                return Result<GetPatientProfileByIdQueryResponse>.Failure((int)HttpStatusCode.NotFound, "Patient not found");
+            }
 
             var response = mapper.Map<GetPatientProfileByIdQueryResponse>(patient);
 
@@ -36,7 +42,7 @@ namespace eAppointment.Backend.Application.Features.Patients.GetPatientProfileBy
                 response.ProfilePhotoBase64Content = base64Content;
             }
 
-            return response;
+            return new Result<GetPatientProfileByIdQueryResponse>((int)HttpStatusCode.OK, response);
         }
     }
 }

@@ -3,6 +3,7 @@ using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
 using MediatR;
 using eAppointment.Backend.Domain.Helpers;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Departments.CreateDepartment
 {
@@ -16,7 +17,7 @@ namespace eAppointment.Backend.Application.Features.Departments.CreateDepartment
 
             await departmentRepository.AddAsync(department, cancellationToken);
 
-            return "Department created successfully";
+            return new Result<string>((int)HttpStatusCode.Created, "Department created successfully");
         }
     }
 }

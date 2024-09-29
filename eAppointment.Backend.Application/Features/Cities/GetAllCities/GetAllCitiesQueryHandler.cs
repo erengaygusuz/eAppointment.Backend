@@ -3,6 +3,7 @@ using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
 using MediatR;
 using eAppointment.Backend.Domain.Helpers;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Cities.GetAllCities
 {
@@ -21,7 +22,7 @@ namespace eAppointment.Backend.Application.Features.Cities.GetAllCities
 
             var response = mapper.Map<List<GetAllCitiesQueryResponse>>(cities);
 
-            return response;
+            return new Result<List<GetAllCitiesQueryResponse>>((int)HttpStatusCode.OK, response);
         }
     }
 }

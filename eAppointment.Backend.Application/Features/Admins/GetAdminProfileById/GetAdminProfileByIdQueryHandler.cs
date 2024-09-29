@@ -4,16 +4,30 @@ using eAppointment.Backend.Domain.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
+using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Admins.GetAdminProfileById
 {
     internal sealed class GetAdminProfileByIdQueryHandler(
         UserManager<User> userManager,
-        IMapper mapper) : IRequestHandler<GetAdminProfileByIdQuery, Result<GetAdminProfileByIdQueryResponse>>
+        IMapper mapper,
+        IStringLocalizer<object> localization,
+        ILogger<GetAdminProfileByIdQueryHandler> logger) : IRequestHandler<GetAdminProfileByIdQuery, Result<GetAdminProfileByIdQueryResponse>>
     {
         public async Task<Result<GetAdminProfileByIdQueryResponse>> Handle(GetAdminProfileByIdQuery request, CancellationToken cancellationToken)
         {
+            var translatedMessagePath = "Features.Admins.GetAdminProfileById.Others";
+
             User? user = await userManager.Users.Where(x => x.Id == request.id).FirstOrDefaultAsync(cancellationToken);
+
+            if (user is null)
+            {
+                logger.LogError("User could not found");
+
+                return Result<GetAdminProfileByIdQueryResponse>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "CouldNotFound"]);
+            }
 
             var response = mapper.Map<GetAdminProfileByIdQueryResponse>(user);
 
@@ -31,7 +45,7 @@ namespace eAppointment.Backend.Application.Features.Admins.GetAdminProfileById
                 response.ProfilePhotoBase64Content = base64Content;
             }
 
-            return response;
+            return new Result<GetAdminProfileByIdQueryResponse>((int)HttpStatusCode.OK, response);
         }
     }
 }
