@@ -14,7 +14,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginCommand request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Login([FromBody] LoginCommand request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
 

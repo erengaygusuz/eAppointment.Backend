@@ -15,7 +15,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.GetDoctorById
         public async Task<Result<GetDoctorByIdQueryResponse>> Handle(GetDoctorByIdQuery request, CancellationToken cancellationToken)
         {
             Doctor? doctor = await doctorRepository.GetAsync(
-               expression: p => p.Id == request.id,
+               expression: p => p.UserId == request.id,
                trackChanges: false,
                include: x => x.Include(u => u.User).Include(d => d.Department),
                orderBy: x => x.OrderBy(p => p.Department!.DepartmentKey).ThenBy(p => p.User!.FirstName),

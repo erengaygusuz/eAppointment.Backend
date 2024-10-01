@@ -14,9 +14,11 @@ namespace eAppointment.Backend.WebAPI.Controllers
         }
 
         [Authorize(Policy = Permissions.GetAllCountiesByCityId)]
-        [HttpPost]
-        public async Task<IActionResult> GetAll(GetAllCountiesByCityIdQuery request, CancellationToken cancellationToken)
+        [HttpGet]
+        public async Task<IActionResult> GetAllByCityId([FromQuery(Name = "cityId")] int cityId, CancellationToken cancellationToken)
         {
+            var request = new GetAllCountiesByCityIdQuery(cityId);
+
             var response = await _mediator.Send(request, cancellationToken);
 
             return StatusCode(response.StatusCode, response);

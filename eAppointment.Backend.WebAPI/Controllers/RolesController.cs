@@ -15,18 +15,22 @@ namespace eAppointment.Backend.WebAPI.Controllers
         }
 
         [Authorize(Policy = Permissions.GetAllRoles)]
-        [HttpPost]
-        public async Task<IActionResult> GetAll(GetAllRolesQuery request, CancellationToken cancellationToken)
+        [HttpGet]
+        public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         {
+            var request = new GetAllRolesQuery();
+
             var response = await _mediator.Send(request, cancellationToken);
 
             return StatusCode(response.StatusCode, response);
         }
 
         [Authorize(Policy = Permissions.GetMenuItems)]
-        [HttpPost]
-        public async Task<IActionResult> GetMenuItems(GetMenuItemsQuery request, CancellationToken cancellationToken)
+        [HttpGet]
+        public async Task<IActionResult> GetMenuItems([FromQuery(Name = "roleName")] string roleName, CancellationToken cancellationToken)
         {
+            var request = new GetMenuItemsQuery(roleName);
+
             var response = await _mediator.Send(request, cancellationToken);
 
             return StatusCode(response.StatusCode, response);

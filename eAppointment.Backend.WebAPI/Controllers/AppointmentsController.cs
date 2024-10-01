@@ -22,7 +22,7 @@ namespace eAppointment.Backend.WebAPI.Controllers
 
         [Authorize(Policy = Permissions.CreateAppointment)]
         [HttpPost]
-        public async Task<IActionResult> Create(CreateAppointmentCommand request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Create([FromBody] CreateAppointmentCommand request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
 
@@ -30,44 +30,52 @@ namespace eAppointment.Backend.WebAPI.Controllers
         }
 
         [Authorize(Policy = Permissions.GetAllAppointmentsByDoctorId)]
-        [HttpPost]
-        public async Task<IActionResult> GetAllByDoctorIdAndByStatus(GetAllAppointmentsByDoctorIdAndByStatusQuery request, CancellationToken cancellationToken)
+        [HttpGet]
+        public async Task<IActionResult> GetAllByDoctorIdAndByStatus([FromQuery(Name = "doctorId")] int doctorId, [FromQuery(Name = "status")] int status, CancellationToken cancellationToken)
         {
+            var request = new GetAllAppointmentsByDoctorIdAndByStatusQuery(doctorId, status);
+
             var response = await _mediator.Send(request, cancellationToken);
 
             return StatusCode(response.StatusCode, response);
         }
 
         [Authorize(Policy = Permissions.GetAllAppointmentsByDoctorId)]
-        [HttpPost]
-        public async Task<IActionResult> GetAllByDoctorId(GetAllAppointmentsByDoctorIdQuery request, CancellationToken cancellationToken)
+        [HttpGet]
+        public async Task<IActionResult> GetAllByDoctorId([FromQuery(Name = "doctorId")] int doctorId, CancellationToken cancellationToken)
         {
+            var request = new GetAllAppointmentsByDoctorIdQuery(doctorId);
+
             var response = await _mediator.Send(request, cancellationToken);
 
             return StatusCode(response.StatusCode, response);
         }
 
         [Authorize(Policy = Permissions.GetAllAppointmentsByPatientId)]
-        [HttpPost]
-        public async Task<IActionResult> GetAllByPatientIdAndByStatus(GetAllAppointmentsByPatientIdAndByStatusQuery request, CancellationToken cancellationToken)
+        [HttpGet]
+        public async Task<IActionResult> GetAllByPatientIdAndByStatus([FromQuery(Name = "patientId")] int patientId, [FromQuery(Name = "status")] int status, CancellationToken cancellationToken)
         {
+            var request = new GetAllAppointmentsByPatientIdAndByStatusQuery(patientId, status);
+
             var response = await _mediator.Send(request, cancellationToken);
 
             return StatusCode(response.StatusCode, response);
         }
 
         [Authorize(Policy = Permissions.GetAllAppointmentsByPatientId)]
-        [HttpPost]
-        public async Task<IActionResult> GetAllByPatientId(GetAllAppointmentsByPatientIdQuery request, CancellationToken cancellationToken)
+        [HttpGet]
+        public async Task<IActionResult> GetAllByPatientId([FromQuery(Name = "patientId")] int patientId, CancellationToken cancellationToken)
         {
+            var request = new GetAllAppointmentsByPatientIdQuery(patientId);
+
             var response = await _mediator.Send(request, cancellationToken);
 
             return StatusCode(response.StatusCode, response);
         }
 
         [Authorize(Policy = Permissions.UpdateAppointmentById)]
-        [HttpPost]
-        public async Task<IActionResult> UpdateById(UpdateAppointmentByIdCommand request, CancellationToken cancellationToken)
+        [HttpPut]
+        public async Task<IActionResult> UpdateById([FromBody] UpdateAppointmentByIdCommand request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
 
@@ -75,8 +83,8 @@ namespace eAppointment.Backend.WebAPI.Controllers
         }
 
         [Authorize(Policy = Permissions.UpdateAppointmentStatusById)]
-        [HttpPost]
-        public async Task<IActionResult> UpdateStatusById(UpdateAppointmentStatusByIdCommand request, CancellationToken cancellationToken)
+        [HttpPut]
+        public async Task<IActionResult> UpdateStatusById([FromBody] UpdateAppointmentStatusByIdCommand request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
 
@@ -84,8 +92,8 @@ namespace eAppointment.Backend.WebAPI.Controllers
         }
 
         [Authorize(Policy = Permissions.CancelAppointmentById)]
-        [HttpPost]
-        public async Task<IActionResult> CancelById(CancelAppointmentByIdCommand request, CancellationToken cancellationToken)
+        [HttpPut]
+        public async Task<IActionResult> CancelById([FromBody] CancelAppointmentByIdCommand request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
 
