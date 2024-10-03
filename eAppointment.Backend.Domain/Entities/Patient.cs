@@ -1,9 +1,7 @@
 ﻿namespace eAppointment.Backend.Domain.Entities
 {
-    public sealed class Patient
+    public sealed class Patient : BaseEntity
     {
-        public int Id { get; set; }
-
         public int UserId { get; set; }
 
         public User User { get; set; }
@@ -15,10 +13,6 @@
         public County County { get; set; }
 
         public string? FullAddress { get; set; } = string.Empty;
-
-        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
-
-        public DateTime? ModifiedDate { get; set; }
 
         public ICollection<Appointment>? Appointments { get; set; }
     }

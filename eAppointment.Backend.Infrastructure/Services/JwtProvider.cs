@@ -2,6 +2,7 @@
 using eAppointment.Backend.Domain.Constants;
 using eAppointment.Backend.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Localization;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -15,11 +16,9 @@ namespace eAppointment.Backend.Infrastructure.Services
     {
         public async Task<string> CreateTokenAsync(User user)
         {
-            var userRoles = await userManager.GetRolesAsync(user);
+            var userRole = (await userManager.GetRolesAsync(user))[0];
 
-            var stringRoles = userRoles!.Select(x => x.ToLower()).ToList();
-
-            var allPermissions = Permissions.GetAllPermissions(userRoles[0]);
+            var allPermissions = Permissions.GetAllPermissions(userRole);
 
             List<Claim> claims = new();
 
@@ -32,7 +31,7 @@ namespace eAppointment.Backend.Infrastructure.Services
                     new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
                     new Claim("UserName", user.UserName ?? string.Empty),
                     new Claim("PatientId", user.Patient!.Id.ToString()),
-                    new Claim(ClaimTypes.Role, JsonSerializer.Serialize(userRoles)),
+                    new Claim(ClaimTypes.Role, JsonSerializer.Serialize(userRole)),
                     new Claim("Permissions", JsonSerializer.Serialize(allPermissions))
                 });
             }
@@ -46,7 +45,7 @@ namespace eAppointment.Backend.Infrastructure.Services
                     new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
                     new Claim("UserName", user.UserName ?? string.Empty),
                     new Claim("DoctorId", user.Doctor!.Id.ToString()),
-                    new Claim(ClaimTypes.Role, JsonSerializer.Serialize(userRoles)),
+                    new Claim(ClaimTypes.Role, JsonSerializer.Serialize(userRole)),
                     new Claim("Permissions", JsonSerializer.Serialize(allPermissions))
                 });
             }
@@ -59,7 +58,7 @@ namespace eAppointment.Backend.Infrastructure.Services
                     new Claim(ClaimTypes.Name, user.FirstName + " " + user.LastName),
                     new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
                     new Claim("UserName", user.UserName ?? string.Empty),
-                    new Claim(ClaimTypes.Role, JsonSerializer.Serialize(userRoles)),
+                    new Claim(ClaimTypes.Role, JsonSerializer.Serialize(userRole)),
                     new Claim("Permissions", JsonSerializer.Serialize(allPermissions))
                 });
             }

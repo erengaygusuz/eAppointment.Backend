@@ -44,6 +44,8 @@ namespace eAppointment.Backend.Infrastructure.Context
 
         public async override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
+            UpdateChangeTracker();
+
             OnBeforeSaveChanges();
 
             return await base.SaveChangesAsync(cancellationToken);
@@ -57,11 +59,6 @@ namespace eAppointment.Backend.Infrastructure.Context
 
             foreach (var entry in ChangeTracker.Entries())
             {
-                //if (entry.Entity is ErrorLog || entry.Entity is AuditLog)
-                //{
-                //    continue;
-                //}
-
                 if (entry.Entity is AuditLog || entry.State == EntityState.Detached || entry.State == EntityState.Unchanged)
                 {
                     continue;
@@ -126,6 +123,56 @@ namespace eAppointment.Backend.Infrastructure.Context
             {
                 AuditLogs.AddAsync(auditEntry.ToAuditLog());
             }
+        }
+
+        public void UpdateChangeTracker()
+        {
+            foreach (var item in ChangeTracker.Entries())
+            {
+                BaseEntity entityReference = null;
+                User userReference = null;
+                Role roleReference = null;
+
+                if (item.Entity is BaseEntity)
+                {
+                    entityReference = (BaseEntity)item.Entity;
+                }
+
+                else if (item.Entity is User)
+                {
+                    userReference = (User)item.Entity;
+                }
+
+                else if (item.Entity is Role)
+                {
+                    roleReference = (Role)item.Entity;
+                }
+
+                switch (item.State)
+                {
+                    case EntityState.Added:
+                        {
+                            if (entityReference != null || userReference != null || roleReference != null)
+                            {
+                                Entry(entityReference).Property(x => x.ModifiedDate).IsModified = false;
+                                entityReference.CreatedDate = DateTime.Now;
+                            }
+
+                            break;
+                        }
+                    case EntityState.Modified:
+                        {
+                            if (entityReference != null || userReference != null || roleReference != null)
+                            {
+                                Entry(entityReference).Property(x => x.CreatedDate).IsModified = false;
+                                entityReference.ModifiedDate = DateTime.Now;
+                            }
+
+                            break;
+                        }
+                }
+            }
+
         }
     }
 }
