@@ -26,7 +26,7 @@ namespace eAppointment.Backend.Application.Features.Admins.GetAdminProfileById
             {
                 logger.LogError("User could not found");
 
-                return Result<GetAdminProfileByIdQueryResponse>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "CouldNotFound"]);
+                return Result<GetAdminProfileByIdQueryResponse>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "AdminCouldNotFound"]);
             }
 
             var response = mapper.Map<GetAdminProfileByIdQueryResponse>(user);
@@ -35,14 +35,23 @@ namespace eAppointment.Backend.Application.Features.Admins.GetAdminProfileById
 
             var filePath = $"{Environment.GetEnvironmentVariable("User__Profile__Image__Folder__Path")}" + user.ProfilePhotoPath;
 
-            if (File.Exists(filePath))
+            if(!string.IsNullOrEmpty(user.ProfilePhotoPath))
             {
-                var fileBytes = File.ReadAllBytes(filePath);
+                if (File.Exists(filePath))
+                {
+                    var fileBytes = File.ReadAllBytes(filePath);
 
-                var base64Content = Convert.ToBase64String(fileBytes);
+                    var base64Content = Convert.ToBase64String(fileBytes);
 
-                response.ProfilePhotoContentType = "image/png";
-                response.ProfilePhotoBase64Content = base64Content;
+                    response.ProfilePhotoContentType = "image/png";
+                    response.ProfilePhotoBase64Content = base64Content;
+                }
+                else
+                {
+                    logger.LogError("Profile photo could not found");
+
+                    return Result<GetAdminProfileByIdQueryResponse>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "AdminProfilePhotoCouldNotFound"]);
+                }
             }
 
             return Result<GetAdminProfileByIdQueryResponse>.Succeed((int)HttpStatusCode.OK, response);

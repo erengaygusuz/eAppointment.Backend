@@ -43,9 +43,20 @@
           }
         },
         "Others": {
-          "CannotCreated": "User could not created",
-          "RoleCannotAdded": "Role could not add to user",
-          "SuccessfullyCreated": "Admin created successfully"
+          "AdminCouldNotCreated": "Admin could not created",
+          "AdminRoleCouldNotAdded": "Admin role could not added to user",
+          "AdminSuccessfullyCreated": "Admin created successfully"
+        }
+      },
+      "GetAdminById": {
+        "Others": {
+          "AdminCouldNotFound": "Admin user could not found"
+        }
+      },
+      "GetAdminProfileById": {
+        "Others": {
+          "AdminCouldNotFound": "Admin user could not found",
+          "AdminProfilePhotoCouldNotFound": "Admin user profile could not found"
         }
       },
       "UpdateAdmin": {
@@ -85,9 +96,9 @@
           }
         },
         "Others": {
-          "CouldNotFound": "User could not found",
-          "CouldNotUpdated": "User could not updated",
-          "SuccessfullyUpdated": "User updated successfully"
+          "AdminCouldNotFound": "Admin user could not found",
+          "AdminCouldNotUpdated": "Admin user could not updated",
+          "AdminSuccessfullyUpdated": "Admin user updated successfully"
         }
       },
       "UpdateAdminProfile": {
@@ -111,9 +122,9 @@
           }
         },
         "Others": {
-          "CouldNotFound": "User could not found",
-          "CouldNotUpdated": "User could not updated",
-          "SuccessfullyUpdated": "User updated successfully"
+          "AdminCouldNotFound": "Admin user could not found",
+          "AdminCouldNotUpdated": "Admin user could not updated",
+          "AdminSuccessfullyUpdated": "Admin user updated successfully"
         }
       }
     },

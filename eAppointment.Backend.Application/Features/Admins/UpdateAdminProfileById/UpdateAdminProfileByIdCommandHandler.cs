@@ -25,7 +25,7 @@ namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminProfileByI
             {
                 logger.LogError("User could not found");
 
-                return Result<string>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "CouldNotFound"]);
+                return Result<string>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "AdminCouldNotFound"]);
             }
 
             if (request.profilePhoto != null)
@@ -66,12 +66,12 @@ namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminProfileByI
             {
                 logger.LogError("User could not updated");
 
-                return Result<string>.Failure((int)HttpStatusCode.InternalServerError, localization[translatedMessagePath + "." + "CouldNotUpdated"]);
+                return Result<string>.Failure((int)HttpStatusCode.InternalServerError, localization[translatedMessagePath + "." + "AdminCouldNotUpdated"]);
             }
 
             logger.LogInformation("Admin profile updated successfully");
 
-            return Result<string>.Succeed((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value);
+            return Result<string>.Succeed((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "AdminSuccessfullyUpdated"].Value);
         }
     }
 }

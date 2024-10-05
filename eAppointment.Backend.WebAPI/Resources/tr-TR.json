@@ -43,9 +43,20 @@
           }
         },
         "Others": {
-          "CannotCreated": "Kullanıcı oluşturulamadı",
-          "RoleCannotAdded": "Rol kullanıcıya eklenemedi",
-          "SuccessfullyCreated": "Kullanıcı başarılı bir şekilde oluşturuldu"
+          "AdminCouldNotCreated": "Yönetici kullanıcı oluşturulamadı",
+          "AdminRoleCouldNotAdded": "Yönetici rol kullanıcıya eklenemedi",
+          "AdminSuccessfullyCreated": "Yönetici kullanıcı başarılı bir şekilde oluşturuldu"
+        }
+      },
+      "GetAdminById": {
+        "Others": {
+          "AdminCouldNotFound": "Yönetici kullanıcı bulunamadı"
+        }
+      },
+      "GetAdminProfileById": {
+        "Others": {
+          "AdminCouldNotFound": "Yönetici kullanıcı bulunamadı",
+          "AdminProfilePhotoCouldNotFound": "Yönetici profil fotoğrafı bulunamadı"
         }
       },
       "UpdateAdmin": {
@@ -85,9 +96,9 @@
           }
         },
         "Others": {
-          "CouldNotFound": "Kullanıcı bulunamadı",
-          "CouldNotUpdated": "Kullanıcı güncellenemedi",
-          "SuccessfullyUpdated": "Kullanıcı başarılı bir şekilde güncellendi"
+          "AdminCouldNotFound": "Yönetici kullanıcı bulunamadı",
+          "AdminCouldNotUpdated": "Yönetici Kullanıcı güncellenemedi",
+          "AdminSuccessfullyUpdated": "Yönetici kullanıcı başarılı bir şekilde güncellendi"
         }
       },
       "UpdateAdminProfile": {
@@ -111,9 +122,9 @@
           }
         },
         "Others": {
-          "CouldNotFound": "Kullanıcı bulunamadı",
-          "CouldNotUpdated": "Kullanıcı güncellenemedi",
-          "SuccessfullyUpdated": "Kullanıcı başarılı bir şekilde güncellendi"
+          "AdminCouldNotFound": "Yönetici kullanıcı bulunamadı",
+          "AdminCouldNotUpdated": "Yönetici Kullanıcı güncellenemedi",
+          "AdminSuccessfullyUpdated": "Yönetici kullanıcı başarılı bir şekilde güncellendi"
         }
       }
     },

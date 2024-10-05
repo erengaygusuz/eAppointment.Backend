@@ -25,7 +25,7 @@ namespace eAppointment.Backend.Application.Features.Admins.GetAdminById
             {
                 logger.LogError("User could not found");
 
-                return Result<GetAdminByIdQueryResponse>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "CouldNotFound"]);
+                return Result<GetAdminByIdQueryResponse>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "AdminCouldNotFound"]);
             }
 
             var response = mapper.Map<GetAdminByIdQueryResponse>(user);
