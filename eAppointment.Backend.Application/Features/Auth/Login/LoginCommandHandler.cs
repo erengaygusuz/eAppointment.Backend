@@ -29,7 +29,7 @@ namespace eAppointment.Backend.Application.Features.Auth.Login
             {
                 logger.LogError("User could not found");
 
-                return Result<LoginCommandResponse>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "NotFound"]);
+                return Result<LoginCommandResponse>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "CouldNotFound"]);
             }
 
             bool isPasswordCorrect = await userManager.CheckPasswordAsync(appUser, request.password);

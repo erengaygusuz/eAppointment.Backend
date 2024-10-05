@@ -212,9 +212,8 @@
           }
         },
         "Others": {
-          "NotFound": "User could not found",
-          "WrongPassword": "User password is wrong",
-          "SuccessfullyLoggedIn": "User successfully logged in"
+          "CouldNotFound": "User could not found",
+          "WrongPassword": "User password is wrong"
         }
       }
     },

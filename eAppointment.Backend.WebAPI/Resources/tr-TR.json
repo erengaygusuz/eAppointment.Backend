@@ -212,7 +212,7 @@
           }
         },
         "Others": {
-          "NotFound": "Kullanıcı bulunamadı",
+          "CouldNotFound": "Kullanıcı bulunamadı",
           "WrongPassword": "Şifre hatalı"
         }
       }
