@@ -263,9 +263,21 @@
           }
         },
         "Others": {
-          "CannotCreated": "User could not created",
-          "RoleCannotAdded": "Role could not add to user",
+          "CouldNotCreated": "Doctor could not created",
+          "CouldNotFound": "Doctor could not found",
+          "RoleCouldNotAdded": "Doctor role could not add to user",
           "SuccessfullyCreated": "Doctor created successfully"
+        }
+      },
+      "GetDoctorById": {
+        "Others": {
+          "CouldNotFound": "Doctor user could not found"
+        }
+      },
+      "GetDoctorProfileById": {
+        "Others": {
+          "CouldNotFound": "Doctor user could not found",
+          "ProfilePhotoCouldNotFound": "Doctor user profile could not found"
         }
       },
       "UpdateDoctor": {
@@ -308,8 +320,8 @@
           }
         },
         "Others": {
-          "CouldNotFound": "User could not found",
-          "CouldNotUpdated": "User could not updated",
+          "CouldNotFound": "Doctor user could not found",
+          "CouldNotUpdated": "Doctor user could not updated",
           "SuccessfullyCreated": "Doctor updated successfully"
         }
       },
@@ -353,8 +365,8 @@
           }
         },
         "Others": {
-          "CouldNotFound": "User could not found",
-          "CouldNotUpdated": "User could not updated",
+          "CouldNotFound": "Doctor user could not found",
+          "CouldNotUpdated": "Doctor user could not updated",
           "SuccessfullyCreated": "Doctor updated successfully"
         }
       }

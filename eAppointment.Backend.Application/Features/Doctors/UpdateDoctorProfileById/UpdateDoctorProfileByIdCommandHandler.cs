@@ -5,15 +5,22 @@ using MediatR;
 using eAppointment.Backend.Domain.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using eAppointment.Backend.Application.Features.Doctors.UpdateDoctorById;
+using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
 
 namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorProfileById
 {
     internal sealed class UpdateDoctorProfileByIdCommandHandler(
         IDoctorRepository doctorRepository,
-        IMapper mapper) : IRequestHandler<UpdateDoctorProfileByIdCommand, Result<string>>
+        IMapper mapper,
+        IStringLocalizer<object> localization,
+        ILogger<UpdateDoctorByIdCommandHandler> logger) : IRequestHandler<UpdateDoctorProfileByIdCommand, Result<string>>
     {
         public async Task<Result<string>> Handle(UpdateDoctorProfileByIdCommand request, CancellationToken cancellationToken)
         {
+            var translatedMessagePath = "Features.Doctors.UpdateDoctorProfileById.Others";
+
             Doctor? doctor = await doctorRepository.GetAsync(
                expression: p => p.Id == request.id,
                trackChanges: false,
@@ -23,7 +30,9 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorProfileB
 
             if (doctor is null)
             {
-                return Result<string>.Failure((int)HttpStatusCode.NotFound, "Doctor not found");
+                logger.LogError("User could not found");
+
+                return Result<string>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "CouldNotFound"]);
             }
 
             if (request.profilePhoto != null)
@@ -60,7 +69,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorProfileB
 
             doctorRepository.Update(doctor);
 
-            return Result<string>.Succeed((int)HttpStatusCode.OK, "Doctor updated successfully");
+            return Result<string>.Succeed((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyUpdated"]);
         }
     }
 }

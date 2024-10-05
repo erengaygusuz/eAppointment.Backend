@@ -97,7 +97,7 @@
         },
         "Others": {
           "CouldNotFound": "Yönetici kullanıcı bulunamadı",
-          "CouldNotUpdated": "Yönetici Kullanıcı güncellenemedi",
+          "CouldNotUpdated": "Yönetici kullanıcı güncellenemedi",
           "SuccessfullyUpdated": "Yönetici kullanıcı başarılı bir şekilde güncellendi"
         }
       },
@@ -263,9 +263,21 @@
           }
         },
         "Others": {
-          "CannotCreated": "Kullanıcı oluşturulamadı",
-          "RoleCannotAdded": "Rol kullanıcıya eklenemedi",
+          "CouldNotCreated": "Doktor kullanıcısı oluşturulamadı",
+          "CouldNotFound": "Doktor kullanıcı bulunamadı",
+          "RoleCouldNotAdded": "Rol kullanıcıya eklenemedi",
           "SuccessfullyCreated": "Doktor başarılı bir şekilde oluşturuldu"
+        }
+      },
+      "GetDoctorById": {
+        "Others": {
+          "CouldNotFound": "Doktor kullanıcısı bulunamadı"
+        }
+      },
+      "GetDoctorProfileById": {
+        "Others": {
+          "CouldNotFound": "Doktor kullanıcı bulunamadı",
+          "ProfilePhotoCouldNotFound": "Doktor profil fotoğrafı bulunamadı"
         }
       },
       "UpdateDoctor": {
@@ -308,8 +320,8 @@
           }
         },
         "Others": {
-          "CouldNotFound": "Kullanıcı bulunamadı",
-          "CouldNotUpdated": "Kullanıcı güncellenemedi",
+          "CouldNotFound": "Doktor kullanıcısı bulunamadı",
+          "CouldNotUpdated": "Doktor kullanıcı güncellenemedi",
           "SuccessfullyCreated": "Doktor başarılı bir şekilde güncellendi"
         }
       },
@@ -353,8 +365,8 @@
           }
         },
         "Others": {
-          "CouldNotFound": "Kullanıcı bulunamadı",
-          "CouldNotUpdated": "Kullanıcı güncellenemedi",
+          "CouldNotFound": "Doktor kullanıcı bulunamadı",
+          "CouldNotUpdated": "Doktor kullanıcı güncellenemedi",
           "SuccessfullyCreated": "Doktor başarılı bir şekilde güncellendi"
         }
       }
