@@ -574,19 +574,7 @@
     "400": "Sunucu, bir istemci hatası olarak algılanan bir nedenle isteği işleyemiyor veya işlemeyi reddediyor.",
     "401": "İstemcinin istenen yanıtı almak için kimlik doğrulaması yapması gerekmektedir.",
     "403": "İstemcinin içeriğe erişim hakları yoktur; yani yetkisizdir, bu nedenle sunucu istenen kaynağı vermeyi reddediyor.",
-    "404": "Sunucu, istenen kaynağı bulamıyor.",
-    "405": "İstek yöntemi sunucu tarafından biliniyor ancak hedef kaynak tarafından desteklenmiyor.",
-    "408": "Bu yanıt, bazı sunucular tarafından bir önceki istemci isteği olmadan bile boşta olan bir bağlantıda gönderilir.",
-    "410": "Bu yanıt, istenen içeriğin sunucudan kalıcı olarak silindiği ve hiçbir yönlendirme adresi olmadığı zaman gönderilir.",
-    "413": "İstek varlığı, sunucu tarafından tanımlanan limitlerden daha büyüktür.",
-    "414": "İstemcinin istediği URI, sunucunun yorumlamaya istekli olduğu uzunluktan daha uzundur.",
-    "415": "İstenen verinin medya formatı sunucu tarafından desteklenmiyor, bu nedenle sunucu isteği reddediyor.",
-    "429": "Kullanıcı, belirli bir zaman diliminde çok fazla istek göndermiştir.",
-    "431": "Sunucu, isteği işlemek istemiyor çünkü başlık alanları çok büyük.",
     "500": "Sunucu, nasıl işleneceğini bilmediği bir durumla karşılaştı.",
-    "502": "Sunucu, isteği işlemek için gereken yanıtı almak üzere bir geçit olarak çalışırken geçersiz bir yanıt aldı.",
-    "503": "Sunucu, isteği işlemek için hazır değil.",
-    "504": "Bu hata yanıtı, sunucu bir geçit olarak hareket ederken zamanında yanıt alamadığında verilir.",
     "Unknown": "Beklenmedik bir hata oluştu."
   }
 }
