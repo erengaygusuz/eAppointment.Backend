@@ -1,0 +1,580 @@
+{
+  "Features": {
+    "Admins": {
+      "CreateAdmin": {
+        "ValidationMessages": {
+          "FirstName": {
+            "NotNull": "Please fill the firstname",
+            "MinimumLength": "Please enter minimum 3 character for firstname",
+            "MaximumLength": "Please enter maximum 50 character for firstname",
+            "NotUseNumbers": "Please do not use numbers in the firstname"
+          },
+          "LastName": {
+            "NotNull": "Please fill the lastname",
+            "MinimumLength": "Please enter minimum 3 character for lastname",
+            "MaximumLength": "Please enter maximum 50 character for lastname",
+            "NotUseNumbers": "Please do not use numbers in the lastname"
+          },
+          "UserName": {
+            "NotNull": "Please fill the username",
+            "MinimumLength": "Please enter minimum 3 character for username",
+            "MaximumLength": "Please enter maximum 50 character for username",
+            "NotUseSpaces": "Please do not use spaces for username",
+            "NotUseTurkishCharacters": "Please do not use turkish characters for username",
+            "NotUseUpperLetters": "Please do not use upper letters for username",
+            "NotUseNumbers": "Please do not use numbers in the username",
+            "NotUnique": "Please choose a unique username"
+          },
+          "Email": {
+            "NotNull": "Please fill the e-mail",
+            "MaximumLength": "Please enter maximum 150 character for e-mail",
+            "NotValid": "Please enter a valid e-mail",
+            "NotUnique": "Please choose a unique e-mail"
+          },
+          "PhoneNumber": {
+            "NotNull": "Please fill the phone number",
+            "NotValid": "Please enter a valid phone number",
+            "NotUseLetters": "Please do not use letters in the phone number"
+          },
+          "Password": {
+            "NotNull": "Please fill the password",
+            "MinimumLength": "Please enter minimum 1 character for password",
+            "MaximumLength": "Please enter maximum 5 character for password"
+          }
+        },
+        "Others": {
+          "CouldNotCreated": "Admin could not created",
+          "RoleCouldNotAdded": "Admin role could not added to user",
+          "SuccessfullyCreated": "Admin created successfully"
+        }
+      },
+      "GetAdminById": {
+        "Others": {
+          "CouldNotFound": "Admin user could not found"
+        }
+      },
+      "GetAdminProfileById": {
+        "Others": {
+          "CouldNotFound": "Admin user could not found",
+          "ProfilePhotoCouldNotFound": "Admin user profile could not found"
+        }
+      },
+      "UpdateAdmin": {
+        "ValidationMessages": {
+          "FirstName": {
+            "NotNull": "Please fill the firstname",
+            "MinimumLength": "Please enter minimum 3 character for firstname",
+            "MaximumLength": "Please enter maximum 50 character for firstname",
+            "NotUseNumbers": "Please do not use numbers in the firstname"
+          },
+          "LastName": {
+            "NotNull": "Please fill the lastname",
+            "MinimumLength": "Please enter minimum 3 character for lastname",
+            "MaximumLength": "Please enter maximum 50 character for lastname",
+            "NotUseNumbers": "Please do not use numbers in the lastname"
+          },
+          "UserName": {
+            "NotNull": "Please fill the username",
+            "MinimumLength": "Please enter minimum 3 character for username",
+            "MaximumLength": "Please enter maximum 50 character for username",
+            "NotUseSpaces": "Please do not use spaces for username",
+            "NotUseTurkishCharacters": "Please do not use turkish characters for username",
+            "NotUseUpperLetters": "Please do not use upper letters for username",
+            "NotUseNumbers": "Please do not use numbers in the username",
+            "NotUnique": "Please choose a unique username"
+          },
+          "Email": {
+            "NotNull": "Please fill the e-mail",
+            "MaximumLength": "Please enter maximum 150 character for e-mail",
+            "NotValid": "Please enter a valid e-mail",
+            "NotUnique": "Please choose a unique e-mail"
+          },
+          "PhoneNumber": {
+            "NotNull": "Please fill the phone number",
+            "NotValid": "Please enter a valid phone number",
+            "NotUseLetters": "Please do not use letters in the phone number"
+          }
+        },
+        "Others": {
+          "CouldNotFound": "Admin user could not found",
+          "CouldNotUpdated": "Admin user could not updated",
+          "SuccessfullyUpdated": "Admin user updated successfully"
+        }
+      },
+      "UpdateAdminProfile": {
+        "ValidationMessages": {
+          "FirstName": {
+            "NotNull": "Please fill the firstname",
+            "MinimumLength": "Please enter minimum 3 character for firstname",
+            "MaximumLength": "Please enter maximum 50 character for firstname",
+            "NotUseNumbers": "Please do not use numbers in the firstname"
+          },
+          "LastName": {
+            "NotNull": "Please fill the lastname",
+            "MinimumLength": "Please enter minimum 3 character for lastname",
+            "MaximumLength": "Please enter maximum 50 character for lastname",
+            "NotUseNumbers": "Please do not use numbers in the lastname"
+          },
+          "PhoneNumber": {
+            "NotNull": "Please fill the phone number",
+            "NotValid": "Please enter a valid phone number",
+            "NotUseLetters": "Please do not use letters in the phone number"
+          }
+        },
+        "Others": {
+          "CouldNotFound": "Admin user could not found",
+          "CouldNotUpdated": "Admin user could not updated",
+          "SuccessfullyUpdated": "Admin user updated successfully"
+        }
+      }
+    },
+    "Appointments": {
+      "CancelAppointment": {
+        "Others": {
+          "CouldNotFound": "Appointment could not found",
+          "CouldNotCanceled": "Appointment could not cancelled",
+          "SuccessfullyCancelled": "Appointment cancelled successfully"
+        }
+      },
+      "CreateAppointment": {
+        "ValidationMessages": {
+          "StartDate": {
+            "NotNull": "Please fill the start date",
+            "IsValidDate": "Start date is not valid"
+          },
+          "EndDate": {
+            "NotNull": "Please fill the end date",
+            "IsValidDate": "End date is not valid"
+          },
+          "PatientId": {
+            "GreaterThanZero": "Patient id should be greater than 0"
+          },
+          "DoctorId": {
+            "GreaterThanZero": "Doctor id should be greater than 0"
+          },
+          "Composite": {
+            "IsAvailable": "Appointment is not available"
+          }
+        },
+        "Others": {
+          "SuccessfullyCreated": "Appointment created successfully"
+        }
+      },
+      "UpdateAppointment": {
+        "ValidationMessages": {
+          "Id": {
+            "GreaterThanZero": "Id should be greater than 0"
+          },
+          "StartDate": {
+            "NotNull": "Please fill the start date",
+            "IsValidDate": "Start date is not valid"
+          },
+          "EndDate": {
+            "NotNull": "Please fill the end date",
+            "IsValidDate": "End date is not valid"
+          },
+          "Status": {
+            "GreaterThanZero": "Status should be greater than 0",
+            "IsValidStatus": "Status is not valid"
+          },
+          "Composite": {
+            "IsAvailable": "Appointment is not available"
+          }
+        },
+        "Others": {
+          "CouldNotFound": "Appointment could not found",
+          "SuccessfullyUpdated": "Appointment updated successfully"
+        }
+      },
+      "UpdateAppointmentStatus": {
+        "Others": {
+          "CouldNotFound": "Appointment could not found",
+          "SuccessfullyUpdated": "Appointment status updated successfully"
+        }
+      }
+    },
+    "Auth": {
+      "Login": {
+        "ValidationMessages": {
+          "UserName": {
+            "NotNull": "Please fill the username",
+            "MinimumLength": "Please enter minimum 3 character for username",
+            "MaximumLength": "Please enter maximum 50 character for username",
+            "NotUseSpaces": "Please do not use spaces for username",
+            "NotUseTurkishCharacters": "Please do not use turkish characters for username",
+            "NotUseUpperLetters": "Please do not use upper letters for username",
+            "NotUseNumbers": "Please do not use numbers in the username"
+          },
+          "Password": {
+            "NotNull": "Please fill the password",
+            "MinimumLength": "Please enter minimum 1 character for password",
+            "MaximumLength": "Please enter maximum 5 character for password"
+          }
+        },
+        "Others": {
+          "CouldNotFound": "User could not found",
+          "WrongPassword": "User password is wrong"
+        }
+      }
+    },
+    "Doctors": {
+      "CreateDoctor": {
+        "ValidationMessages": {
+          "FirstName": {
+            "NotNull": "Please fill the firstname",
+            "MinimumLength": "Please enter minimum 3 character for firstname",
+            "MaximumLength": "Please enter maximum 50 character for firstname",
+            "NotUseNumbers": "Please do not use numbers in the firstname"
+          },
+          "LastName": {
+            "NotNull": "Please fill the lastname",
+            "MinimumLength": "Please enter minimum 3 character for lastname",
+            "MaximumLength": "Please enter maximum 50 character for lastname",
+            "NotUseNumbers": "Please do not use numbers in the lastname"
+          },
+          "UserName": {
+            "NotNull": "Please fill the username",
+            "MinimumLength": "Please enter minimum 3 character for username",
+            "MaximumLength": "Please enter maximum 50 character for username",
+            "NotUseSpaces": "Please do not use spaces for username",
+            "NotUseTurkishCharacters": "Please do not use turkish characters for username",
+            "NotUseUpperLetters": "Please do not use upper letters for username",
+            "NotUseNumbers": "Please do not use numbers in the username",
+            "NotUnique": "Please choose a unique username"
+          },
+          "Email": {
+            "NotNull": "Please fill the e-mail",
+            "MaximumLength": "Please enter maximum 150 character for e-mail",
+            "NotValid": "Please enter a valid e-mail",
+            "NotUnique": "Please choose a unique e-mail"
+          },
+          "PhoneNumber": {
+            "NotNull": "Please fill the phone number",
+            "NotValid": "Please enter a valid phone number",
+            "NotUseLetters": "Please do not use letters in the phone number"
+          },
+          "Password": {
+            "NotNull": "Please fill the password",
+            "MinimumLength": "Please enter minimum 1 character for password",
+            "MaximumLength": "Please enter maximum 5 character for password"
+          },
+          "DepartmentId": {
+            "GreaterThanZero": "Department id should be greater than 0"
+          }
+        },
+        "Others": {
+          "CouldNotCreated": "Doctor could not created",
+          "CouldNotFound": "Doctor could not found",
+          "RoleCouldNotAdded": "Doctor role could not add to user",
+          "SuccessfullyCreated": "Doctor created successfully"
+        }
+      },
+      "GetDoctorById": {
+        "Others": {
+          "CouldNotFound": "Doctor user could not found"
+        }
+      },
+      "GetDoctorProfileById": {
+        "Others": {
+          "CouldNotFound": "Doctor user could not found",
+          "ProfilePhotoCouldNotFound": "Doctor user profile could not found"
+        }
+      },
+      "UpdateDoctor": {
+        "ValidationMessages": {
+          "FirstName": {
+            "NotNull": "Please fill the firstname",
+            "MinimumLength": "Please enter minimum 3 character for firstname",
+            "MaximumLength": "Please enter maximum 50 character for firstname",
+            "NotUseNumbers": "Please do not use numbers in the firstname"
+          },
+          "LastName": {
+            "NotNull": "Please fill the lastname",
+            "MinimumLength": "Please enter minimum 3 character for lastname",
+            "MaximumLength": "Please enter maximum 50 character for lastname",
+            "NotUseNumbers": "Please do not use numbers in the lastname"
+          },
+          "UserName": {
+            "NotNull": "Please fill the username",
+            "MinimumLength": "Please enter minimum 3 character for username",
+            "MaximumLength": "Please enter maximum 50 character for username",
+            "NotUseSpaces": "Please do not use spaces for username",
+            "NotUseTurkishCharacters": "Please do not use turkish characters for username",
+            "NotUseUpperLetters": "Please do not use upper letters for username",
+            "NotUseNumbers": "Please do not use numbers in the username",
+            "NotUnique": "Please choose a unique username"
+          },
+          "Email": {
+            "NotNull": "Please fill the e-mail",
+            "MaximumLength": "Please enter maximum 150 character for e-mail",
+            "NotValid": "Please enter a valid e-mail",
+            "NotUnique": "Please choose a unique e-mail"
+          },
+          "PhoneNumber": {
+            "NotNull": "Please fill the phone number",
+            "NotValid": "Please enter a valid phone number",
+            "NotUseLetters": "Please do not use letters in the phone number"
+          },
+          "DepartmentId": {
+            "GreaterThanZero": "Department id should be greater than 0"
+          }
+        },
+        "Others": {
+          "UserCouldNotFound": "User could not found",
+          "CouldNotUpdated": "Doctor user could not updated",
+          "DoctorUserCouldNotFound": "Doctor user could not found",
+          "SuccessfullyCreated": "Doctor updated successfully"
+        }
+      },
+      "UpdateDoctorProfile": {
+        "ValidationMessages": {
+          "FirstName": {
+            "NotNull": "Please fill the firstname",
+            "MinimumLength": "Please enter minimum 3 character for firstname",
+            "MaximumLength": "Please enter maximum 50 character for firstname",
+            "NotUseNumbers": "Please do not use numbers in the firstname"
+          },
+          "LastName": {
+            "NotNull": "Please fill the lastname",
+            "MinimumLength": "Please enter minimum 3 character for lastname",
+            "MaximumLength": "Please enter maximum 50 character for lastname",
+            "NotUseNumbers": "Please do not use numbers in the lastname"
+          },
+          "UserName": {
+            "NotNull": "Please fill the username",
+            "MinimumLength": "Please enter minimum 3 character for username",
+            "MaximumLength": "Please enter maximum 50 character for username",
+            "NotUseSpaces": "Please do not use spaces for username",
+            "NotUseTurkishCharacters": "Please do not use turkish characters for username",
+            "NotUseUpperLetters": "Please do not use upper letters for username",
+            "NotUseNumbers": "Please do not use numbers in the username",
+            "NotUnique": "Please choose a unique username"
+          },
+          "Email": {
+            "NotNull": "Please fill the e-mail",
+            "MaximumLength": "Please enter maximum 150 character for e-mail",
+            "NotValid": "Please enter a valid e-mail",
+            "NotUnique": "Please choose a unique e-mail"
+          },
+          "PhoneNumber": {
+            "NotNull": "Please fill the phone number",
+            "NotValid": "Please enter a valid phone number",
+            "NotUseLetters": "Please do not use letters in the phone number"
+          },
+          "DepartmentId": {
+            "GreaterThanZero": "Department id should be greater than 0"
+          }
+        },
+        "Others": {
+          "CouldNotFound": "Doctor user could not found",
+          "SuccessfullyCreated": "Doctor updated successfully"
+        }
+      }
+    },
+    "Patients": {
+      "CreatePatient": {
+        "ValidationMessages": {
+          "FirstName": {
+            "NotNull": "Please fill the firstname",
+            "MinimumLength": "Please enter minimum 3 character for firstname",
+            "MaximumLength": "Please enter maximum 50 character for firstname",
+            "NotUseNumbers": "Please do not use numbers in the firstname"
+          },
+          "LastName": {
+            "NotNull": "Please fill the lastname",
+            "MinimumLength": "Please enter minimum 3 character for lastname",
+            "MaximumLength": "Please enter maximum 50 character for lastname",
+            "NotUseNumbers": "Please do not use numbers in the lastname"
+          },
+          "Email": {
+            "NotNull": "Please fill the e-mail",
+            "MaximumLength": "Please enter maximum 150 character for e-mail",
+            "NotValid": "Please enter a valid e-mail",
+            "NotUnique": "Please choose a unique e-mail"
+          },
+          "PhoneNumber": {
+            "NotNull": "Please fill the phone number",
+            "NotValid": "Please enter a valid phone number",
+            "NotUseLetters": "Please do not use letters in the phone number"
+          },
+          "UserName": {
+            "NotNull": "Please fill the username",
+            "MinimumLength": "Please enter minimum 3 character for username",
+            "MaximumLength": "Please enter maximum 50 character for username",
+            "NotUseSpaces": "Please do not use spaces for username",
+            "NotUseTurkishCharacters": "Please do not use turkish characters for username",
+            "NotUseUpperLetters": "Please do not use upper letters for username",
+            "NotUseNumbers": "Please do not use numbers in the username",
+            "NotUnique": "Please choose a unique username"
+          },
+          "IdentityNumber": {
+            "NotNull": "Please fill the identity number",
+            "NotExactNumberCount": "Please enter 11 numbers for identity number",
+            "NotUseLetters": "Please do not use letters in the identity number"
+          },
+          "CountyId": {
+            "GreaterThanZero": "County id should be greater than 0"
+          },
+          "FullAddress": {
+            "NotNull": "Please fill the full address",
+            "MinimumLength": "Please enter minimum 50 character for full address",
+            "MaximumLength": "Please enter maximum 500 character for full address"
+          },
+          "Password": {
+            "NotNull": "Please fill the password",
+            "MinimumLength": "Please enter minimum 1 character for password",
+            "MaximumLength": "Please enter maximum 5 character for password"
+          }
+        },
+        "Others": {
+          "CouldNotCreated": "Patient could not created",
+          "CouldNotFound": "Patient could not found",
+          "RoleCouldNotAdded": "Patient role could not add to user",
+          "SuccessfullyCreated": "Patient created successfully"
+        }
+      },
+      "GetAllPatientsByDoctorId": {
+        "Others": {
+          "CouldNotFound": "Doctor user could not found"
+        }
+      },
+      "GetPatientById": {
+        "Others": {
+          "CouldNotFound": "Patient user could not found"
+        }
+      },
+      "GetPatientProfileById": {
+        "Others": {
+          "CouldNotFound": "Patient user could not found",
+          "ProfilePhotoCouldNotFound": "Patient user profile could not found"
+        }
+      },
+      "UpdatePatient": {
+        "ValidationMessages": {
+          "FirstName": {
+            "NotNull": "Please fill the firstname",
+            "MinimumLength": "Please enter minimum 3 character for firstname",
+            "MaximumLength": "Please enter maximum 50 character for firstname",
+            "NotUseNumbers": "Please do not use numbers in the firstname"
+          },
+          "LastName": {
+            "NotNull": "Please fill the lastname",
+            "MinimumLength": "Please enter minimum 3 character for lastname",
+            "MaximumLength": "Please enter maximum 50 character for lastname",
+            "NotUseNumbers": "Please do not use numbers in the lastname"
+          },
+          "Email": {
+            "NotNull": "Please fill the e-mail",
+            "MaximumLength": "Please enter maximum 150 character for e-mail",
+            "NotValid": "Please enter a valid e-mail",
+            "NotUnique": "Please choose a unique e-mail"
+          },
+          "PhoneNumber": {
+            "NotNull": "Please fill the phone number",
+            "NotValid": "Please enter a valid phone number",
+            "NotUseLetters": "Please do not use letters in the phone number"
+          },
+          "UserName": {
+            "NotNull": "Please fill the username",
+            "MinimumLength": "Please enter minimum 3 character for username",
+            "MaximumLength": "Please enter maximum 50 character for username",
+            "NotUseSpaces": "Please do not use spaces for username",
+            "NotUseTurkishCharacters": "Please do not use turkish characters for username",
+            "NotUseUpperLetters": "Please do not use upper letters for username",
+            "NotUseNumbers": "Please do not use numbers in the username",
+            "NotUnique": "Please choose a unique username"
+          },
+          "IdentityNumber": {
+            "NotNull": "Please fill the identity number",
+            "NotExactNumberCount": "Please enter 11 numbers for identity number",
+            "NotUseLetters": "Please do not use letters in the identity number"
+          },
+          "CountyId": {
+            "GreaterThanZero": "County id should be greater than 0"
+          },
+          "FullAddress": {
+            "NotNull": "Please fill the full address",
+            "MinimumLength": "Please enter minimum 50 character for full address",
+            "MaximumLength": "Please enter maximum 500 character for full address"
+          }
+        },
+        "Others": {
+          "UserCouldNotFound": "User could not found",
+          "CouldNotUpdated": "Patient user could not updated",
+          "PatientUserCouldNotFound": "Patient user could not found",
+          "SuccessfullyCreated": "Patient updated successfully"
+        }
+      },
+      "UpdatePatientProfile": {
+        "ValidationMessages": {
+          "FirstName": {
+            "NotNull": "Please fill the firstname",
+            "MinimumLength": "Please enter minimum 3 character for firstname",
+            "MaximumLength": "Please enter maximum 50 character for firstname",
+            "NotUseNumbers": "Please do not use numbers in the firstname"
+          },
+          "LastName": {
+            "NotNull": "Please fill the lastname",
+            "MinimumLength": "Please enter minimum 3 character for lastname",
+            "MaximumLength": "Please enter maximum 50 character for lastname",
+            "NotUseNumbers": "Please do not use numbers in the lastname"
+          },
+          "Email": {
+            "NotNull": "Please fill the e-mail",
+            "MaximumLength": "Please enter maximum 150 character for e-mail",
+            "NotValid": "Please enter a valid e-mail",
+            "NotUnique": "Please choose a unique e-mail"
+          },
+          "PhoneNumber": {
+            "NotNull": "Please fill the phone number",
+            "NotValid": "Please enter a valid phone number",
+            "NotUseLetters": "Please do not use letters in the phone number"
+          },
+          "UserName": {
+            "NotNull": "Please fill the username",
+            "MinimumLength": "Please enter minimum 3 character for username",
+            "MaximumLength": "Please enter maximum 50 character for username",
+            "NotUseSpaces": "Please do not use spaces for username",
+            "NotUseTurkishCharacters": "Please do not use turkish characters for username",
+            "NotUseUpperLetters": "Please do not use upper letters for username",
+            "NotUseNumbers": "Please do not use numbers in the username",
+            "NotUnique": "Please choose a unique username"
+          },
+          "IdentityNumber": {
+            "NotNull": "Please fill the identity number",
+            "NotExactNumberCount": "Please enter 11 numbers for identity number",
+            "NotUseLetters": "Please do not use letters in the identity number"
+          },
+          "CountyId": {
+            "GreaterThanZero": "County id should be greater than 0"
+          },
+          "FullAddress": {
+            "NotNull": "Please fill the full address",
+            "MinimumLength": "Please enter minimum 50 character for full address",
+            "MaximumLength": "Please enter maximum 500 character for full address"
+          }
+        },
+        "Others": {
+          "CouldNotFound": "Patient user could not found",
+          "SuccessfullyCreated": "Patient updated successfully"
+        }
+      }
+    },
+    "Users": {
+      "DeleteUserById": {
+        "Others": {
+          "CouldNotFound": "User could not found",
+          "CouldNotDeleted": "User could not deleted",
+          "SuccessfullyDeleted": "User deleted successfully"
+        }
+      }
+    }
+  },
+  "ErrorsCodes": {
+    "400": "The server cannot or will not process the request due to something that is perceived to be a client error.",
+    "401": "The client must authenticate itself to get the requested response.",
+    "403": "The client does not have access rights to the content; that is, it is unauthorized, so the server is refusing to give the requested resource.",
+    "500": "The server has encountered a situation it does not know how to handle.",
+    "Unknown": "An unexpected error occurred."
+  }
+}

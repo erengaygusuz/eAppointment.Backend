@@ -105,6 +105,7 @@ namespace eAppointment.Backend.WebAPI
                 var supportedCultures = new[]
                 {
                     new CultureInfo("en-US"),
+                    new CultureInfo("en-GB"),
                     new CultureInfo("tr-TR")
                 };
 
