@@ -27,7 +27,7 @@ namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientById
             {
                 logger.LogError("User could not found");
 
-                return Result<string>.Failure(localization[translatedMessagePath + "." + "CouldNotFound"]);
+                return Result<string>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "UserCouldNotFound"]);
             }
 
             mapper.Map(request, user);
@@ -38,14 +38,14 @@ namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientById
             {
                 logger.LogError("User could not updated");
 
-                return Result<string>.Failure(localization[translatedMessagePath + "." + "CouldNotUpdated"]);
+                return Result<string>.Failure((int)HttpStatusCode.InternalServerError, localization[translatedMessagePath + "." + "CouldNotUpdated"]);
             }
 
             Patient patient = await patientRepository.GetAsync(x => x.UserId == request.id);
 
             if (patient == null)
             {
-                return Result<string>.Failure((int)HttpStatusCode.NotFound, "Patient not found");
+                return Result<string>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "PatientCouldNotFound"]);
             }
 
             patient.IdentityNumber = request.identityNumber;

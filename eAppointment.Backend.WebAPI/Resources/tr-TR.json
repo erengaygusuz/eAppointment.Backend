@@ -320,8 +320,9 @@
           }
         },
         "Others": {
-          "CouldNotFound": "Doktor kullanıcısı bulunamadı",
+          "UserCouldNotFound": "Kullanıcı bulunamadı",
           "CouldNotUpdated": "Doktor kullanıcı güncellenemedi",
+          "DoctorCouldNotFound": "Doktor kullanıcısı bulunamadı",
           "SuccessfullyCreated": "Doktor başarılı bir şekilde güncellendi"
         }
       },
@@ -366,7 +367,6 @@
         },
         "Others": {
           "CouldNotFound": "Doktor kullanıcı bulunamadı",
-          "CouldNotUpdated": "Doktor kullanıcı güncellenemedi",
           "SuccessfullyCreated": "Doktor başarılı bir şekilde güncellendi"
         }
       }
@@ -427,9 +427,26 @@
           }
         },
         "Others": {
-          "CannotCreated": "Kullanıcı oluşturulamadı",
-          "RoleCannotAdded": "Rol kullanıcıya eklenemedi",
+          "CouldNotCreated": "Hasta kullanıcı oluşturulamadı",
+          "CouldNotFound": "Hasta kullanıcı bulunamadı",
+          "RoleCouldNotAdded": "Rol kullanıcıya eklenemedi",
           "SuccessfullyCreated": "Hasta başarılı bir şekilde oluşturuldu"
+        }
+      },
+      "GetAllPatientsByDoctorId": {
+        "Others": {
+          "CouldNotFound": "Doktor kullanıcısı bulunamadı"
+        }
+      },
+      "GetPatientById": {
+        "Others": {
+          "CouldNotFound": "Hasta kullanıcısı bulunamadı"
+        }
+      },
+      "GetPatientProfileById": {
+        "Others": {
+          "CouldNotFound": "Hasta kullanıcı bulunamadı",
+          "ProfilePhotoCouldNotFound": "Hasta profil fotoğrafı bulunamadı"
         }
       },
       "UpdatePatient": {
@@ -482,8 +499,9 @@
           }
         },
         "Others": {
-          "CouldNotFound": "Kullanıcı bulunamadı",
-          "CouldNotUpdated": "Kullanıcı güncellenemedi",
+          "UserCouldNotFound": "Kullanıcı bulunamadı",
+          "CouldNotUpdated": "Hasta kullanıcı güncellenemedi",
+          "PatientCouldNotFound": "Hasta kullanıcı bulunamadı",
           "SuccessfullyCreated": "Hasta başarılı bir şekilde güncellendi"
         }
       },
@@ -537,8 +555,7 @@
           }
         },
         "Others": {
-          "CouldNotFound": "Kullanıcı bulunamadı",
-          "CouldNotUpdated": "Kullanıcı güncellenemedi",
+          "CouldNotFound": "Hasta kullanıcı bulunamadı",
           "SuccessfullyCreated": "Hasta başarılı bir şekilde güncellendi"
         }
       }

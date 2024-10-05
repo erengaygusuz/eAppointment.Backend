@@ -29,7 +29,7 @@ namespace eAppointment.Backend.Application.Features.Patients.CreatePatient
             {
                 logger.LogError("User could not created");
 
-                return Result<string>.Failure((int)HttpStatusCode.InternalServerError, localization[translatedMessagePath + "." + "CannotCreated"]);
+                return Result<string>.Failure((int)HttpStatusCode.InternalServerError, localization[translatedMessagePath + "." + "CouldNotCreated"]);
             }
 
             var addedUser = await userManager.FindByEmailAsync(user.Email!);
@@ -47,7 +47,7 @@ namespace eAppointment.Backend.Application.Features.Patients.CreatePatient
             {
                 logger.LogError("Role could not add to user");
 
-                return Result<string>.Failure((int)HttpStatusCode.InternalServerError, localization[translatedMessagePath + "." + "RoleCannotAdded"]);
+                return Result<string>.Failure((int)HttpStatusCode.InternalServerError, localization[translatedMessagePath + "." + "RoleCouldNotAdded"]);
             }
 
             Patient patient = new Patient()

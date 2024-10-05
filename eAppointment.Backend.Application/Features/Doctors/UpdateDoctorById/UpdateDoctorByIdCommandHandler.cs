@@ -27,7 +27,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorById
             {
                 logger.LogError("User could not found");
 
-                return Result<string>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "CouldNotFound"]);
+                return Result<string>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "UserCouldNotFound"]);
             }
 
             mapper.Map(request, user);
@@ -45,7 +45,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.UpdateDoctorById
 
             if (doctor == null)
             {
-                return Result<string>.Failure((int)HttpStatusCode.NotFound, "Doctor not found");
+                return Result<string>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "DoctorCouldNotFound"]);
             }
 
             doctor.DepartmentId = request.departmentId;

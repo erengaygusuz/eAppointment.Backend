@@ -4,16 +4,22 @@ using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Domain.Helpers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
 using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Patients.GetAllPatientsByDoctorId
 {
     internal sealed class GetAllPatientsByDoctorIdQueryHandler(
         IDoctorRepository doctorRepository,
-        IMapper mapper) : IRequestHandler<GetAllPatientsByDoctorIdQuery, Result<List<GetAllPatientsByDoctorIdQueryResponse>>>
+        IMapper mapper,
+        IStringLocalizer<object> localization,
+        ILogger<GetAllPatientsByDoctorIdQueryHandler> logger) : IRequestHandler<GetAllPatientsByDoctorIdQuery, Result<List<GetAllPatientsByDoctorIdQueryResponse>>>
     {
         public async Task<Result<List<GetAllPatientsByDoctorIdQueryResponse>>> Handle(GetAllPatientsByDoctorIdQuery request, CancellationToken cancellationToken)
         {
+            var translatedMessagePath = "Features.Patients.GetAllPatientsByDoctorId.Others";
+
             Doctor? doctor = await doctorRepository.GetAsync(
                expression: p => p.Id == request.doctorId,
                trackChanges: false,
@@ -23,7 +29,9 @@ namespace eAppointment.Backend.Application.Features.Patients.GetAllPatientsByDoc
 
             if (doctor == null)
             {
-                return Result<List<GetAllPatientsByDoctorIdQueryResponse>>.Failure((int)HttpStatusCode.NotFound, "Doctor not found");
+                logger.LogError("User could not created");
+
+                return Result<List<GetAllPatientsByDoctorIdQueryResponse>>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "CouldNotFound"]);
             }
 
             var response = mapper.Map<List<GetAllPatientsByDoctorIdQueryResponse>>(doctor);

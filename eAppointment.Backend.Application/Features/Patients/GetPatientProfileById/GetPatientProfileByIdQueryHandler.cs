@@ -4,16 +4,22 @@ using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Domain.Helpers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
 using System.Net;
 
 namespace eAppointment.Backend.Application.Features.Patients.GetPatientProfileById
 {
     internal sealed class GetPatientProfileByIdQueryHandler(
         IPatientRepository patientRepository,
-        IMapper mapper) : IRequestHandler<GetPatientProfileByIdQuery, Result<GetPatientProfileByIdQueryResponse>>
+        IMapper mapper,
+        IStringLocalizer<object> localization,
+        ILogger<GetPatientProfileByIdQueryHandler> logger) : IRequestHandler<GetPatientProfileByIdQuery, Result<GetPatientProfileByIdQueryResponse>>
     {
         public async Task<Result<GetPatientProfileByIdQueryResponse>> Handle(GetPatientProfileByIdQuery request, CancellationToken cancellationToken)
         {
+            var translatedMessagePath = "Features.Patients.GetPatientProfileById.Others";
+
             Patient? patient = await patientRepository.GetAsync(
                expression: x => x.Id == request.id,
                trackChanges: false,
@@ -23,7 +29,9 @@ namespace eAppointment.Backend.Application.Features.Patients.GetPatientProfileBy
 
             if (patient == null)
             {
-                return Result<GetPatientProfileByIdQueryResponse>.Failure((int)HttpStatusCode.NotFound, "Patient not found");
+                logger.LogError("User could not found");
+
+                return Result<GetPatientProfileByIdQueryResponse>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "CouldNotFound"]);
             }
 
             var response = mapper.Map<GetPatientProfileByIdQueryResponse>(patient);
@@ -32,14 +40,23 @@ namespace eAppointment.Backend.Application.Features.Patients.GetPatientProfileBy
 
             var filePath = $"{Environment.GetEnvironmentVariable("User__Profile__Image__Folder__Path")}" + patient.User.ProfilePhotoPath;
 
-            if (File.Exists(filePath))
+            if (!string.IsNullOrEmpty(patient.User.ProfilePhotoPath))
             {
-                var fileBytes = File.ReadAllBytes(filePath);
+                if (File.Exists(filePath))
+                {
+                    var fileBytes = File.ReadAllBytes(filePath);
 
-                var base64Content = Convert.ToBase64String(fileBytes);
+                    var base64Content = Convert.ToBase64String(fileBytes);
 
-                response.ProfilePhotoContentType = "image/png";
-                response.ProfilePhotoBase64Content = base64Content;
+                    response.ProfilePhotoContentType = "image/png";
+                    response.ProfilePhotoBase64Content = base64Content;
+                }
+                else
+                {
+                    logger.LogError("Profile photo could not found");
+
+                    return Result<GetPatientProfileByIdQueryResponse>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "ProfilePhotoCouldNotFound"]);
+                }
             }
 
             return Result<GetPatientProfileByIdQueryResponse>.Succeed((int)HttpStatusCode.OK, response);

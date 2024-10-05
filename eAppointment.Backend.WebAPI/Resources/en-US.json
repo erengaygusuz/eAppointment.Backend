@@ -320,8 +320,9 @@
           }
         },
         "Others": {
-          "CouldNotFound": "Doctor user could not found",
+          "UserCouldNotFound": "User could not found",
           "CouldNotUpdated": "Doctor user could not updated",
+          "DoctorUserCouldNotFound": "Doctor user could not found",
           "SuccessfullyCreated": "Doctor updated successfully"
         }
       },
@@ -366,7 +367,6 @@
         },
         "Others": {
           "CouldNotFound": "Doctor user could not found",
-          "CouldNotUpdated": "Doctor user could not updated",
           "SuccessfullyCreated": "Doctor updated successfully"
         }
       }
@@ -425,6 +425,28 @@
             "MinimumLength": "Please enter minimum 1 character for password",
             "MaximumLength": "Please enter maximum 5 character for password"
           }
+        },
+        "Others": {
+          "CouldNotCreated": "Patient could not created",
+          "CouldNotFound": "Patient could not found",
+          "RoleCouldNotAdded": "Patient role could not add to user",
+          "SuccessfullyCreated": "Patient created successfully"
+        }
+      },
+      "GetAllPatientsByDoctorId": {
+        "Others": {
+          "CouldNotFound": "Doctor user could not found"
+        }
+      },
+      "GetPatientById": {
+        "Others": {
+          "CouldNotFound": "Patient user could not found"
+        }
+      },
+      "GetPatientProfileById": {
+        "Others": {
+          "CouldNotFound": "Patient user could not found",
+          "ProfilePhotoCouldNotFound": "Patient user profile could not found"
         }
       },
       "UpdatePatient": {
@@ -475,6 +497,12 @@
             "MinimumLength": "Please enter minimum 50 character for full address",
             "MaximumLength": "Please enter maximum 500 character for full address"
           }
+        },
+        "Others": {
+          "UserCouldNotFound": "User could not found",
+          "CouldNotUpdated": "Patient user could not updated",
+          "PatientUserCouldNotFound": "Patient user could not found",
+          "SuccessfullyCreated": "Patient updated successfully"
         }
       },
       "UpdatePatientProfile": {
@@ -525,6 +553,10 @@
             "MinimumLength": "Please enter minimum 50 character for full address",
             "MaximumLength": "Please enter maximum 500 character for full address"
           }
+        },
+        "Others": {
+          "CouldNotFound": "Patient user could not found",
+          "SuccessfullyCreated": "Patient updated successfully"
         }
       }
     },

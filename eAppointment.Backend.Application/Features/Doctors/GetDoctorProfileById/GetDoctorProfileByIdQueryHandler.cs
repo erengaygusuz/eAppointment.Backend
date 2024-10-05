@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using eAppointment.Backend.Application.Features.Admins.GetAdminProfileById;
 using eAppointment.Backend.Domain.Abstractions;
 using eAppointment.Backend.Domain.Entities;
 using eAppointment.Backend.Domain.Helpers;
@@ -15,7 +14,7 @@ namespace eAppointment.Backend.Application.Features.Doctors.GetDoctorProfileById
         IDoctorRepository doctorRepository,
         IMapper mapper,
         IStringLocalizer<object> localization,
-        ILogger<GetAdminProfileByIdQueryHandler> logger) : IRequestHandler<GetDoctorProfileByIdQuery, Result<GetDoctorProfileByIdQueryResponse>>
+        ILogger<GetDoctorProfileByIdQueryHandler> logger) : IRequestHandler<GetDoctorProfileByIdQuery, Result<GetDoctorProfileByIdQueryResponse>>
     {
         public async Task<Result<GetDoctorProfileByIdQueryResponse>> Handle(GetDoctorProfileByIdQuery request, CancellationToken cancellationToken)
         {
