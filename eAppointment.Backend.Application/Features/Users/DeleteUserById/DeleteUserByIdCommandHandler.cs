@@ -15,7 +15,7 @@ namespace eAppointment.Backend.Application.Features.Users.DeleteUserById
     {
         public async Task<Result<string>> Handle(DeleteUserByIdCommand request, CancellationToken cancellationToken)
         {
-            var translatedMessagePath = "Features.Users.DeleteUser.Others";
+            var translatedMessagePath = "Features.Users.DeleteUserById.Others";
 
             User? user = await userManager.FindByIdAsync(request.id.ToString());
 
@@ -32,7 +32,7 @@ namespace eAppointment.Backend.Application.Features.Users.DeleteUserById
             {
                 logger.LogError("User could not deleted");
 
-                return Result<string>.Failure((int)HttpStatusCode.InternalServerError, result.Errors.Select(s => s.Description).ToList());
+                return Result<string>.Failure((int)HttpStatusCode.InternalServerError, localization[translatedMessagePath + "." + "CouldNotDeleted"]);
             }
 
             logger.LogInformation("User deleted successfully");

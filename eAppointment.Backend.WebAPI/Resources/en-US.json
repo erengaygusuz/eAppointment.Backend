@@ -561,7 +561,7 @@
       }
     },
     "Users": {
-      "DeleteUser": {
+      "DeleteUserById": {
         "Others": {
           "CouldNotFound": "User could not found",
           "CouldNotDeleted": "User could not deleted",
