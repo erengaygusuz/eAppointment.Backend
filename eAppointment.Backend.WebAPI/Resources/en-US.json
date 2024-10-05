@@ -43,20 +43,20 @@
           }
         },
         "Others": {
-          "AdminCouldNotCreated": "Admin could not created",
-          "AdminRoleCouldNotAdded": "Admin role could not added to user",
-          "AdminSuccessfullyCreated": "Admin created successfully"
+          "CouldNotCreated": "Admin could not created",
+          "RoleCouldNotAdded": "Admin role could not added to user",
+          "SuccessfullyCreated": "Admin created successfully"
         }
       },
       "GetAdminById": {
         "Others": {
-          "AdminCouldNotFound": "Admin user could not found"
+          "CouldNotFound": "Admin user could not found"
         }
       },
       "GetAdminProfileById": {
         "Others": {
-          "AdminCouldNotFound": "Admin user could not found",
-          "AdminProfilePhotoCouldNotFound": "Admin user profile could not found"
+          "CouldNotFound": "Admin user could not found",
+          "ProfilePhotoCouldNotFound": "Admin user profile could not found"
         }
       },
       "UpdateAdmin": {
@@ -96,9 +96,9 @@
           }
         },
         "Others": {
-          "AdminCouldNotFound": "Admin user could not found",
-          "AdminCouldNotUpdated": "Admin user could not updated",
-          "AdminSuccessfullyUpdated": "Admin user updated successfully"
+          "CouldNotFound": "Admin user could not found",
+          "CouldNotUpdated": "Admin user could not updated",
+          "SuccessfullyUpdated": "Admin user updated successfully"
         }
       },
       "UpdateAdminProfile": {
@@ -122,13 +122,20 @@
           }
         },
         "Others": {
-          "AdminCouldNotFound": "Admin user could not found",
-          "AdminCouldNotUpdated": "Admin user could not updated",
-          "AdminSuccessfullyUpdated": "Admin user updated successfully"
+          "CouldNotFound": "Admin user could not found",
+          "CouldNotUpdated": "Admin user could not updated",
+          "SuccessfullyUpdated": "Admin user updated successfully"
         }
       }
     },
     "Appointments": {
+      "CancelAppointment": {
+        "Others": {
+          "CouldNotFound": "Appointment could not found",
+          "CouldNotCanceled": "Appointment could not cancelled",
+          "SuccessfullyCancelled": "Appointment cancelled successfully"
+        }
+      },
       "CreateAppointment": {
         "ValidationMessages": {
           "StartDate": {
@@ -175,21 +182,14 @@
           }
         },
         "Others": {
-          "NotFound": "Appointment could not found",
+          "CouldNotFound": "Appointment could not found",
           "SuccessfullyUpdated": "Appointment updated successfully"
         }
       },
       "UpdateAppointmentStatus": {
         "Others": {
-          "NotFound": "Appointment could not found",
-          "SuccessfullyUpdated": "Appointment updated successfully"
-        }
-      },
-      "CancelAppointment": {
-        "Others": {
-          "NotFound": "Appointment could not found",
-          "CouldNotCanceled": "Appointment could not cancelled",
-          "SuccessfullyCancelled": "Appointment cancelled successfully"
+          "CouldNotFound": "Appointment could not found",
+          "SuccessfullyUpdated": "Appointment status updated successfully"
         }
       }
     },

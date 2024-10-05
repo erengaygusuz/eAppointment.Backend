@@ -29,7 +29,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.DeleteAppointme
             {
                 logger.LogError("User could not found");
 
-                return Result<string>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "NotFound"]);
+                return Result<string>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "CouldNotFound"]);
             }
 
             if (appointment.Status == AppointmentStatus.SuccessfullyCompleted ||

@@ -26,7 +26,7 @@ namespace eAppointment.Backend.Application.Features.Admins.GetAdminProfileById
             {
                 logger.LogError("User could not found");
 
-                return Result<GetAdminProfileByIdQueryResponse>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "AdminCouldNotFound"]);
+                return Result<GetAdminProfileByIdQueryResponse>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "CouldNotFound"]);
             }
 
             var response = mapper.Map<GetAdminProfileByIdQueryResponse>(user);
@@ -50,7 +50,7 @@ namespace eAppointment.Backend.Application.Features.Admins.GetAdminProfileById
                 {
                     logger.LogError("Profile photo could not found");
 
-                    return Result<GetAdminProfileByIdQueryResponse>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "AdminProfilePhotoCouldNotFound"]);
+                    return Result<GetAdminProfileByIdQueryResponse>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "ProfilePhotoCouldNotFound"]);
                 }
             }
 

@@ -43,20 +43,20 @@
           }
         },
         "Others": {
-          "AdminCouldNotCreated": "Yönetici kullanıcı oluşturulamadı",
-          "AdminRoleCouldNotAdded": "Yönetici rol kullanıcıya eklenemedi",
-          "AdminSuccessfullyCreated": "Yönetici kullanıcı başarılı bir şekilde oluşturuldu"
+          "CouldNotCreated": "Yönetici kullanıcı oluşturulamadı",
+          "RoleCouldNotAdded": "Yönetici rol kullanıcıya eklenemedi",
+          "SuccessfullyCreated": "Yönetici kullanıcı başarılı bir şekilde oluşturuldu"
         }
       },
       "GetAdminById": {
         "Others": {
-          "AdminCouldNotFound": "Yönetici kullanıcı bulunamadı"
+          "CouldNotFound": "Yönetici kullanıcı bulunamadı"
         }
       },
       "GetAdminProfileById": {
         "Others": {
-          "AdminCouldNotFound": "Yönetici kullanıcı bulunamadı",
-          "AdminProfilePhotoCouldNotFound": "Yönetici profil fotoğrafı bulunamadı"
+          "CouldNotFound": "Yönetici kullanıcı bulunamadı",
+          "ProfilePhotoCouldNotFound": "Yönetici profil fotoğrafı bulunamadı"
         }
       },
       "UpdateAdmin": {
@@ -96,9 +96,9 @@
           }
         },
         "Others": {
-          "AdminCouldNotFound": "Yönetici kullanıcı bulunamadı",
-          "AdminCouldNotUpdated": "Yönetici Kullanıcı güncellenemedi",
-          "AdminSuccessfullyUpdated": "Yönetici kullanıcı başarılı bir şekilde güncellendi"
+          "CouldNotFound": "Yönetici kullanıcı bulunamadı",
+          "CouldNotUpdated": "Yönetici Kullanıcı güncellenemedi",
+          "SuccessfullyUpdated": "Yönetici kullanıcı başarılı bir şekilde güncellendi"
         }
       },
       "UpdateAdminProfile": {
@@ -122,13 +122,20 @@
           }
         },
         "Others": {
-          "AdminCouldNotFound": "Yönetici kullanıcı bulunamadı",
-          "AdminCouldNotUpdated": "Yönetici Kullanıcı güncellenemedi",
-          "AdminSuccessfullyUpdated": "Yönetici kullanıcı başarılı bir şekilde güncellendi"
+          "CouldNotFound": "Yönetici kullanıcı bulunamadı",
+          "CouldNotUpdated": "Yönetici Kullanıcı güncellenemedi",
+          "SuccessfullyUpdated": "Yönetici kullanıcı başarılı bir şekilde güncellendi"
         }
       }
     },
     "Appointments": {
+      "CancelAppointment": {
+        "Others": {
+          "CouldNotFound": "Randevu bulunamadı",
+          "CouldNotCanceled": "Randevu iptal edilemedi",
+          "SuccessfullyCancelled": "Randevu başarılı bir şekilde iptal edildi"
+        }
+      },
       "CreateAppointment": {
         "ValidationMessages": {
           "StartDate": {
@@ -175,8 +182,14 @@
           }
         },
         "Others": {
-          "NotFound": "Randevu bulunamadı",
+          "CouldNotFound": "Randevu bulunamadı",
           "SuccessfullyUpdated": "Randevu başarılı bir şekilde güncellendi"
+        }
+      },
+      "UpdateAppointmentStatus": {
+        "Others": {
+          "CouldNotFound": "Randevu bulunamadı",
+          "SuccessfullyUpdated": "Randevu durumu başarılı bir şekilde güncellendi"
         }
       }
     },

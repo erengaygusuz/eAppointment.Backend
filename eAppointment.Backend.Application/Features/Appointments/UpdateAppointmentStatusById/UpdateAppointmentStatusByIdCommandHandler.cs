@@ -30,7 +30,7 @@ namespace eAppointment.Backend.Application.Features.Appointments.UpdateAppointme
             {
                 logger.LogError(localization[translatedMessagePath + "." + "NotFound"].Value);
 
-                return Result<string>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "NotFound"].Value);
+                return Result<string>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "CouldNotFound"].Value);
             }
 
             mapper.Map(request, appointment);

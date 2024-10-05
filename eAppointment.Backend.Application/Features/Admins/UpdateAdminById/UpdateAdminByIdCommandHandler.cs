@@ -25,7 +25,7 @@ namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminById
             {
                 logger.LogError("User could not found");
 
-                return Result<string>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "AdminCouldNotFound"]);
+                return Result<string>.Failure((int)HttpStatusCode.NotFound, localization[translatedMessagePath + "." + "CouldNotFound"]);
             }
 
             mapper.Map(request, user);
@@ -36,12 +36,12 @@ namespace eAppointment.Backend.Application.Features.Admins.UpdateAdminById
             {
                 logger.LogError("User could not updated");
 
-                return Result<string>.Failure((int)HttpStatusCode.InternalServerError, localization[translatedMessagePath + "." + "AdminCouldNotUpdated"]);
+                return Result<string>.Failure((int)HttpStatusCode.InternalServerError, localization[translatedMessagePath + "." + "CouldNotUpdated"]);
             }
 
             logger.LogInformation("Admin updated successfully");
 
-            return Result<string>.Succeed((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "AdminSuccessfullyUpdated"].Value);
+            return Result<string>.Succeed((int)HttpStatusCode.OK, localization[translatedMessagePath + "." + "SuccessfullyUpdated"].Value);
         }
     }
 }
