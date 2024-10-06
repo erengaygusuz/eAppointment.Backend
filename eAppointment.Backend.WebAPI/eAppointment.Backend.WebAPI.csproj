@@ -10,6 +10,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Include="Resources\en-GB.json" />
 	  <None Include="Resources\en-US.json" />
 	  <None Include="Resources\tr-TR.json" />
 	</ItemGroup>
