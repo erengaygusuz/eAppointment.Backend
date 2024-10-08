@@ -519,31 +519,10 @@
             "MaximumLength": "Please enter maximum 50 character for lastname",
             "NotUseNumbers": "Please do not use numbers in the lastname"
           },
-          "Email": {
-            "NotNull": "Please fill the e-mail",
-            "MaximumLength": "Please enter maximum 150 character for e-mail",
-            "NotValid": "Please enter a valid e-mail",
-            "NotUnique": "Please choose a unique e-mail"
-          },
           "PhoneNumber": {
             "NotNull": "Please fill the phone number",
             "NotValid": "Please enter a valid phone number",
             "NotUseLetters": "Please do not use letters in the phone number"
-          },
-          "UserName": {
-            "NotNull": "Please fill the username",
-            "MinimumLength": "Please enter minimum 3 character for username",
-            "MaximumLength": "Please enter maximum 50 character for username",
-            "NotUseSpaces": "Please do not use spaces for username",
-            "NotUseTurkishCharacters": "Please do not use turkish characters for username",
-            "NotUseUpperLetters": "Please do not use upper letters for username",
-            "NotUseNumbers": "Please do not use numbers in the username",
-            "NotUnique": "Please choose a unique username"
-          },
-          "IdentityNumber": {
-            "NotNull": "Please fill the identity number",
-            "NotExactNumberCount": "Please enter 11 numbers for identity number",
-            "NotUseLetters": "Please do not use letters in the identity number"
           },
           "CountyId": {
             "GreaterThanZero": "County id should be greater than 0"

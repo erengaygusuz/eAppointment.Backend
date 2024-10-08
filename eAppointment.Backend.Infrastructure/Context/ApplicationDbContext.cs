@@ -152,20 +152,44 @@ namespace eAppointment.Backend.Infrastructure.Context
                 {
                     case EntityState.Added:
                         {
-                            if (entityReference != null || userReference != null || roleReference != null)
+                            if (entityReference != null)
                             {
                                 Entry(entityReference).Property(x => x.ModifiedDate).IsModified = false;
                                 entityReference.CreatedDate = DateTime.Now;
+                            }
+
+                            if (userReference != null)
+                            {
+                                Entry(userReference).Property(x => x.ModifiedDate).IsModified = false;
+                                userReference.CreatedDate = DateTime.Now;
+                            }
+
+                            if (roleReference != null)
+                            {
+                                Entry(roleReference).Property(x => x.ModifiedDate).IsModified = false;
+                                roleReference.CreatedDate = DateTime.Now;
                             }
 
                             break;
                         }
                     case EntityState.Modified:
                         {
-                            if (entityReference != null || userReference != null || roleReference != null)
+                            if (entityReference != null)
                             {
                                 Entry(entityReference).Property(x => x.CreatedDate).IsModified = false;
                                 entityReference.ModifiedDate = DateTime.Now;
+                            }
+
+                            if (userReference != null)
+                            {
+                                Entry(userReference).Property(x => x.CreatedDate).IsModified = false;
+                                userReference.ModifiedDate = DateTime.Now;
+                            }
+
+                            if (roleReference != null)
+                            {
+                                Entry(roleReference).Property(x => x.CreatedDate).IsModified = false;
+                                roleReference.ModifiedDate = DateTime.Now;
                             }
 
                             break;
