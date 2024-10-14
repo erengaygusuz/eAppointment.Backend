@@ -101,7 +101,7 @@
           "SuccessfullyUpdated": "Yönetici kullanıcı başarılı bir şekilde güncellendi"
         }
       },
-      "UpdateAdminProfile": {
+      "UpdateAdminProfileById": {
         "ValidationMessages": {
           "FirstName": {
             "NotNull": "Lütfen ad alanını boş bırakmayınız",
@@ -323,10 +323,10 @@
           "UserCouldNotFound": "Kullanıcı bulunamadı",
           "CouldNotUpdated": "Doktor kullanıcı güncellenemedi",
           "DoctorCouldNotFound": "Doktor kullanıcısı bulunamadı",
-          "SuccessfullyCreated": "Doktor başarılı bir şekilde güncellendi"
+          "SuccessfullyUpdated": "Doktor başarılı bir şekilde güncellendi"
         }
       },
-      "UpdateDoctorProfile": {
+      "UpdateDoctorProfileById": {
         "ValidationMessages": {
           "FirstName": {
             "NotNull": "Lütfen ad alanını boş bırakmayınız",
@@ -367,7 +367,7 @@
         },
         "Others": {
           "CouldNotFound": "Doktor kullanıcı bulunamadı",
-          "SuccessfullyCreated": "Doktor başarılı bir şekilde güncellendi"
+          "SuccessfullyUpdated": "Doktor başarılı bir şekilde güncellendi"
         }
       }
     },
@@ -502,10 +502,10 @@
           "UserCouldNotFound": "Kullanıcı bulunamadı",
           "CouldNotUpdated": "Hasta kullanıcı güncellenemedi",
           "PatientCouldNotFound": "Hasta kullanıcı bulunamadı",
-          "SuccessfullyCreated": "Hasta başarılı bir şekilde güncellendi"
+          "SuccessfullyUpdated": "Hasta başarılı bir şekilde güncellendi"
         }
       },
-      "UpdatePatientProfile": {
+      "UpdatePatientProfileById": {
         "ValidationMessages": {
           "FirstName": {
             "NotNull": "Please fill the firstname",
@@ -540,7 +540,7 @@
         },
         "Others": {
           "CouldNotFound": "Hasta kullanıcı bulunamadı",
-          "SuccessfullyCreated": "Hasta başarılı bir şekilde güncellendi"
+          "SuccessfullyUpdated": "Hasta başarılı bir şekilde güncellendi"
         }
       }
     },

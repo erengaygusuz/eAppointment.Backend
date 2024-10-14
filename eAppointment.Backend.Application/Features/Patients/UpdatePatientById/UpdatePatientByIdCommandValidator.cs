@@ -15,7 +15,7 @@ namespace eAppointment.Backend.Application.Features.Patients.UpdatePatientById
             _userManager = userManager;
             _localization = localization;
 
-            var validationMessagePath = "Features.Patients.CreatePatient.ValidationMessages";
+            var validationMessagePath = "Features.Patients.UpdatePatientById.ValidationMessages";
 
             RuleFor(x => x.firstName)
                 .NotNull().WithMessage(_localization[validationMessagePath + "." + "FirstName.NotNull"])

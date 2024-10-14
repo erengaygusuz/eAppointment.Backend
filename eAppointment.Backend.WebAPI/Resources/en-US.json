@@ -101,7 +101,7 @@
           "SuccessfullyUpdated": "Admin user updated successfully"
         }
       },
-      "UpdateAdminProfile": {
+      "UpdateAdminProfileById": {
         "ValidationMessages": {
           "FirstName": {
             "NotNull": "Please fill the firstname",
@@ -323,10 +323,10 @@
           "UserCouldNotFound": "User could not found",
           "CouldNotUpdated": "Doctor user could not updated",
           "DoctorUserCouldNotFound": "Doctor user could not found",
-          "SuccessfullyCreated": "Doctor updated successfully"
+          "SuccessfullyUpdated": "Doctor updated successfully"
         }
       },
-      "UpdateDoctorProfile": {
+      "UpdateDoctorProfileById": {
         "ValidationMessages": {
           "FirstName": {
             "NotNull": "Please fill the firstname",
@@ -367,7 +367,7 @@
         },
         "Others": {
           "CouldNotFound": "Doctor user could not found",
-          "SuccessfullyCreated": "Doctor updated successfully"
+          "SuccessfullyUpdated": "Doctor updated successfully"
         }
       }
     },
@@ -502,10 +502,10 @@
           "UserCouldNotFound": "User could not found",
           "CouldNotUpdated": "Patient user could not updated",
           "PatientUserCouldNotFound": "Patient user could not found",
-          "SuccessfullyCreated": "Patient updated successfully"
+          "SuccessfullyUpdated": "Patient updated successfully"
         }
       },
-      "UpdatePatientProfile": {
+      "UpdatePatientProfileById": {
         "ValidationMessages": {
           "FirstName": {
             "NotNull": "Please fill the firstname",
@@ -535,7 +535,7 @@
         },
         "Others": {
           "CouldNotFound": "Patient user could not found",
-          "SuccessfullyCreated": "Patient updated successfully"
+          "SuccessfullyUpdated": "Patient updated successfully"
         }
       }
     },

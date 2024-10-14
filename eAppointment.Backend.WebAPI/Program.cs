@@ -151,7 +151,7 @@ namespace eAppointment.Backend.WebAPI
 
             app.UseHttpsRedirection();
 
-            var supportedCultures = new[] { "en-US", "tr-TR" };
+            var supportedCultures = new[] { "en-US", "en-GB", "tr-TR" };
 
             var localizationOptions = new RequestLocalizationOptions()
                 .SetDefaultCulture(supportedCultures[0])
